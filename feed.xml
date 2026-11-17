@@ -99,5 +99,38 @@
 <itunes:episode>10</itunes:episode>
 <itunes:episodeType>full</itunes:episodeType>
 </item>
+<item>
+<title>3.4 Backpropagation out loud</title>
+<description>How a network assigns blame to millions of weights in one backward sweep, and the four things that sweep demands of the hardware.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/3.4.mp3" length="2891477" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-3.4</guid>
+<pubDate>Mon, 16 Nov 2026 12:37:00 +0000</pubDate>
+<itunes:duration>482</itunes:duration>
+<itunes:season>3</itunes:season>
+<itunes:episode>4</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>3.14 The compute behind AI</title>
+<description>Counting the arithmetic in a training run, what a GPU provides, why memory traffic is the bottleneck, and the workload profile any new hardware has to meet.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/3.14.mp3" length="2849140" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-3.14</guid>
+<pubDate>Mon, 16 Nov 2026 12:47:00 +0000</pubDate>
+<itunes:duration>475</itunes:duration>
+<itunes:season>3</itunes:season>
+<itunes:episode>14</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>3.17 Learning without backpropagation</title>
+<description>The menu of learning rules a physical system could run on itself, from Hebbian rules to evolution, and which have been tried in chemistry.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/3.17.mp3" length="3098271" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-3.17</guid>
+<pubDate>Mon, 16 Nov 2026 12:50:00 +0000</pubDate>
+<itunes:duration>516</itunes:duration>
+<itunes:season>3</itunes:season>
+<itunes:episode>17</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
 </channel>
 </rss>

@@ -652,11 +652,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "Backpropagation out loud",
-     "mins": 17,
+     "mins": 8,
      "sum": "How a network assigns blame to millions of weights in one backward sweep, and the four things that sweep demands of the hardware.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "3.5",
@@ -837,11 +837,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "The compute behind AI",
-     "mins": 17,
+     "mins": 8,
      "sum": "Counting the arithmetic in a training run, what a GPU provides, why memory traffic is the bottleneck, and the workload profile any new hardware has to meet.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "3.15",
@@ -883,11 +883,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "Learning without backpropagation",
-     "mins": 17,
+     "mins": 9,
      "sum": "The menu of learning rules a physical system could run on itself, from Hebbian rules to evolution, and which have been tried in chemistry.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "3.18",

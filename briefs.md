@@ -103,7 +103,7 @@ Supervised learning as he knows it: features, label, loss, train and test. Trees
 
 Neuron = weighted sum plus bias, then a nonlinearity. Layer = matrix times vector plus bias. Without nonlinearity a stack collapses to one linear map. ReLU. Forward pass. Counting parameters: inputs times outputs plus outputs; BINND has 4,467,969 (CHECKED). Cost: one multiply-add per weight per example. Batches turn it into matrix times matrix. Outputs: logits to probabilities by sigmoid or softmax; cross-entropy loss as surprise. Width versus depth. What hardware must do: multiply-accumulate at scale and apply a simple nonlinearity.
 
-### 3.4 Backpropagation out loud (core, about 17 min)
+### 3.4 Backpropagation out loud (core, about 8 min)
 
 KEYSTONE. Goal: how much would the loss change if each weight changed a little. Naive: nudge each weight and rerun, millions of passes. Backpropagation: one backward sweep. Blame assignment through the chain rule; computational graph; the forward pass stores every activation; the backward pass carries an error signal layer by layer, using each layer's stored input and the same weights transposed. Cost about two to three forward passes; memory = all activations. Update: weight minus learning rate times gradient. Four demands on hardware: the backward path must know the forward weights exactly (weight transport); per-example activations must be stored; error signals are signed and span a wide range; updates are tiny and must accumulate faithfully over millions of steps. This list is why inference in chemistry is far easier than training in chemistry.
 
@@ -123,7 +123,7 @@ Recurrent networks: a hidden state updated token by token; sequential, forgetful
 
 Pretraining by prediction on unlabelled data; fine-tuning; frozen embeddings plus a small head; transfer when labels are scarce. In-context learning: behaviour changes with examples in the prompt, no weight change. Retrieval. Scaling laws in one sentence. DNA and protein language models: what they are trained on and good at; caveat that short synthetic oligos under assay conditions are far from genomes, so a small network on the right data can win, as BINND found.
 
-### 3.14 The compute behind AI (core, about 17 min)
+### 3.14 The compute behind AI (core, about 8 min)
 
 KEYSTONE. Count arithmetic: a forward pass is about two operations per parameter per token; training about three times that. A model of 100 billion parameters trained on ten to the thirteenth tokens: order of ten to the twenty-fifth operations. A top accelerator: about ten to the fifteenth operations per second at roughly a kilowatt, so about ten to the minus 12 joules per operation; clusters of tens to hundreds of thousands. Number formats: 32-bit and 16-bit floating point, 8-bit integers. Memory bandwidth as the bottleneck. Parallel across examples and across positions; serial across layers and across update steps: a training run is on the order of a million sequential updates. The workload profile for any new hardware: dominated by multiply-accumulate; wide but with irreducible depth; millions of sequential updates; heavy memory traffic.
 
@@ -131,7 +131,7 @@ KEYSTONE. Count arithmetic: a forward pass is about two operations per parameter
 
 Floating point in a sentence. Inference: 8-bit integers routine; 4 bits common for language models; binary or ternary weights possible at some cost (BinaryConnect, binarised networks 2015-16). Why: redundancy, averaging over many weights, training for robustness. Training needs more: each update is a tiny fraction of a weight, so low-precision weights swallow it; fixes: keep a hidden high-precision copy, or stochastic rounding (Gupta 2015: 16-bit training). Noise as regulariser; noise-aware training makes networks tolerate analog hardware. Bridge: inference at three to five bits fits a tube; for training, a concentration is a naturally fine-grained accumulator but is hard to set and read precisely.
 
-### 3.17 Learning without backpropagation (core, about 17 min)
+### 3.17 Learning without backpropagation (core, about 9 min)
 
 KEYSTONE. Nine routes. Train in software and deploy (all DNA networks before 2025). Hybrid physics-aware training. Local rules: Hebbian; delta or perceptron rule. Energy-based: Hopfield, Boltzmann machines (compare clamped and free statistics), equilibrium propagation. Forward-forward. Feedback alignment. Perturbation and evolution strategies: only forward evaluations, trivially parallel, and molecules can be copied with variation and selected, so a tube can evaluate ten to the twelfth variants. Reservoir computing: fixed dynamics, train only the read-out. Memory-based: store examples and compare (nearest centroid); Cherry and Qian 2025 is of this kind: examples written additively into concentrations (CHECKED: three sets of 100-bit patterns). For each: what it demands physically and whether chemistry has done it.
 
