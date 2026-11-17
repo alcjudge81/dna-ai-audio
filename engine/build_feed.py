@@ -16,7 +16,7 @@ for ph in PHASES:
         s = json.load(open(side))
         desc = it.get("sum") or it.get("why") or ""
         for l in it.get("links") or []: desc += f"\n{l['label']}: {l['url']}"
-        eps.append({"id": it["id"], "title": f"{it['id']} {it['title']}", "desc": desc, "season": ph["n"] + 1, "ep": n, "secs": s["seconds"],
+        eps.append({"id": it["id"], "title": f"{it['id']} {it['title']}", "desc": desc, "season": max(1, ph["n"]), "ep": n + (len(PHASES[0]["items"]) if ph["n"] == 1 else 0), "secs": s["seconds"],
                     "bytes": os.path.getsize(mp3), "date": format_datetime(T0 + datetime.timedelta(minutes=gi)), "depth": it["track"] == "depth"})
 x = ['<?xml version="1.0" encoding="UTF-8"?>',
      '<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">', "<channel>",
