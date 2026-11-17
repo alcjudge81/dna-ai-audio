@@ -241,15 +241,15 @@ Depth. Labs and what each is known for; the DNA computing conference, FNANO, SEE
 
 ## Phase 6: Toward AI in DNA
 
-### 6.1 Sizing the problem (core, about 17 min)
+### 6.1 Sizing the problem (core, about 10 min)
 
 KEYSTONE. Currencies: operations, memory, precision, sequential depth, distinct addresses, time, energy, money. What chemistry offers: a micromole is six times ten to the seventeenth molecules; a bimolecular step takes one over (rate constant times concentration); three to five bits per concentration; few distinct interacting species; cheap events but many copies. The dilution law: total concentration is capped, so concentration per species falls as species are added and every reaction slows in proportion. A well-mixed analog matrix with a million weights would need a million species at picomolar each, hours per step. The alternative: sequence as data, one instruction applied to all molecules. Throughput arithmetic: ten to the fifteenth molecules stepped once an hour is far below one accelerator; but enzymes turn over hundreds of times a second each, so raw molecular throughput can be astronomical. Conclusion: throughput is not the bottleneck; organisation is: addressing, precision, depth, and getting data in and out. Five places DNA could win.
 
-### 6.2 The design space: seven routes to molecular AI (core, about 20 min)
+### 6.2 The design space: seven routes to molecular AI (core, about 10 min)
 
 KEYSTONE. Seven routes, each with what is shown, what binds, the tenfold levers. A: train in software, run in chemistry. B: hybrid training with the tube in the loop. C: learning rules in chemistry. D: storage-centred associative computing. E: evolution and selection as learning. F: equilibrium and energy-landscape computing. G: spatial, compartmentalised and enzymatic hardware underneath all the others. The general idea that molecular parallelism favours wide, shallow computation, stated as a hypothesis with its addressing problem. The hybrid machine: electronic controller, molecular co-processor.
 
-### 6.4 The interface and the clock (core, about 13 min)
+### 6.4 The interface and the clock (core, about 7 min)
 
 Budget for input and output: synthesis (cost per base, days), enzymatic synthesis, premade libraries assembled combinatorially, epigenetic writing (2024: 350 bits per reaction); dispensing; reading by fluorescence, sequencing, nanopore. The clock: stepped protocols, thermal cycling, microfluidics; cycle times of minutes. Design consequences: few fat steps, sparse read-out, state kept in molecules, the robot as part of the computer. A cost model: dollars per cycle plus dollars per molecule-operation.
 

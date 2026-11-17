@@ -198,5 +198,38 @@
 <itunes:episode>20</itunes:episode>
 <itunes:episodeType>full</itunes:episodeType>
 </item>
+<item>
+<title>6.1 Sizing the problem</title>
+<description>What an AI workload costs in operations, memory, precision and sequential steps, and what chemistry offers in each of those currencies.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/6.1.mp3" length="3546383" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-6.1</guid>
+<pubDate>Mon, 16 Nov 2026 14:19:00 +0000</pubDate>
+<itunes:duration>591</itunes:duration>
+<itunes:season>6</itunes:season>
+<itunes:episode>1</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>6.2 The design space: seven routes to molecular AI</title>
+<description>Seven architectures, each scored on what has been shown, what binds it, and where a tenfold gain could come from.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/6.2.mp3" length="3663051" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-6.2</guid>
+<pubDate>Mon, 16 Nov 2026 14:20:00 +0000</pubDate>
+<itunes:duration>610</itunes:duration>
+<itunes:season>6</itunes:season>
+<itunes:episode>2</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>6.4 The interface and the clock</title>
+<description>The cost and delay of writing and reading molecules, and how to design computations around a cycle time of minutes.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/6.4.mp3" length="2665688" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-6.4</guid>
+<pubDate>Mon, 16 Nov 2026 14:22:00 +0000</pubDate>
+<itunes:duration>444</itunes:duration>
+<itunes:season>6</itunes:season>
+<itunes:episode>4</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
 </channel>
 </rss>

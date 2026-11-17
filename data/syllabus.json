@@ -2779,22 +2779,22 @@
      "kind": "lesson",
      "track": "core",
      "title": "Sizing the problem",
-     "mins": 17,
+     "mins": 10,
      "sum": "What an AI workload costs in operations, memory, precision and sequential steps, and what chemistry offers in each of those currencies.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "6.2",
      "kind": "lesson",
      "track": "core",
      "title": "The design space: seven routes to molecular AI",
-     "mins": 20,
+     "mins": 10,
      "sum": "Seven architectures, each scored on what has been shown, what binds it, and where a tenfold gain could come from.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "6.3",
@@ -2830,11 +2830,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "The interface and the clock",
-     "mins": 13,
+     "mins": 7,
      "sum": "The cost and delay of writing and reading molecules, and how to design computations around a cycle time of minutes.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "6.5",
