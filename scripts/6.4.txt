@@ -1,0 +1,71 @@
+# 6.4 The interface and the clock
+
+Imagine a processor a million times faster than any ever built, with one flaw: each number takes a day to get into it, and a day to get out. How useful is it? For almost everything, not at all. For one kind of job, it is still the best machine in the world. This lesson is about telling those jobs apart, because that processor is a fair cartoon of a molecular computer.
+
+Quick recall. What is the test to apply to any proposal for a hybrid machine, part electronic and part molecular?
+
+Ask which step is the molecular step, and whether, in the all-electronic version, that step is the bottleneck. If it is not, the molecular version has nothing to win.
+
+A molecular computer has three interfaces with the rest of the world: writing, reading, and the clock. Take them in turn.
+
+Writing: getting information into molecules. There are four ways, and they differ enormously in cost and delay.
+
+The first is synthesis. You specify a sequence, and a company makes it, one base at a time. This is the most flexible way, and the most expensive. You pay by the base, and you wait days. Strands made in large mixed pools on a chip are far cheaper per base, but you get tiny amounts of each, all mixed together.
+
+The second is enzymatic synthesis: making DNA with enzymes in place of the standard chemistry. It is advancing quickly, and it is not yet the norm.
+
+The third is the one to watch: do not synthesise at all. Start with a stock of ready-made pieces, and write information by combining them, or by marking them. A group in China showed a striking version in twenty twenty-four. They wrote data by adding chemical marks, methyl groups, at chosen positions on prefabricated DNA, the way a printer sets movable type. They reported three hundred and fifty bits written in a single reaction.
+
+The fourth is simply dispensing. If the strands exist already, writing a value means delivering the right amount. A liquid-handling robot is a writing device, accurate to a few percent.
+
+So the principle for writing is: synthesise once, and reuse. Everything that can be made from stock parts should be.
+
+Reading: getting information out. Three ways.
+
+Fluorescence. A strand releases a dye, and the tube glows. You get an answer in seconds, continuously, while the reaction runs. But only for a handful of signals at a time, because there are only so many colours you can tell apart.
+
+Sequencing. This reads the actual molecules, billions of them, and counts each kind. It is the richest read-out there is. It takes hours, and it uses up the sample.
+
+Nanopores. A strand is pulled through a tiny hole and read as it passes. Fewer molecules than a big sequencer, but the reads stream out as they happen. The NC State engine was read this way.
+
+So for reading you choose between fast and narrow, or slow and wide.
+
+[B] And the clock? A tube does not have one.
+
+That is the third interface, and in some ways the most interesting. A silicon chip has a crystal that ticks billions of times a second, telling every part when to move. A tube has nothing. So what steps a molecular computation along?
+
+Whatever adds the next thing, or changes the conditions. A robot that pipettes in the next instruction strands. A thermal cycler that heats and cools. A pump that pushes fluid through a channel. That device is the clock, and its speed is the clock rate.
+
+So how fast can it tick? A thermal cycler takes a minute or two per cycle. Heat recharging takes minutes. A pipetting step, with mixing and waiting, takes minutes. Call it a minute per tick, on a good day. Against a billion ticks a second in silicon.
+
+Now you see why I began with that cartoon. A molecular computer may do a vast amount inside one tick. But it ticks about once a minute, and getting data in and out costs hours and dollars.
+
+From that follow three design rules, and these are what I most want you to keep from this lesson.
+
+Rule one: few, fat steps. Every tick is expensive, so make each one do as much as possible. A program of ten steps, each touching a million million molecules, suits this machine. A program of a million small steps does not.
+
+Rule two: read rarely. Reading is the slowest and most costly thing you can do. So do not read after every step. Let the molecules carry on, and read once, at the end, or at a few checkpoints.
+
+Rule three: keep the state in the molecules. Between one step and the next, the intermediate result should stay in the tube, as molecules. The moment you take it out to a computer and put it back, you have paid for a read and a write, and you have lost whatever advantage you had.
+
+Few fat steps. Read rarely. Keep the state in the molecules.
+
+[B] You keep talking about cost. Is there a way to actually put a number on a design?
+
+There is, and hardly anyone in the field does it, which is an opening for you. Write a cost model with two terms.
+
+The first term is cost per cycle: what does one tick of the clock cost, in reagents, robot time and elapsed minutes? Multiply by the number of cycles.
+
+The second is cost per molecule: what did it cost to make the molecules, divided by how many useful operations each one performs before it is spent? If a strand is used once, that term is high. If it is recharged and used a hundred times, it falls a hundredfold.
+
+Add the reading and writing at the two ends. Then divide the total by the number of useful operations. That gives a figure in dollars per operation, and another in seconds per operation, that you can set beside a chip.
+
+Almost certainly the first figures you compute will be terrible. That is fine. The value is in seeing which term dominates, because that term is the thing to work on. For most designs today, it is writing.
+
+One last point, and it changes how you should think about the lab. The robot is not an accessory to the computer. The robot is part of the computer. It is the clock, it is the writing device, and often it is the bus that carries material from place to place. So the automation is not something to add after the chemistry works. It belongs in the design from the first day. A molecular computer is a chemical process with a control system, and you know how to design those.
+
+Three sentences. A molecular computer meets the world through writing, reading and a clock, and all three are slow: days to synthesise, hours to sequence, about a minute per tick. So design for few fat steps, read rarely, and keep the state in the molecules between steps. Put a cost on every design, per cycle and per molecule, and treat the robot as part of the computer.
+
+[B] Questions. One: name the four ways of writing information into molecules, and say which one avoids synthesis. Two: what plays the part of the clock in a molecular computer, and roughly how fast does it tick? Three: state the three design rules.
+
+---

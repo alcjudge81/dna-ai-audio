@@ -1,0 +1,61 @@
+# 5.15 Beyond the well-mixed tube: enzymes, surfaces, compartments and cells
+
+A yeast cell keeps tens of thousands of different kinds of molecule working in a single compartment, all at once, without descending into chaos. The largest circuits we have built in a test tube manage a few hundred. What does the cell have that the tube does not?
+
+It has at least four things, and each one is a way out of the well-mixed tube. This lesson takes them in turn.
+
+Quick recall. What is the tension between recharging a circuit with heat and having it learn?
+
+Heat returns the circuit to its starting state, and a learned memory is a departure from the starting state. So the memory has to live somewhere that heat does not erase.
+
+First, be clear about why the stirred tube is the least scalable way to build a computer. In a well-mixed solution, every molecule can meet every other. So every pair is a possible unwanted reaction. Nothing has an address except its sequence. And because molecules must find their partners by wandering, everything slows as it gets more dilute. Those were walls two and three from lesson five point six.
+
+Way out number one: enzymes. Strand displacement, with no enzymes, runs downhill and stops. Add enzymes, and you can keep a system running. The best-developed toolkit uses three. A polymerase, which makes new strands from templates. A nicking enzyme, which cuts them free. And an exonuclease, which steadily destroys them. Now you have production and degradation going on continuously, like a flow reactor with a feed and a drain. Signals rise when they are being made and fall when they are not. You can build oscillators and switches that keep going for hours.
+
+Enzymes also give sharper thresholds. In twenty twenty-two, a Franco-Japanese team led by Anthony Genot and Yannick Rondelez used that toolkit to build neurons with adjustable weights and biases. One neuron computed a majority vote over ten input bits. Two layers together carved out a region that no single layer can, which is the mark of a true multilayer network. And they ran the whole thing in droplets the size of a cell.
+
+The price of enzymes is delicacy. They need the right buffer and temperature, they age, and they vary from batch to batch.
+
+Way out number two: give molecules a position. Take a flat sheet of folded DNA, an origami, and fix the gates onto it side by side, a few nanometres apart. Now a signal released by one gate reaches its neighbour almost at once, because the neighbour is right there. What matters is no longer the concentration in the tube. It is the distance on the sheet. A group at the University of Washington showed this in twenty seventeen, with signals passing along tethered gates like a row of falling dominoes.
+
+Two things follow. Speed no longer depends on how dilute the tube is. And sequences can be reused. The same gate sequence can appear at ten different places and mean ten different things, because where it is tells you what it is. That is how a chip gets billions of wires out of one kind of metal.
+
+[B] That is what you meant in phase two by an address being a place and not a sequence.
+
+Exactly that. And the third way out takes it further.
+
+Way out number three: compartments. Put the reaction in droplets, or in gel beads, or in porous particles like the dendricolloid from your lab. Each compartment is its own small computer. Molecules in one do not meet molecules in another. So you can run a million different computations in a million droplets, with the same sequences in each.
+
+Compartments bring two consequences from phase two. In a tiny volume, a signal is carried by few molecules, so the energy cost per operation falls enormously. And for the same reason, counting noise comes back. You are trading the errors of the bulk for the errors of small numbers.
+
+The open engineering problem is communication. Isolated droplets are a million separate calculators. To make them one computer, they must exchange signals in a controlled way. That is a problem in transport, and transport is your subject.
+
+Way out number four: the cell itself. Living cells have been made to compute, in three styles worth knowing.
+
+Analog. In twenty thirteen, a group at MIT built gene circuits that add, and take ratios, using only three genes, by working with graded signals instead of on and off. A digital design for the same job would need many more parts.
+
+Perceptron-like. In twenty twenty-two, a group in Israel built gene circuits in bacteria that take weighted sums and apply thresholds.
+
+And winner-take-all, in twenty twenty-four, from Michael Elowitz's lab. Not with DNA strands, but with designed proteins, inside mammalian cells. The same architecture as the Caltech network from lesson five point eight, in a different chemistry.
+
+So here is what the cell has that the tube lacks.
+
+Recognition beyond base pairing. Proteins recognise each other by shape and charge, which gives a far larger vocabulary of specific partners than twenty-letter sequences can.
+
+Location. Membranes, scaffolds and compartments mean that most molecules never meet most others.
+
+Proofreading. The cell spends energy to check its own work, as you heard in lesson one point nine.
+
+And turnover. Everything is continuously made and destroyed, so mistakes are flushed away instead of piling up.
+
+Recognition, location, proofreading, turnover. Each of the four ways out in this lesson borrows one or two of those.
+
+[B] Then is the well-mixed tube a dead end?
+
+It is a starting point, and a very good one, because it is the simplest system in which the ideas can be tested cleanly. But I will say this plainly. Scale, if it comes, will come from space: from giving molecules places to be. The stirred tube is to molecular computing roughly what a breadboard is to electronics. You learn on it. You do not ship it.
+
+Three sentences. The well-mixed tube is the least scalable architecture, because everything can meet everything and dilution slows it all down. Enzymes give sustained dynamics and sharp thresholds, tethering gives speed and reusable sequences, compartments give many independent computers, and cells show all of these working together. What biology has that tubes lack is recognition beyond base pairing, location, proofreading and turnover.
+
+[B] Questions. One: what do enzymes add to a molecular circuit, and what do they cost? Two: why does tethering gates to a surface allow sequences to be reused? Three: name the four things a cell has that a well-mixed tube lacks.
+
+---

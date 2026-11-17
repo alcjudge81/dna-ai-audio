@@ -1,0 +1,61 @@
+# 1.5 What can be computed, and at what cost
+
+In nineteen ninety-four, Leonard Adleman solved a mathematical puzzle in a test tube, using DNA, and for a few years people talked as if the silicon chip had a rival. Within five years that hope had gone quiet. The experiment worked. So what went wrong? The answer is the most important thing a newcomer can know about the limits of molecular parallelism, and to see it you need two ideas: what a computer can do at all, and what it costs.
+
+Quick recall. What is the von Neumann bottleneck?
+
+Moving data between memory and processor costs more time and energy than the arithmetic itself.
+
+First idea: what can be computed. Start with a word. An algorithm is a finite recipe: a list of simple steps that a clerk with no imagination could follow, and that always finishes with an answer.
+
+In nineteen thirty-six, Alan Turing asked what the simplest possible machine for following recipes would be. His answer has three parts. A long tape, divided into squares, each holding a symbol. A head that sits over one square, and can read it, rewrite it, and move one step left or right. And a small table of rules: if you are in this state and you see this symbol, write that, move this way, and go to that state.
+
+You already know a machine like this. A polymerase sits on a strand, reads one base, writes one base, and moves one step along. Biology found the design first.
+
+Now the result that changed everything. Turing showed that you can build one such machine whose rule table lets it imitate any other. Give it a description of another machine on its tape, and it will behave like that machine. That is called universality, and every computer you have used is universal in this sense.
+
+[B] Why should that matter to someone building computers from molecules?
+
+Because of what it rules out. If every universal machine can imitate every other, then no new kind of computer can compute anything that an old one could not. Not a quantum computer. Not a DNA computer. Changing the substrate never changes what is computable. It changes four things only: how fast, how cheap, how dense, and how much energy. So when someone tells you DNA computing will do something that silicon cannot do in principle, they are mistaken. The honest case for molecules is always about cost. That is why this course keeps handing you numbers.
+
+Second idea: cost. Computer scientists measure cost by asking how the number of steps grows as the problem gets bigger. And there is one dividing line that matters more than any other.
+
+On one side are problems where the steps grow like a power of the size: the size squared, say, or cubed. Double the problem, and the work goes up four times, or eight. That is called polynomial growth, and such problems are considered tractable. Sorting a list is like that. Multiplying matrices is like that.
+
+On the other side are problems where the steps grow exponentially. Add one more item, and the work doubles. Add ten, and it goes up a thousand times. Add a hundred, and no computer that could ever be built will finish.
+
+There is a famous family of problems that seem to sit on the wrong side of that line, yet have a strange property. If someone hands you an answer, you can check it quickly. Finding the answer is what seems to take forever. That family is called NP. Whether finding is truly harder than checking is the great open question known as P versus NP.
+
+Now Adleman. His puzzle belonged to that family. Take a set of cities with one-way roads between some of them. Is there a route that starts at one given city, ends at another, and visits every city exactly once?
+
+His approach was beautifully simple. Give each city a random DNA sequence. Give each road a sequence that is half the complement of one city and half the complement of the next, so that it acts as a splint joining them. Mix everything in a tube. In seconds, the strands assemble themselves into every possible route, a vast number of each. Then filter. Keep only the strands that start and end at the right cities. Keep only those of the right length. Keep only those that contain every city. If anything is left, the answer is yes.
+
+He did it for seven cities. The assembling took moments. The filtering took about a week at the bench.
+
+[B] That sounds like a triumph. A tube tried every route at once.
+
+It did, and that is exactly the trap. Look at how he beat the exponential. He did not find a cleverer recipe. He made every candidate, physically, and paid for each one in molecules. For seven cities, that is nothing. But the number of routes grows faster than exponentially with the number of cities. Within a year, the computer scientist Juris Hartmanis ran the arithmetic. For two hundred cities, the DNA required would weigh more than the Earth.
+
+So here is the lesson, and I would like it never to leave you. Parallelism buys you a constant factor. It can be a magnificent factor: a million million million molecules working at once. But it is a fixed number, and an exponential eats any fixed number for breakfast. Massive parallelism does not turn an intractable problem into a tractable one. It moves the wall a little further out.
+
+That is why the first dream of DNA computing faded. And it is why the field that came after stopped trying to out-search silicon and started asking a different question: what can molecules compute in places where silicon cannot go?
+
+[B] Then is parallelism worthless?
+
+Not at all. It is priceless, for the right shape of problem. So let me give you the tool for telling shapes apart. Every computation has a width and a depth.
+
+Width is how much can be done at the same moment, because the pieces do not depend on each other. Depth is how many stages must happen one after another, because each needs the result of the one before.
+
+Parallel hardware helps with width, and does nothing for depth. There is an old rule about this, called Amdahl's law. If even five percent of a job must be done in sequence, then no amount of parallel hardware, not even an infinite amount, can make the job more than twenty times faster.
+
+Now look at the operation at the heart of AI: a matrix times a vector. Say the matrix is a thousand by a thousand. That is a million multiplications, and not one of them depends on another. Pure width. Then each row's products must be added up. You can add a thousand numbers in pairs: five hundred sums, then two hundred and fifty, and so on. That takes ten rounds. So the whole thing is a million operations wide and about eleven stages deep.
+
+That is the shape that suits a massively parallel machine: enormously wide, and very shallow. Adleman's problem was the wrong shape. A layer of a neural network is the right one.
+
+So carry this forward. For a substrate where each step takes minutes, sequential depth is the scarce resource, and width is nearly free. Every time you meet a proposal for molecular computing, ask for its depth.
+
+Three sentences. Every universal computer can imitate every other, so a new substrate changes only speed, cost, density and energy, never what is computable. Parallelism multiplies your power by a fixed factor, which cannot beat exponential growth, and that is why Adleman's method stopped at small puzzles. Parallelism pays when a computation is wide and shallow, as a matrix times a vector is, so for slow molecules the thing to watch is depth.
+
+[B] Questions. One: what does universality rule out for any new kind of computer? Two: why could Adleman's method not scale, even though a tube holds so many molecules? Three: a matrix a thousand by a thousand multiplies a vector. How wide is that computation, and roughly how deep?
+
+---

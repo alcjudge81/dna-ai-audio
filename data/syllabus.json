@@ -104,7 +104,7 @@
      "mins": 16,
      "sum": "Turing machines, universality, and why Adleman's experiment could not scale: what massive parallelism buys and what it never will.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -282,7 +282,7 @@
      "mins": 15,
      "sum": "How a grid of resistors multiplies a matrix in one step, what goes wrong when you build it, and what the same structure looks like in chemistry.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -293,7 +293,7 @@
      "mins": 14,
      "sum": "Hinton's argument for hardware whose knowledge cannot be copied, the training methods it needs, and the odd position DNA holds, with a copyable part and a mortal part.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -1551,7 +1551,7 @@
      "mins": 15,
      "sum": "How seesaw gates restore signals, what the square-root circuit proved, and the six reasons well-mixed circuits stop growing.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -1748,7 +1748,7 @@
      "mins": 16,
      "sum": "Why the stirred tube is the least scalable architecture, and what enzymes, tethering, droplets and living cells each buy.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -2833,7 +2833,7 @@
      "mins": 13,
      "sum": "The cost and delay of writing and reading molecules, and how to design computations around a cycle time of minutes.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {

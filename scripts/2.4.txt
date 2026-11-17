@@ -1,0 +1,69 @@
+# 2.4 The analog comeback: why AI reopened the question
+
+By the year two thousand, analog computing was a closed chapter. The precision bill had settled the matter. Twenty years later, some of the largest chip companies in the world were building analog computers again. What changed?
+
+Two things changed at once: what chips could no longer do, and what we wanted them for.
+
+Quick recall. Roughly where do the analog and digital cost curves cross? And what is the hybrid strategy?
+
+They cross at around six to eight bits. And the hybrid strategy is to compute a little in analog, restore the signal to clean levels, and repeat.
+
+Begin with what chips could no longer do. For thirty years, making transistors smaller also made them faster and less power-hungry, all together. That happy arrangement ended in the mid two-thousands. Transistors kept shrinking, but they stopped getting cooler. Since then, power has been the limit on almost everything.
+
+Now what we wanted. Neural networks arrived, and they changed the workload. Two facts about them matter here, and you will meet both properly in phase three. First, nearly all the work is one operation: multiply a big grid of numbers, the weights, by a list of numbers, the inputs, and add up each row. A matrix times a vector. Second, a trained network does not need precise arithmetic. Four to eight bits is plenty.
+
+Put that next to the last lesson. Low precision, and one simple operation repeated endlessly. That is the corner of the map where analog wins.
+
+There was a third fact. In a digital chip running a neural network, most of the energy is not spent on arithmetic. It is spent on fetching the weights from memory and carrying them to the arithmetic. The von Neumann bottleneck again.
+
+[B] So the idea is to do the arithmetic in analog. How do you multiply a matrix by a vector with a circuit?
+
+With two laws you learned in your first physics course, and this is one of the prettiest ideas in engineering.
+
+Picture a grid of wires: a set running left to right, and a set running top to bottom, like a street map. At every crossing, connect the two wires through a tiny resistor. And make each resistor adjustable, so you can set how easily it conducts.
+
+Now put a voltage on each horizontal wire. Those voltages are your input numbers. At each crossing, current flows down into the vertical wire. How much? Ohm's law: the current is the voltage times the conductance. So each crossing has just multiplied an input by a stored number. That stored number, the conductance, is a weight.
+
+And the vertical wire collects the current from every crossing along its length. Kirchhoff's law says currents joining at a wire simply add. So at the bottom of each vertical wire, you read a current that is the sum of inputs times weights. That is one row of the matrix product.
+
+Every vertical wire does that at the same instant. So the whole matrix times the whole vector happens in one step, in the time it takes the currents to settle. And notice where it happened: in the memory itself. The weights never moved. Memory and arithmetic are the same piece of hardware. That is called in-memory computing.
+
+Ohm's law multiplies. Kirchhoff's law adds. The grid is the matrix.
+
+[B] If it is that elegant, why isn't every AI chip built this way?
+
+Because the precision bill still has to be paid, and here it arrives as four separate invoices.
+
+One: the devices are not identical. Two resistors made to the same recipe differ by a few percent. So the weight you stored is not quite the weight you meant.
+
+Two: they drift. A conductance you set today has shifted by next week.
+
+Three: each device can hold only so many distinguishable levels. In practice, about four to six bits.
+
+Four, and the largest: the edges. The inside of the grid is analog, but the rest of the computer is digital. So at every input you need a converter from digital to analog, and at every output a converter back. Those converters take most of the chip's area and most of its energy. The beautiful grid in the middle is cheap. The border crossings are expensive.
+
+The cleverest response to the first three does not fix the hardware at all. It fixes the training. While the network is being trained, in software, you deliberately add noise that resembles the hardware's own flaws. The network learns weights that still work when they are a little wrong. This is called hardware-aware training, and it is a general principle worth keeping: if you cannot make the machine precise, teach the program to tolerate the machine.
+
+Where does all this stand? Research chips with millions of these devices have run real networks for speech and images. Running a trained network on them works. Training on them is much harder, and the reason belongs to phase three: training needs tiny, precise, repeatable adjustments to each weight, and these devices do not adjust precisely.
+
+Two cousins deserve one sentence each. Photonic chips do the same matrix arithmetic with light in place of current. And neuromorphic chips imitate the brain's spikes, staying silent and spending nothing when nothing is happening.
+
+Now look at what you have just learned, with a test tube in mind.
+
+A weight stored as a physical quantity. In the grid, a conductance. In a tube, a concentration.
+
+Multiplication done by a law of physics. In the grid, Ohm's law. In a tube, mass action: the rate of a reaction is proportional to the product of two concentrations.
+
+Addition done for free where things merge. In the grid, currents in a wire. In a tube, identical molecules pooling.
+
+It is the same architecture. And so it inherits the same four invoices. Variability becomes pipetting error and strand quality. Drift becomes degradation and leak. The limited number of levels is your three to five bits. And the expensive border crossings are synthesis on the way in and sequencing on the way out.
+
+Which means the remedies carry over as well. Tolerate the machine in training. Restore signals at intervals. And cross the border as rarely as you can.
+
+The engineers who build analog chips have spent fifteen years on the problems you are about to meet. Their literature is one of the most useful things you can read, and almost nobody in molecular computing reads it.
+
+Three sentences. Analog came back because power became the limit and neural networks need only one operation at low precision. A grid of adjustable resistors multiplies a matrix by a vector in a single step, inside the memory, with Ohm's law multiplying and Kirchhoff's law adding. Its troubles are variability, drift, few levels, and costly converters at the edges, and a tube of DNA has the same architecture, the same troubles, and the same remedies.
+
+[B] Questions. One: in the grid of wires, what plays the part of the input, the weight, and the output? Two: which of the four invoices is the largest, and why? Three: translate each of the four into its test tube equivalent.
+
+---

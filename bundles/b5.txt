@@ -1,0 +1,395 @@
+=== 1.5 ===
+# 1.5 What can be computed, and at what cost
+
+In nineteen ninety-four, Leonard Adleman solved a mathematical puzzle in a test tube, using DNA, and for a few years people talked as if the silicon chip had a rival. Within five years that hope had gone quiet. The experiment worked. So what went wrong? The answer is the most important thing a newcomer can know about the limits of molecular parallelism, and to see it you need two ideas: what a computer can do at all, and what it costs.
+
+Quick recall. What is the von Neumann bottleneck?
+
+Moving data between memory and processor costs more time and energy than the arithmetic itself.
+
+First idea: what can be computed. Start with a word. An algorithm is a finite recipe: a list of simple steps that a clerk with no imagination could follow, and that always finishes with an answer.
+
+In nineteen thirty-six, Alan Turing asked what the simplest possible machine for following recipes would be. His answer has three parts. A long tape, divided into squares, each holding a symbol. A head that sits over one square, and can read it, rewrite it, and move one step left or right. And a small table of rules: if you are in this state and you see this symbol, write that, move this way, and go to that state.
+
+You already know a machine like this. A polymerase sits on a strand, reads one base, writes one base, and moves one step along. Biology found the design first.
+
+Now the result that changed everything. Turing showed that you can build one such machine whose rule table lets it imitate any other. Give it a description of another machine on its tape, and it will behave like that machine. That is called universality, and every computer you have used is universal in this sense.
+
+[B] Why should that matter to someone building computers from molecules?
+
+Because of what it rules out. If every universal machine can imitate every other, then no new kind of computer can compute anything that an old one could not. Not a quantum computer. Not a DNA computer. Changing the substrate never changes what is computable. It changes four things only: how fast, how cheap, how dense, and how much energy. So when someone tells you DNA computing will do something that silicon cannot do in principle, they are mistaken. The honest case for molecules is always about cost. That is why this course keeps handing you numbers.
+
+Second idea: cost. Computer scientists measure cost by asking how the number of steps grows as the problem gets bigger. And there is one dividing line that matters more than any other.
+
+On one side are problems where the steps grow like a power of the size: the size squared, say, or cubed. Double the problem, and the work goes up four times, or eight. That is called polynomial growth, and such problems are considered tractable. Sorting a list is like that. Multiplying matrices is like that.
+
+On the other side are problems where the steps grow exponentially. Add one more item, and the work doubles. Add ten, and it goes up a thousand times. Add a hundred, and no computer that could ever be built will finish.
+
+There is a famous family of problems that seem to sit on the wrong side of that line, yet have a strange property. If someone hands you an answer, you can check it quickly. Finding the answer is what seems to take forever. That family is called NP. Whether finding is truly harder than checking is the great open question known as P versus NP.
+
+Now Adleman. His puzzle belonged to that family. Take a set of cities with one-way roads between some of them. Is there a route that starts at one given city, ends at another, and visits every city exactly once?
+
+His approach was beautifully simple. Give each city a random DNA sequence. Give each road a sequence that is half the complement of one city and half the complement of the next, so that it acts as a splint joining them. Mix everything in a tube. In seconds, the strands assemble themselves into every possible route, a vast number of each. Then filter. Keep only the strands that start and end at the right cities. Keep only those of the right length. Keep only those that contain every city. If anything is left, the answer is yes.
+
+He did it for seven cities. The assembling took moments. The filtering took about a week at the bench.
+
+[B] That sounds like a triumph. A tube tried every route at once.
+
+It did, and that is exactly the trap. Look at how he beat the exponential. He did not find a cleverer recipe. He made every candidate, physically, and paid for each one in molecules. For seven cities, that is nothing. But the number of routes grows faster than exponentially with the number of cities. Within a year, the computer scientist Juris Hartmanis ran the arithmetic. For two hundred cities, the DNA required would weigh more than the Earth.
+
+So here is the lesson, and I would like it never to leave you. Parallelism buys you a constant factor. It can be a magnificent factor: a million million million molecules working at once. But it is a fixed number, and an exponential eats any fixed number for breakfast. Massive parallelism does not turn an intractable problem into a tractable one. It moves the wall a little further out.
+
+That is why the first dream of DNA computing faded. And it is why the field that came after stopped trying to out-search silicon and started asking a different question: what can molecules compute in places where silicon cannot go?
+
+[B] Then is parallelism worthless?
+
+Not at all. It is priceless, for the right shape of problem. So let me give you the tool for telling shapes apart. Every computation has a width and a depth.
+
+Width is how much can be done at the same moment, because the pieces do not depend on each other. Depth is how many stages must happen one after another, because each needs the result of the one before.
+
+Parallel hardware helps with width, and does nothing for depth. There is an old rule about this, called Amdahl's law. If even five percent of a job must be done in sequence, then no amount of parallel hardware, not even an infinite amount, can make the job more than twenty times faster.
+
+Now look at the operation at the heart of AI: a matrix times a vector. Say the matrix is a thousand by a thousand. That is a million multiplications, and not one of them depends on another. Pure width. Then each row's products must be added up. You can add a thousand numbers in pairs: five hundred sums, then two hundred and fifty, and so on. That takes ten rounds. So the whole thing is a million operations wide and about eleven stages deep.
+
+That is the shape that suits a massively parallel machine: enormously wide, and very shallow. Adleman's problem was the wrong shape. A layer of a neural network is the right one.
+
+So carry this forward. For a substrate where each step takes minutes, sequential depth is the scarce resource, and width is nearly free. Every time you meet a proposal for molecular computing, ask for its depth.
+
+Three sentences. Every universal computer can imitate every other, so a new substrate changes only speed, cost, density and energy, never what is computable. Parallelism multiplies your power by a fixed factor, which cannot beat exponential growth, and that is why Adleman's method stopped at small puzzles. Parallelism pays when a computation is wide and shallow, as a matrix times a vector is, so for slow molecules the thing to watch is depth.
+
+[B] Questions. One: what does universality rule out for any new kind of computer? Two: why could Adleman's method not scale, even though a tube holds so many molecules? Three: a matrix a thousand by a thousand multiplies a vector. How wide is that computation, and roughly how deep?
+
+---
+
+=== 2.4 ===
+# 2.4 The analog comeback: why AI reopened the question
+
+By the year two thousand, analog computing was a closed chapter. The precision bill had settled the matter. Twenty years later, some of the largest chip companies in the world were building analog computers again. What changed?
+
+Two things changed at once: what chips could no longer do, and what we wanted them for.
+
+Quick recall. Roughly where do the analog and digital cost curves cross? And what is the hybrid strategy?
+
+They cross at around six to eight bits. And the hybrid strategy is to compute a little in analog, restore the signal to clean levels, and repeat.
+
+Begin with what chips could no longer do. For thirty years, making transistors smaller also made them faster and less power-hungry, all together. That happy arrangement ended in the mid two-thousands. Transistors kept shrinking, but they stopped getting cooler. Since then, power has been the limit on almost everything.
+
+Now what we wanted. Neural networks arrived, and they changed the workload. Two facts about them matter here, and you will meet both properly in phase three. First, nearly all the work is one operation: multiply a big grid of numbers, the weights, by a list of numbers, the inputs, and add up each row. A matrix times a vector. Second, a trained network does not need precise arithmetic. Four to eight bits is plenty.
+
+Put that next to the last lesson. Low precision, and one simple operation repeated endlessly. That is the corner of the map where analog wins.
+
+There was a third fact. In a digital chip running a neural network, most of the energy is not spent on arithmetic. It is spent on fetching the weights from memory and carrying them to the arithmetic. The von Neumann bottleneck again.
+
+[B] So the idea is to do the arithmetic in analog. How do you multiply a matrix by a vector with a circuit?
+
+With two laws you learned in your first physics course, and this is one of the prettiest ideas in engineering.
+
+Picture a grid of wires: a set running left to right, and a set running top to bottom, like a street map. At every crossing, connect the two wires through a tiny resistor. And make each resistor adjustable, so you can set how easily it conducts.
+
+Now put a voltage on each horizontal wire. Those voltages are your input numbers. At each crossing, current flows down into the vertical wire. How much? Ohm's law: the current is the voltage times the conductance. So each crossing has just multiplied an input by a stored number. That stored number, the conductance, is a weight.
+
+And the vertical wire collects the current from every crossing along its length. Kirchhoff's law says currents joining at a wire simply add. So at the bottom of each vertical wire, you read a current that is the sum of inputs times weights. That is one row of the matrix product.
+
+Every vertical wire does that at the same instant. So the whole matrix times the whole vector happens in one step, in the time it takes the currents to settle. And notice where it happened: in the memory itself. The weights never moved. Memory and arithmetic are the same piece of hardware. That is called in-memory computing.
+
+Ohm's law multiplies. Kirchhoff's law adds. The grid is the matrix.
+
+[B] If it is that elegant, why isn't every AI chip built this way?
+
+Because the precision bill still has to be paid, and here it arrives as four separate invoices.
+
+One: the devices are not identical. Two resistors made to the same recipe differ by a few percent. So the weight you stored is not quite the weight you meant.
+
+Two: they drift. A conductance you set today has shifted by next week.
+
+Three: each device can hold only so many distinguishable levels. In practice, about four to six bits.
+
+Four, and the largest: the edges. The inside of the grid is analog, but the rest of the computer is digital. So at every input you need a converter from digital to analog, and at every output a converter back. Those converters take most of the chip's area and most of its energy. The beautiful grid in the middle is cheap. The border crossings are expensive.
+
+The cleverest response to the first three does not fix the hardware at all. It fixes the training. While the network is being trained, in software, you deliberately add noise that resembles the hardware's own flaws. The network learns weights that still work when they are a little wrong. This is called hardware-aware training, and it is a general principle worth keeping: if you cannot make the machine precise, teach the program to tolerate the machine.
+
+Where does all this stand? Research chips with millions of these devices have run real networks for speech and images. Running a trained network on them works. Training on them is much harder, and the reason belongs to phase three: training needs tiny, precise, repeatable adjustments to each weight, and these devices do not adjust precisely.
+
+Two cousins deserve one sentence each. Photonic chips do the same matrix arithmetic with light in place of current. And neuromorphic chips imitate the brain's spikes, staying silent and spending nothing when nothing is happening.
+
+Now look at what you have just learned, with a test tube in mind.
+
+A weight stored as a physical quantity. In the grid, a conductance. In a tube, a concentration.
+
+Multiplication done by a law of physics. In the grid, Ohm's law. In a tube, mass action: the rate of a reaction is proportional to the product of two concentrations.
+
+Addition done for free where things merge. In the grid, currents in a wire. In a tube, identical molecules pooling.
+
+It is the same architecture. And so it inherits the same four invoices. Variability becomes pipetting error and strand quality. Drift becomes degradation and leak. The limited number of levels is your three to five bits. And the expensive border crossings are synthesis on the way in and sequencing on the way out.
+
+Which means the remedies carry over as well. Tolerate the machine in training. Restore signals at intervals. And cross the border as rarely as you can.
+
+The engineers who build analog chips have spent fifteen years on the problems you are about to meet. Their literature is one of the most useful things you can read, and almost nobody in molecular computing reads it.
+
+Three sentences. Analog came back because power became the limit and neural networks need only one operation at low precision. A grid of adjustable resistors multiplies a matrix by a vector in a single step, inside the memory, with Ohm's law multiplying and Kirchhoff's law adding. Its troubles are variability, drift, few levels, and costly converters at the edges, and a tube of DNA has the same architecture, the same troubles, and the same remedies.
+
+[B] Questions. One: in the grid of wires, what plays the part of the input, the weight, and the output? Two: which of the four invoices is the largest, and why? Three: translate each of the four into its test tube equivalent.
+
+---
+
+=== 2.5 ===
+# 2.5 Mortal computation: machines that learn in their own physics
+
+You can copy a program from one laptop to another, and it will run identically. That seems so natural that nobody asks what it costs. In twenty twenty-two, Geoffrey Hinton asked, and his answer was: nearly everything. We pay for that convenience with almost all the energy a computer uses. And there is another kind of machine that refuses to pay.
+
+Quick recall. In a grid of adjustable resistors, which law does the multiplying, and which does the adding?
+
+Ohm's law multiplies. Kirchhoff's law adds.
+
+Here is Hinton's argument, in four steps.
+
+Step one. In ordinary computing, software is separate from hardware. The same program gives the same result on any machine. He calls that immortal computation, because the knowledge in the program outlives any piece of hardware. If the machine dies, you load the program onto another.
+
+Step two. That separation has a price. For the same program to behave identically on a billion chips, every transistor on every chip must behave as designed. That takes extreme precision in manufacturing. And it takes signals driven hard, far above the noise, so that no component's quirks ever show. You saw that price in the last two lessons: it is the cost of being digital.
+
+Step three. Now imagine giving it up. Let every device be a little different from every other. Let the components be sloppy, cheap, perhaps even grown instead of manufactured. Run them at low power, down where their individual quirks do show. And then let learning find a set of weights that works on this one device, quirks and all. You would have a computer that is far cheaper and far more frugal.
+
+Step four, the catch. The knowledge in that machine is welded to its hardware. The weights that work on this device are wrong for the one beside it. You cannot copy them across. When the hardware dies, what it knew dies with it. Hinton calls that mortal computation. And you own an example. It is your brain: twenty watts, unreliable parts, and no way to copy its contents out.
+
+[B] If you cannot copy the weights, how does knowledge ever get from one mortal machine to another?
+
+The slow way. By teaching. One machine shows the other its answers to many questions, and the second adjusts itself until it gives the same answers. Engineers call this distillation. You and I call it school. And notice how inefficient it is. A digital model can be copied in seconds, complete. A mortal one has to be taught from the outside, an example at a time.
+
+There is a second catch, and it is the one that concerns us. How does a mortal machine learn in the first place? The standard method, backpropagation, which you will meet in phase three, needs an exact mathematical description of what the hardware does on the forward pass. But the whole point here is that you do not have one. Each device is different, and you never measured it.
+
+So mortal computation needs learning methods that work without an exact model of the hardware. That is an active research area, and there are two broad answers.
+
+The first: find learning rules that use only information available on the spot, inside the device, with no global model. Hinton has proposed one. There are others, and lesson three point seventeen surveys them.
+
+The second is a compromise, and it is the one to remember, because it is practical today. It is called physics-aware training, from Peter McMahon's group at Cornell in twenty twenty-two. Here is the loop. Feed an input into the real physical system, and measure what really comes out, with every imperfection included. Then work out how to adjust the parameters using a software model of the system. The model does not have to be exact. It only has to be good enough to point in roughly the right direction, because the real system corrects the picture on every pass. Adjust, and go again.
+
+They showed it on three completely different systems: one optical, one mechanical, which was a vibrating metal plate, and one electronic. All three learned to classify sounds or images. The message was that almost any physical system with knobs you can turn, and outputs you can measure, can be trained as a neural network.
+
+Why not simply train a simulation and copy the result to the hardware? Because simulations are always a little wrong, and small errors compound through layers. That mismatch has a name: the gap between simulation and reality. Physics-aware training closes it by keeping the real system in the loop.
+
+[B] So is a tube of DNA mortal or immortal?
+
+That is the question I most wanted you to ask, because the answer is unusual. It is both, and I do not know of another computing substrate of which that is true.
+
+Think about what a DNA computer consists of. First, a set of sequences: which strands exist, and what each one binds to. Second, a set of amounts: how much of each strand is in the tube, and what state each is in.
+
+The sequences are immortal. DNA is the one material in the world that comes with its own exact copying machine. A polymerase will duplicate a sequence a billion times, and the copies are, for practical purposes, perfect. You can send the sequence as a text file to a company on another continent, and they will make it.
+
+The amounts are mortal. The exact concentrations in your tube, with your pipetting errors and your batch of strands, belong to that tube alone. Split the tube and you have halved everything. Prepare a second tube from the same recipe, and it is a slightly different computer.
+
+So a DNA computer has an immortal part and a mortal part, and here is the design insight: you get to choose which knowledge goes in which.
+
+Put knowledge in the sequences, and it is permanent, copyable, and expensive to change, because changing it means synthesising new strands. That is how storage works. It is also how BINND's kind of design works: the intelligence is in which sequences were chosen.
+
+Put knowledge in the concentrations, and it is cheap to change, a matter of adding a little more of something. But it is fragile, it is local to one tube, and it cannot be copied. That is how the weights of DNA neural networks have been stored.
+
+Evolution uses both, by the way. A genome is the immortal part. The state of a cell is the mortal part. And a great deal of biology is about moving information between the two.
+
+Three sentences. Digital computing is immortal because software is separate from hardware, and it pays for that with precision and power. Mortal computation gives up copying to gain efficiency, and it needs learning methods that work without an exact model of the device, such as physics-aware training with the real system in the loop. A DNA computer is both at once: its sequences can be copied exactly, its concentrations cannot, and choosing which knowledge lives where is a design decision.
+
+[B] Questions. One: what do we pay for the ability to copy a program between machines? Two: in physics-aware training, what does the real system do, and what does the software model do? Three: a DNA computer holds knowledge in two forms. Which can be copied exactly, and which cannot?
+
+---
+
+=== 5.6 ===
+# 5.6 Digital circuits in a test tube, and the scaling wall
+
+In twenty eleven, a tube of DNA at Caltech computed the square root of a four-bit number. It took a hundred and thirty different strands, and several hours. It was, by a wide margin, the largest molecular circuit anyone had built. Fifteen years later, nobody has built a well-mixed circuit a hundred times larger. This lesson is about how that circuit worked, and why the next factor of a hundred has been so hard.
+
+Quick recall. What does it mean for a chemical computation to be rate-independent?
+
+Its final answer is the same whatever the reaction rates are. Only the amounts matter, not the speeds.
+
+Back in lesson one point one, I scored the seesaw gate against the five tests for a logic family and promised you the mechanics. Here they are.
+
+A seesaw gate has three ingredients in the tube. The gate itself: a base strand with an output strand sitting on it. A threshold: a similar complex with a longer toehold, so that it reacts faster. And fuel: a free strand that can sit on the same base.
+
+Now an input strand arrives. Two things compete for it. The threshold grabs it faster, and swallows it for good. So at first, input just disappears. Only when the threshold is used up does input start reaching the gate.
+
+When it does, the input displaces the output strand and takes its place on the base. One in, one out. Then a fuel strand displaces the input, which floats away, free to find another gate and release another output. One input strand can release many outputs. The name comes from that back and forth: strands going on and off the same base like children on a seesaw.
+
+So: threshold, then catalytic amplification. Inputs below the threshold produce nothing. Inputs above it produce the full output. A sloppy signal goes in, a clean one comes out.
+
+[B] That gives you one kind of gate. How do you get AND, OR and NOT from it?
+
+AND and OR come from a single change: the threshold level. Let two inputs feed one gate. Their concentrations add, because both are converted to the same strand. If the threshold is set a little below one unit, either input alone gets through. That is OR. If it is set a little above one unit, you need both. That is AND. Same molecules, a different amount of threshold. You program the logic with a pipette.
+
+NOT is the awkward one. A NOT gate must produce output when its input is absent. But in chemistry, absence does nothing. No strand, no reaction. And you cannot distinguish a signal that is zero from a signal that has not arrived yet.
+
+The solution is called dual-rail logic. Represent every bit with two strands. One means: this bit is one. The other means: this bit is zero. Exactly one of the pair is present. Now a NOT gate is nothing but a relabelling: swap the two. No chemistry at all. The price is that every signal, and every gate, is doubled.
+
+With those pieces, Lulu Qian and Erik Winfree built circuits of increasing size, ending with the square root circuit. They also wrote a compiler: you describe the logic, and it gives you the strands. A later version of the work showed you could even use cheap, unpurified strands.
+
+It scaled as far as it did for two reasons. Every layer restored its signal. And every gate was the same simple motif, so there was nothing new to debug as the circuit grew.
+
+Then it hit a wall. In fact, six walls, and you should know each one, because most of the field's research since has been an attempt to get past one or another.
+
+Wall one: leak. Now and then, a gate releases its output with no input present. Each gate leaks only a little. But every gate you add is another source, and the leaked strands are amplified downstream like any signal. Leak grows with the size of the circuit.
+
+Wall two: sequence space. Every signal needs its own sequence, distinct from all the others. The number of twenty-letter sequences is astronomical. The number that can share a tube without sticking to each other is not.
+
+Wall three: speed. This one is subtle. There is a limit on how much DNA you can have in a tube in total. So the more species you add, the lower each concentration must be. And a reaction between two species slows in proportion as they get more dilute. A bigger circuit is a slower circuit. Silicon has nothing like that.
+
+Wall four: quality and cost. Every synthesised strand comes with a fraction of faulty copies. More strands means more faults and more money.
+
+Wall five: it runs once. The fuel is consumed. There is no reset, so there is no loop, no clock and no second run.
+
+Wall six: you cannot see inside. A fluorescence experiment follows a handful of signals. When a hundred-strand circuit gives the wrong answer, finding out why is slow, painful work.
+
+[B] Six walls sounds like a verdict. Is it?
+
+It is a to-do list, and every item has someone working on it.
+
+For leak: designs with built-in redundancy, so that a false output needs several unlikely accidents to happen together. That is von Neumann's idea from lesson one point nine, in base pairs.
+
+For speed and for sequence space at once: stop mixing. Tether the gates next to each other on a scaffold. Then neighbours react quickly whatever else is in the tube, and the same sequences can be reused in different places. That is the subject of lesson five point fifteen.
+
+For running once: heat recharging, from twenty twenty-five, which you will meet in lesson five point ten.
+
+For sharper behaviour and sustained operation: enzymes.
+
+And for sequence space, from the other direction: predict which sequences will stick to which, well enough to choose a large set that will not. That is what a binding predictor is for. It is a design-rule checker for sequence space, and it is the reason a paper about a neural network belongs in a lab that builds molecular computers.
+
+One more thought. Notice that walls two and three are not about DNA at all. They are about the well-mixed tube: about having no positions. The moment molecules have places to be, both walls move. That observation organises most of what comes next.
+
+Three sentences. A seesaw gate restores its signal with a threshold followed by catalytic amplification, sets AND or OR by the threshold level, and avoids NOT by carrying every bit on two strands. That design reached a hundred and thirty strands in twenty eleven, and then met six walls: leak, sequence space, dilution, strand quality, single use, and poor visibility. Each wall has a line of research aimed at it, and two of them come from the well-mixed tube and not from DNA.
+
+[B] Questions. One: in a seesaw gate, what does the threshold do, and what does the fuel do? Two: why is a NOT gate hard in chemistry, and how does dual-rail logic get round it? Three: name the six walls, and say which two would move if molecules had positions.
+
+---
+
+=== 5.15 ===
+# 5.15 Beyond the well-mixed tube: enzymes, surfaces, compartments and cells
+
+A yeast cell keeps tens of thousands of different kinds of molecule working in a single compartment, all at once, without descending into chaos. The largest circuits we have built in a test tube manage a few hundred. What does the cell have that the tube does not?
+
+It has at least four things, and each one is a way out of the well-mixed tube. This lesson takes them in turn.
+
+Quick recall. What is the tension between recharging a circuit with heat and having it learn?
+
+Heat returns the circuit to its starting state, and a learned memory is a departure from the starting state. So the memory has to live somewhere that heat does not erase.
+
+First, be clear about why the stirred tube is the least scalable way to build a computer. In a well-mixed solution, every molecule can meet every other. So every pair is a possible unwanted reaction. Nothing has an address except its sequence. And because molecules must find their partners by wandering, everything slows as it gets more dilute. Those were walls two and three from lesson five point six.
+
+Way out number one: enzymes. Strand displacement, with no enzymes, runs downhill and stops. Add enzymes, and you can keep a system running. The best-developed toolkit uses three. A polymerase, which makes new strands from templates. A nicking enzyme, which cuts them free. And an exonuclease, which steadily destroys them. Now you have production and degradation going on continuously, like a flow reactor with a feed and a drain. Signals rise when they are being made and fall when they are not. You can build oscillators and switches that keep going for hours.
+
+Enzymes also give sharper thresholds. In twenty twenty-two, a Franco-Japanese team led by Anthony Genot and Yannick Rondelez used that toolkit to build neurons with adjustable weights and biases. One neuron computed a majority vote over ten input bits. Two layers together carved out a region that no single layer can, which is the mark of a true multilayer network. And they ran the whole thing in droplets the size of a cell.
+
+The price of enzymes is delicacy. They need the right buffer and temperature, they age, and they vary from batch to batch.
+
+Way out number two: give molecules a position. Take a flat sheet of folded DNA, an origami, and fix the gates onto it side by side, a few nanometres apart. Now a signal released by one gate reaches its neighbour almost at once, because the neighbour is right there. What matters is no longer the concentration in the tube. It is the distance on the sheet. A group at the University of Washington showed this in twenty seventeen, with signals passing along tethered gates like a row of falling dominoes.
+
+Two things follow. Speed no longer depends on how dilute the tube is. And sequences can be reused. The same gate sequence can appear at ten different places and mean ten different things, because where it is tells you what it is. That is how a chip gets billions of wires out of one kind of metal.
+
+[B] That is what you meant in phase two by an address being a place and not a sequence.
+
+Exactly that. And the third way out takes it further.
+
+Way out number three: compartments. Put the reaction in droplets, or in gel beads, or in porous particles like the dendricolloid from your lab. Each compartment is its own small computer. Molecules in one do not meet molecules in another. So you can run a million different computations in a million droplets, with the same sequences in each.
+
+Compartments bring two consequences from phase two. In a tiny volume, a signal is carried by few molecules, so the energy cost per operation falls enormously. And for the same reason, counting noise comes back. You are trading the errors of the bulk for the errors of small numbers.
+
+The open engineering problem is communication. Isolated droplets are a million separate calculators. To make them one computer, they must exchange signals in a controlled way. That is a problem in transport, and transport is your subject.
+
+Way out number four: the cell itself. Living cells have been made to compute, in three styles worth knowing.
+
+Analog. In twenty thirteen, a group at MIT built gene circuits that add, and take ratios, using only three genes, by working with graded signals instead of on and off. A digital design for the same job would need many more parts.
+
+Perceptron-like. In twenty twenty-two, a group in Israel built gene circuits in bacteria that take weighted sums and apply thresholds.
+
+And winner-take-all, in twenty twenty-four, from Michael Elowitz's lab. Not with DNA strands, but with designed proteins, inside mammalian cells. The same architecture as the Caltech network from lesson five point eight, in a different chemistry.
+
+So here is what the cell has that the tube lacks.
+
+Recognition beyond base pairing. Proteins recognise each other by shape and charge, which gives a far larger vocabulary of specific partners than twenty-letter sequences can.
+
+Location. Membranes, scaffolds and compartments mean that most molecules never meet most others.
+
+Proofreading. The cell spends energy to check its own work, as you heard in lesson one point nine.
+
+And turnover. Everything is continuously made and destroyed, so mistakes are flushed away instead of piling up.
+
+Recognition, location, proofreading, turnover. Each of the four ways out in this lesson borrows one or two of those.
+
+[B] Then is the well-mixed tube a dead end?
+
+It is a starting point, and a very good one, because it is the simplest system in which the ideas can be tested cleanly. But I will say this plainly. Scale, if it comes, will come from space: from giving molecules places to be. The stirred tube is to molecular computing roughly what a breadboard is to electronics. You learn on it. You do not ship it.
+
+Three sentences. The well-mixed tube is the least scalable architecture, because everything can meet everything and dilution slows it all down. Enzymes give sustained dynamics and sharp thresholds, tethering gives speed and reusable sequences, compartments give many independent computers, and cells show all of these working together. What biology has that tubes lack is recognition beyond base pairing, location, proofreading and turnover.
+
+[B] Questions. One: what do enzymes add to a molecular circuit, and what do they cost? Two: why does tethering gates to a surface allow sequences to be reused? Three: name the four things a cell has that a well-mixed tube lacks.
+
+---
+
+=== 6.4 ===
+# 6.4 The interface and the clock
+
+Imagine a processor a million times faster than any ever built, with one flaw: each number takes a day to get into it, and a day to get out. How useful is it? For almost everything, not at all. For one kind of job, it is still the best machine in the world. This lesson is about telling those jobs apart, because that processor is a fair cartoon of a molecular computer.
+
+Quick recall. What is the test to apply to any proposal for a hybrid machine, part electronic and part molecular?
+
+Ask which step is the molecular step, and whether, in the all-electronic version, that step is the bottleneck. If it is not, the molecular version has nothing to win.
+
+A molecular computer has three interfaces with the rest of the world: writing, reading, and the clock. Take them in turn.
+
+Writing: getting information into molecules. There are four ways, and they differ enormously in cost and delay.
+
+The first is synthesis. You specify a sequence, and a company makes it, one base at a time. This is the most flexible way, and the most expensive. You pay by the base, and you wait days. Strands made in large mixed pools on a chip are far cheaper per base, but you get tiny amounts of each, all mixed together.
+
+The second is enzymatic synthesis: making DNA with enzymes in place of the standard chemistry. It is advancing quickly, and it is not yet the norm.
+
+The third is the one to watch: do not synthesise at all. Start with a stock of ready-made pieces, and write information by combining them, or by marking them. A group in China showed a striking version in twenty twenty-four. They wrote data by adding chemical marks, methyl groups, at chosen positions on prefabricated DNA, the way a printer sets movable type. They reported three hundred and fifty bits written in a single reaction.
+
+The fourth is simply dispensing. If the strands exist already, writing a value means delivering the right amount. A liquid-handling robot is a writing device, accurate to a few percent.
+
+So the principle for writing is: synthesise once, and reuse. Everything that can be made from stock parts should be.
+
+Reading: getting information out. Three ways.
+
+Fluorescence. A strand releases a dye, and the tube glows. You get an answer in seconds, continuously, while the reaction runs. But only for a handful of signals at a time, because there are only so many colours you can tell apart.
+
+Sequencing. This reads the actual molecules, billions of them, and counts each kind. It is the richest read-out there is. It takes hours, and it uses up the sample.
+
+Nanopores. A strand is pulled through a tiny hole and read as it passes. Fewer molecules than a big sequencer, but the reads stream out as they happen. The NC State engine was read this way.
+
+So for reading you choose between fast and narrow, or slow and wide.
+
+[B] And the clock? A tube does not have one.
+
+That is the third interface, and in some ways the most interesting. A silicon chip has a crystal that ticks billions of times a second, telling every part when to move. A tube has nothing. So what steps a molecular computation along?
+
+Whatever adds the next thing, or changes the conditions. A robot that pipettes in the next instruction strands. A thermal cycler that heats and cools. A pump that pushes fluid through a channel. That device is the clock, and its speed is the clock rate.
+
+So how fast can it tick? A thermal cycler takes a minute or two per cycle. Heat recharging takes minutes. A pipetting step, with mixing and waiting, takes minutes. Call it a minute per tick, on a good day. Against a billion ticks a second in silicon.
+
+Now you see why I began with that cartoon. A molecular computer may do a vast amount inside one tick. But it ticks about once a minute, and getting data in and out costs hours and dollars.
+
+From that follow three design rules, and these are what I most want you to keep from this lesson.
+
+Rule one: few, fat steps. Every tick is expensive, so make each one do as much as possible. A program of ten steps, each touching a million million molecules, suits this machine. A program of a million small steps does not.
+
+Rule two: read rarely. Reading is the slowest and most costly thing you can do. So do not read after every step. Let the molecules carry on, and read once, at the end, or at a few checkpoints.
+
+Rule three: keep the state in the molecules. Between one step and the next, the intermediate result should stay in the tube, as molecules. The moment you take it out to a computer and put it back, you have paid for a read and a write, and you have lost whatever advantage you had.
+
+Few fat steps. Read rarely. Keep the state in the molecules.
+
+[B] You keep talking about cost. Is there a way to actually put a number on a design?
+
+There is, and hardly anyone in the field does it, which is an opening for you. Write a cost model with two terms.
+
+The first term is cost per cycle: what does one tick of the clock cost, in reagents, robot time and elapsed minutes? Multiply by the number of cycles.
+
+The second is cost per molecule: what did it cost to make the molecules, divided by how many useful operations each one performs before it is spent? If a strand is used once, that term is high. If it is recharged and used a hundred times, it falls a hundredfold.
+
+Add the reading and writing at the two ends. Then divide the total by the number of useful operations. That gives a figure in dollars per operation, and another in seconds per operation, that you can set beside a chip.
+
+Almost certainly the first figures you compute will be terrible. That is fine. The value is in seeing which term dominates, because that term is the thing to work on. For most designs today, it is writing.
+
+One last point, and it changes how you should think about the lab. The robot is not an accessory to the computer. The robot is part of the computer. It is the clock, it is the writing device, and often it is the bus that carries material from place to place. So the automation is not something to add after the chemistry works. It belongs in the design from the first day. A molecular computer is a chemical process with a control system, and you know how to design those.
+
+Three sentences. A molecular computer meets the world through writing, reading and a clock, and all three are slow: days to synthesise, hours to sequence, about a minute per tick. So design for few fat steps, read rarely, and keep the state in the molecules between steps. Put a cost on every design, per cycle and per molecule, and treat the robot as part of the computer.
+
+[B] Questions. One: name the four ways of writing information into molecules, and say which one avoids synthesis. Two: what plays the part of the clock in a molecular computer, and roughly how fast does it tick? Three: state the three design rules.
+
+---

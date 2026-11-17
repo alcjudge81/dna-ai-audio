@@ -1,0 +1,57 @@
+# 2.5 Mortal computation: machines that learn in their own physics
+
+You can copy a program from one laptop to another, and it will run identically. That seems so natural that nobody asks what it costs. In twenty twenty-two, Geoffrey Hinton asked, and his answer was: nearly everything. We pay for that convenience with almost all the energy a computer uses. And there is another kind of machine that refuses to pay.
+
+Quick recall. In a grid of adjustable resistors, which law does the multiplying, and which does the adding?
+
+Ohm's law multiplies. Kirchhoff's law adds.
+
+Here is Hinton's argument, in four steps.
+
+Step one. In ordinary computing, software is separate from hardware. The same program gives the same result on any machine. He calls that immortal computation, because the knowledge in the program outlives any piece of hardware. If the machine dies, you load the program onto another.
+
+Step two. That separation has a price. For the same program to behave identically on a billion chips, every transistor on every chip must behave as designed. That takes extreme precision in manufacturing. And it takes signals driven hard, far above the noise, so that no component's quirks ever show. You saw that price in the last two lessons: it is the cost of being digital.
+
+Step three. Now imagine giving it up. Let every device be a little different from every other. Let the components be sloppy, cheap, perhaps even grown instead of manufactured. Run them at low power, down where their individual quirks do show. And then let learning find a set of weights that works on this one device, quirks and all. You would have a computer that is far cheaper and far more frugal.
+
+Step four, the catch. The knowledge in that machine is welded to its hardware. The weights that work on this device are wrong for the one beside it. You cannot copy them across. When the hardware dies, what it knew dies with it. Hinton calls that mortal computation. And you own an example. It is your brain: twenty watts, unreliable parts, and no way to copy its contents out.
+
+[B] If you cannot copy the weights, how does knowledge ever get from one mortal machine to another?
+
+The slow way. By teaching. One machine shows the other its answers to many questions, and the second adjusts itself until it gives the same answers. Engineers call this distillation. You and I call it school. And notice how inefficient it is. A digital model can be copied in seconds, complete. A mortal one has to be taught from the outside, an example at a time.
+
+There is a second catch, and it is the one that concerns us. How does a mortal machine learn in the first place? The standard method, backpropagation, which you will meet in phase three, needs an exact mathematical description of what the hardware does on the forward pass. But the whole point here is that you do not have one. Each device is different, and you never measured it.
+
+So mortal computation needs learning methods that work without an exact model of the hardware. That is an active research area, and there are two broad answers.
+
+The first: find learning rules that use only information available on the spot, inside the device, with no global model. Hinton has proposed one. There are others, and lesson three point seventeen surveys them.
+
+The second is a compromise, and it is the one to remember, because it is practical today. It is called physics-aware training, from Peter McMahon's group at Cornell in twenty twenty-two. Here is the loop. Feed an input into the real physical system, and measure what really comes out, with every imperfection included. Then work out how to adjust the parameters using a software model of the system. The model does not have to be exact. It only has to be good enough to point in roughly the right direction, because the real system corrects the picture on every pass. Adjust, and go again.
+
+They showed it on three completely different systems: one optical, one mechanical, which was a vibrating metal plate, and one electronic. All three learned to classify sounds or images. The message was that almost any physical system with knobs you can turn, and outputs you can measure, can be trained as a neural network.
+
+Why not simply train a simulation and copy the result to the hardware? Because simulations are always a little wrong, and small errors compound through layers. That mismatch has a name: the gap between simulation and reality. Physics-aware training closes it by keeping the real system in the loop.
+
+[B] So is a tube of DNA mortal or immortal?
+
+That is the question I most wanted you to ask, because the answer is unusual. It is both, and I do not know of another computing substrate of which that is true.
+
+Think about what a DNA computer consists of. First, a set of sequences: which strands exist, and what each one binds to. Second, a set of amounts: how much of each strand is in the tube, and what state each is in.
+
+The sequences are immortal. DNA is the one material in the world that comes with its own exact copying machine. A polymerase will duplicate a sequence a billion times, and the copies are, for practical purposes, perfect. You can send the sequence as a text file to a company on another continent, and they will make it.
+
+The amounts are mortal. The exact concentrations in your tube, with your pipetting errors and your batch of strands, belong to that tube alone. Split the tube and you have halved everything. Prepare a second tube from the same recipe, and it is a slightly different computer.
+
+So a DNA computer has an immortal part and a mortal part, and here is the design insight: you get to choose which knowledge goes in which.
+
+Put knowledge in the sequences, and it is permanent, copyable, and expensive to change, because changing it means synthesising new strands. That is how storage works. It is also how BINND's kind of design works: the intelligence is in which sequences were chosen.
+
+Put knowledge in the concentrations, and it is cheap to change, a matter of adding a little more of something. But it is fragile, it is local to one tube, and it cannot be copied. That is how the weights of DNA neural networks have been stored.
+
+Evolution uses both, by the way. A genome is the immortal part. The state of a cell is the mortal part. And a great deal of biology is about moving information between the two.
+
+Three sentences. Digital computing is immortal because software is separate from hardware, and it pays for that with precision and power. Mortal computation gives up copying to gain efficiency, and it needs learning methods that work without an exact model of the device, such as physics-aware training with the real system in the loop. A DNA computer is both at once: its sequences can be copied exactly, its concentrations cannot, and choosing which knowledge lives where is a design decision.
+
+[B] Questions. One: what do we pay for the ability to copy a program between machines? Two: in physics-aware training, what does the real system do, and what does the software model do? Three: a DNA computer holds knowledge in two forms. Which can be copied exactly, and which cannot?
+
+---
