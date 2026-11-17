@@ -1,0 +1,63 @@
+# 5.8 DNA neural networks I: how a tube computes a weighted sum
+
+In twenty eighteen, a test tube at Caltech looked at a handwritten digit and said which digit it was. No electronics touched the decision. So here is the question for this lesson: where, in that tube, were the weights?
+
+Quick recall. In a seesaw gate, which two operations, one after the other, give you signal restoration?
+
+A threshold, which soaks up input until it is exhausted, followed by catalytic amplification, which turns whatever is left into a full-strength output.
+
+You know from phase three what a neuron has to do. Take several inputs. Multiply each by its own weight. Add the results. Then apply a nonlinearity. Let us build each of those four from strands.
+
+Inputs first. An input is a strand. For now, think of it as present or absent: a one or a zero.
+
+Weights. For each connection, from input number i to neuron number j, you add a dedicated molecule to the tube. Call it a weight molecule. When input i is present, it reacts with that weight molecule and converts it into a product. Now here is the trick. The input is supplied in excess, and the weight molecule is not. So the reaction runs until the weight molecule is used up. The amount of product is set by how much weight molecule you put in. The weight is a concentration. You set it with a pipette.
+
+The sum. Every one of those products, from every input that feeds neuron j, is then converted into the same strand. Call it the sum strand for neuron j. And once they are the same strand, they pool. Their concentrations add. Nobody has to build an adder. This is the junction of two wires from the precision lesson: in analog, addition is free.
+
+So after those two steps, the tube holds a concentration of sum strand equal to the weighted sum of the inputs. That is a dot product, computed by stoichiometry.
+
+[B] That handles positive weights. What about negative ones? A concentration cannot go below zero.
+
+Exactly the right worry, and it shaped the whole history of these networks. The fix is to carry two strands for every signal, one meaning positive and one meaning negative, and let them cancel each other. It works, and it doubles everything. Keep that cost in mind.
+
+The fourth ingredient is the nonlinearity, and you already own it: threshold, then amplify. That is a seesaw gate, used as a neuron's firing rule.
+
+Put those together and you have the first DNA neural network, from Lulu Qian, Erik Winfree and Jehoshua Bruck in twenty eleven. It had four neurons, built from a hundred and twelve different strands. It played a guessing game: answer a few yes-or-no questions about a scientist, and it tells you which of four scientists you have in mind, even if you leave some answers out. It was an associative memory, the kind of network John Hopfield described.
+
+It was a landmark. It also did not grow. For seven years nobody built a much bigger one, and the reason is on the list you just heard. Each neuron needed its own threshold, tuned to the right value. Negative weights doubled the strand count. Every added neuron brought more species, more leak and more crosstalk.
+
+Then in twenty eighteen, Kevin Cherry and Lulu Qian changed the architecture, and that is the real lesson here. They did not build a better neuron. They asked what the network was for. It was for classification: deciding which stored pattern an input most resembles. And for that job you do not need a threshold on every neuron. You only need to know which neuron has the largest sum.
+
+That is called winner-take-all, and here is how they did it.
+
+Step one, as before: for each class, compute a weighted sum. If there are nine classes, you now have nine sum strands at nine different concentrations.
+
+Step two is the new idea. Add molecules that make any two different sum strands destroy each other, pair by pair, one for one. Think of nine piles of chips, and a rule that says: take one chip from each of two piles and throw both away. Keep going. The smaller piles vanish. In the end, one pile has chips left: the one that started largest.
+
+Step three: restore. Whatever survives is amplified to a full-strength output, which lights up a fluorescent reporter for that class.
+
+Notice what that bought. No thresholds to tune. No negative weights. The comparison is done by annihilation, which is a reaction, and chemistry is good at reactions.
+
+And it scaled. The network sorted patterns into as many as nine classes. Each input was a ten-by-ten grid of pixels, so a hundred bits, with each bit standing for one particular strand. Each stored pattern was a set of twenty strands, out of the hundred, tracing a handwritten digit from one to nine. And it gave the right answer even when thirty of the hundred bits had been flipped. The earlier networks had managed four patterns of four strands each.
+
+[B] Then let me ask the phase-three question. In machine-learning terms, what is this thing?
+
+Good. Strip away the chemistry and name it.
+
+It is a single layer. There is no hidden layer. For each class, it takes the dot product of the input with a stored template, and it reports the class with the largest dot product. A statistician would call it a nearest-template classifier. It is a close cousin of the nearest-centroid method you may have met alongside random forests.
+
+And where did the templates come from? From a laptop. The authors took many handwritten examples of each digit, averaged them, and kept the twenty pixels most often switched on. Those twenty became the weight molecules. So the learning happened in software. The tube did the inference.
+
+That is not a criticism. It is a description, and you should be able to give one like it for every network in this phase. Ask four things. How many layers? Where do the weights live? Who computed them? And how long does one answer take?
+
+For this network: one layer. Weights as the presence or absence of weight molecules. Computed in software by averaging. And an answer takes hours, because it is a cascade of bimolecular reactions at nanomolar concentrations.
+
+Add two more facts from the scorecard. It runs once. And it needs a few hundred distinct species for a network that a microcontroller would not notice.
+
+So why does it matter? Because it settled an argument. It showed that a tube of molecules can take a noisy, high-dimensional input and classify it by similarity to a memory. And it showed something about design that I want you to carry into your own work. The jump from four patterns to nine classes of a hundred bits did not come from better chemistry. It came from choosing an architecture that asks the chemistry to do what it is good at: pool, annihilate, amplify. And from dropping what it is bad at: precise thresholds and subtraction.
+
+Three sentences. A DNA neuron stores each weight as the concentration of a weight molecule, gets the sum for free because identical strands pool, and uses threshold and amplification as its nonlinearity. The twenty eighteen winner-take-all network replaced per-neuron thresholds with pairwise annihilation and reached nine classes of hundred-bit patterns. In machine-learning terms it is a single-layer, nearest-template classifier whose weights were computed in software.
+
+[B] Your questions. One: in a DNA neuron, what physical quantity is the weight, and why is the sum free? Two: what did winner-take-all remove from the design, and what reaction replaced it? Three: for the twenty eighteen network, answer the four descriptive questions: how many layers, where the weights live, who computed them, and how long an answer takes.
+
+---

@@ -1,0 +1,83 @@
+# 6.5 Open problems, and how to choose yours
+
+Richard Hamming used to walk into the lunchroom at Bell Labs and ask the chemists: what are the important problems in your field? And then, a week later: why are you not working on them?
+
+This is the last lesson of the core path. It gives you a list of ten open problems in molecular computing, says what a result on each would look like, and then offers a way to choose among them that makes use of what you, in particular, are good at.
+
+Quick recall. When one cycle of your computer takes minutes, what are the three design rules?
+
+Few, fat steps: do as much as possible in each cycle. Read rarely. And keep the state in the molecules between cycles, instead of pulling it out and putting it back.
+
+Ten problems. I will give them in three groups, so they are easier to hold.
+
+The first group is about parts that work. Four problems.
+
+One: predicting cross-binding at scale. BINND covers strands of twenty bases, with a yes-or-no answer, under one kind of assay, and it was trained with twenty-six baits. A result here would be a model that handles any length, predicts strength and speed and not only yes or no, takes salt and temperature as inputs, and stays accurate on sequences unlike anything it was trained on.
+
+Two: circuits you can run again and again. Sixteen rounds is the published mark. A result would be a hundred rounds or more with no drift in the answer.
+
+Three: accurate analog arithmetic. A few percent has been shown for small sums with manual steps. A result would be five or six bits, automatically, through several layers.
+
+Four: compartments you can address. Many small reactors, each with its own contents, that can be made to exchange material on command. This is route seven from the design space: giving molecules a position.
+
+The second group is about learning. Three problems.
+
+Five: error-driven learning in chemistry. A system that makes a prediction, compares it with the truth, and changes itself to do better. A result is simple to state: accuracy that rises on the second pass through the same data.
+
+Six: a training loop with the tube in it. A robot, a reader, a model of the chemistry, and a circuit that recharges. A result would be a DNA network whose weights were found by that loop, and which beats the same network designed from simulation alone.
+
+Seven: computing by settling to equilibrium, for the things AI needs, which are sampling and optimisation. A result would be an equilibrium machine that draws samples from a distribution you chose.
+
+The third group is about whole systems. Three problems.
+
+Eight: AI operations inside storage. Similarity search over a billion records. Retrieval that feeds a model. A result would be an archive that answers a question which the electronic version answers more slowly, or at higher cost, at the same scale.
+
+Nine: a compiler. You hand it a trained network. It hands back the strands, with an estimate of how many species, how long, how much it will cost, and how often it will be wrong. Chips have had this for fifty years.
+
+Ten: benchmarks. The field has no agreed way to say that one molecular computer is better than another. A result would be a small set of standard tasks and a few numbers that everyone reports: operations per litre per second, error per operation, cycles of reuse, cost per answer.
+
+[B] Ten is a menu. How do I order from it?
+
+With three questions, and I will be direct about the third.
+
+First: importance. If you solved it completely, what else would become possible? By that test, problems one, two and five are near the top, because so much else waits on them. Nothing large can be built without predictable binding. Nothing iterative can be built without reuse. And nothing can be called training without error-driven learning.
+
+Second: tractability. Is there a first experiment you could run in three months that would teach you something whichever way it came out? Prefer problems where failure is informative. If a negative result would only tell you that you did it badly, the problem is too far away.
+
+Third: your edge. What do you bring that most people in this field do not?
+
+Look at who is in it. Computer scientists, who think in algorithms and proofs. Biochemists and biophysicists, who think in mechanisms. Very few people who think like a chemical engineer. So consider what that training gives you.
+
+You think in rates and residence times. The dilution law, and the time each step takes, are reactor design problems.
+
+You think in transport. Compartments, exchange between them, and reactions on surfaces are transport problems.
+
+You think in scale-up. Going from one tube to a million droplets is a question your discipline has asked about everything else.
+
+You think in control. A training loop with a tube in it is a control loop.
+
+And you think in process economics. Almost nobody in this field can tell you the cost per operation of their computer. You could.
+
+Put the three questions together, and some problems stand out for you specifically. The benchmark problem, number ten, is unglamorous, important, and made for someone who counts cost per unit. The training loop, number six, is control engineering. Addressable compartments, number four, is transport and reactor design. And the binding predictor, number one, is already under your roof.
+
+[B] And once I have picked? How do I avoid losing two years?
+
+Four habits, each drawn from a paper you have met in this course.
+
+Build the measurement first. BINND did not begin as a neural network. It began as an assay that could measure a hundred and forty-four million pairs. The model was what the measurement made possible. In a young field, whoever can measure something a thousand times faster usually wins.
+
+Keep three things going together: an experiment, a simulation of it, and a learned model. When all three agree, you understand the system. When they disagree, you have found your next paper.
+
+Choose a number and make it move. Rounds of reuse. Bits of accuracy. Species in one pot. Records searched. Progress in engineering is a number going up.
+
+And write down your kill criteria before you start. Decide in advance what result, by what date, would tell you this direction is dead. It is much easier to be honest in advance than afterwards.
+
+There is one more thing, and it comes from the essay on the hardware lottery. You are entering a field whose hardware does not yet exist in the form that would win. That means the ideas that suit it have not been chosen yet. Deep, narrow, precise networks won on silicon because silicon is what there was. Nobody knows what wins on molecules. You are early enough to help decide.
+
+That is the end of the core path. The desk capstone asks you to put it to use: two pages arguing for one architecture, with a resource estimate from the scorecard, a first experiment, and three kill criteria. Then give it to Claude and ask for the review a sceptical computer architect would write.
+
+Three sentences. The open problems fall into parts that work, learning, and whole systems, and the ones most things wait on are predictable binding, reuse, and error-driven learning. Choose by importance, by whether a first experiment would teach you something either way, and by your own edge, which is rates, transport, scale-up, control and cost. Then build the measurement first, keep experiment, simulation and model together, move a number, and set your kill criteria in advance.
+
+[B] Your last three questions. One: which three problems does most of the field wait on, and why those? Two: name four things a chemical engineer brings that this field is short of. Three: what would have to be true, by when, for you to drop the direction you are most excited about today?
+
+---

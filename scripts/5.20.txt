@@ -1,0 +1,57 @@
+# 5.20 DNA storage as a computer's memory
+
+Every computer you have ever used keeps its data in one place and does its thinking in another, and spends much of its time and energy carrying data between the two. DNA storage was invented as the ultimate version of the first place: the coldest, densest, slowest archive there is. This lesson asks what happens if you refuse to carry the data anywhere, and do the thinking inside the archive.
+
+Quick recall. What do the nucleation classifier, the equilibrium computer and a Hopfield network have in common?
+
+In all three, the program is an energy landscape, and the answer is the state the system settles into.
+
+Let us start with storage as plain storage, because you need the pipeline in your head. It has seven steps.
+
+Encode: turn bits into bases, avoiding sequences that are hard to make or read, such as long runs of one letter. Index: give every strand an address, because a pool of strands has no order. Add redundancy: the error-correcting codes from lesson one point eight. Synthesise: make the strands, typically a hundred and fifty to three hundred bases each. Store: dry, cold, and preferably sealed. Access: pull out the strands you want. Read: sequence them, and decode.
+
+Now the scorecard numbers. Density: about two hundred petabytes per gram has been demonstrated, which is a data centre in a sugar cube. Energy to keep it: none. Lifetime: thousands of years if kept cold. Against that, writing is the bottleneck: slow, and far too expensive per bit to compete with tape. And reading takes hours.
+
+So as a memory tier, DNA sits below tape: denser, more durable, slower, and write-once in practice.
+
+[B] How do you get one file out without reading the whole archive?
+
+That is random access, and there are two classic ways. Both are lookups by content, which is why I spent a depth lesson on that idea.
+
+The first is amplification. Every strand in a file carries the same short address sequence at its ends. You add primers that match that address, run a polymerase chain reaction, and only that file gets copied until it swamps everything else. The address is a key, and the reaction is the lookup.
+
+The second is capture. You add a probe strand, fixed to a bead, that binds the address, and you pull the bead out.
+
+Either way, notice what is doing the work: hybridisation, which is specific binding between sequences. And notice the weakness. Each access consumes or alters some of the archive, and wrong strands come along for the ride.
+
+That weakness is where your own lab's line of work begins, so let me tell that story in order.
+
+In twenty twenty, the NC State group showed a way of reading a file that leaves the original alone. Instead of amplifying the stored DNA itself, they attached a promoter to each file, so that an enzyme transcribes the file into RNA. The RNA copy is what gets read. The DNA stays where it is. Reading by copying out, and not by using up.
+
+In twenty twenty-one came two more pieces. One showed that primers which deliberately match several addresses can select groups of files: an operation on the file system, done with chemistry. The other, on which Karishma Matange was first author, argued that chemical stability has to be designed in from the start and not bolted on.
+
+Then in twenty twenty-four, the paper called A primordial DNA store and compute engine, from the Keung and Velev groups together. The files sit on particles about fifty micrometres across, made of cellulose acetate, with a branching, feathery structure that gives them an enormous surface. They named the material a dendricolloid. On it, the DNA survives being dried and rewetted many more times than bare DNA does. From accelerated ageing, they project half-lives of about six thousand years at four degrees Celsius, and about two million years at minus eighteen. Files can be erased and replaced. Reading is by transcription, from a separate promoter for each file, so the DNA is not consumed. The RNA is read directly on a nanopore sequencer. And the RNA can be computed on with enzymes: they solved simplified three-by-three chess and sudoku problems.
+
+Take the word primordial seriously. The claim is not that this beats a hard disk. The claim is that one material now supports the full set of basic operations: store, read without destroying, erase, rewrite, and compute. A system that does all of those is a computer in the plainest sense, however simple.
+
+[B] Then what does computing on stored data look like, concretely? Give me the kinds.
+
+Three kinds have been shown, and they are worth keeping distinct.
+
+Kind one: search by similarity. This came from the University of Washington and Microsoft in twenty twenty-one. Ordinary retrieval needs the exact address. But what if you want the images that look like this one? They trained a neural network to turn each image into a DNA sequence, with one requirement: images that look alike must get sequences that bind each other. Then a query image is turned into a probe strand, and the probe fishes out its neighbours from a pool holding one point six million images. Results were comparable to good software methods. The neural network did not do the search. The neural network designed the molecules so that chemistry could do the search.
+
+Kind two: a program run on every record at once. From David Soloveichik's group in twenty twenty-three. Here, each stored molecule is a small register, a few bits long, with the bits written as the pattern of breaks in one strand of a double helix. An instruction is a set of strands that you add to the tube. Every register in the tube responds at the same time, each according to its own contents. Then you add the next instruction. They ran binary counting, and a cellular automaton known as Rule one hundred and ten, which is capable in principle of any computation at all. The registers were four bits. So: unlimited parallelism across records, a few bits per record, and one step every time you add strands.
+
+Kind three is the newest, and it is from your lab. Ordinary design tries to make strands ignore each other. Suppose instead you want a network of deliberate partial matches: this record should bind these three probes and not those five. To design that, you need to predict binding between sequences that are far from perfect complements, which is exactly where the standard thermodynamic tools are weakest. That is the gap BINND fills. In the twenty twenty-six paper, the model was used to design a small searchable database of storybook characters, where each character's strand binds a chosen set of attribute probes. And they built it, and it worked.
+
+Notice the pattern across kinds one and three. In both, machine learning is not running in the DNA. Machine learning is the design tool that makes the DNA computable. That is a role for AI in this field that needs no breakthrough in molecular hardware, and it is available now.
+
+Now step back and look at this the way a computer architect would. Modern AI systems lean heavily on one operation: given a query, find the closest matches in a very large memory. Attention does a soft version of it inside the model. Retrieval systems do it across whole libraries. In silicon, that operation is limited by how fast memory can be scanned.
+
+DNA storage is a memory in which that operation is built into the physics. Every molecule is compared with the probe at once. It is slow per query and enormous in breadth. So the question for this route is whether there are workloads that want breadth and can wait. Archives are one. Screening a library for everything related to a query is another.
+
+Three sentences. DNA is the densest and most durable memory tier, and the slowest, with writing as its bottleneck. The NC State engine showed store, non-destructive read, erase, rewrite and compute in a single material. Computing on stored data has taken three forms: similarity search with learned encodings, parallel programs on small registers, and designed cross-binding networks, and in two of those three, machine learning is the tool that designs the molecules.
+
+[B] Questions. One: name the seven steps of the storage pipeline. Two: how does reading by transcription differ from reading by amplification, and why does it matter? Three: in the similarity search work, what exactly did the neural network do, and what did the chemistry do?
+
+---

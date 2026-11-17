@@ -1,0 +1,279 @@
+=== 5.8 ===
+# 5.8 DNA neural networks I: how a tube computes a weighted sum
+
+In twenty eighteen, a test tube at Caltech looked at a handwritten digit and said which digit it was. No electronics touched the decision. So here is the question for this lesson: where, in that tube, were the weights?
+
+Quick recall. In a seesaw gate, which two operations, one after the other, give you signal restoration?
+
+A threshold, which soaks up input until it is exhausted, followed by catalytic amplification, which turns whatever is left into a full-strength output.
+
+You know from phase three what a neuron has to do. Take several inputs. Multiply each by its own weight. Add the results. Then apply a nonlinearity. Let us build each of those four from strands.
+
+Inputs first. An input is a strand. For now, think of it as present or absent: a one or a zero.
+
+Weights. For each connection, from input number i to neuron number j, you add a dedicated molecule to the tube. Call it a weight molecule. When input i is present, it reacts with that weight molecule and converts it into a product. Now here is the trick. The input is supplied in excess, and the weight molecule is not. So the reaction runs until the weight molecule is used up. The amount of product is set by how much weight molecule you put in. The weight is a concentration. You set it with a pipette.
+
+The sum. Every one of those products, from every input that feeds neuron j, is then converted into the same strand. Call it the sum strand for neuron j. And once they are the same strand, they pool. Their concentrations add. Nobody has to build an adder. This is the junction of two wires from the precision lesson: in analog, addition is free.
+
+So after those two steps, the tube holds a concentration of sum strand equal to the weighted sum of the inputs. That is a dot product, computed by stoichiometry.
+
+[B] That handles positive weights. What about negative ones? A concentration cannot go below zero.
+
+Exactly the right worry, and it shaped the whole history of these networks. The fix is to carry two strands for every signal, one meaning positive and one meaning negative, and let them cancel each other. It works, and it doubles everything. Keep that cost in mind.
+
+The fourth ingredient is the nonlinearity, and you already own it: threshold, then amplify. That is a seesaw gate, used as a neuron's firing rule.
+
+Put those together and you have the first DNA neural network, from Lulu Qian, Erik Winfree and Jehoshua Bruck in twenty eleven. It had four neurons, built from a hundred and twelve different strands. It played a guessing game: answer a few yes-or-no questions about a scientist, and it tells you which of four scientists you have in mind, even if you leave some answers out. It was an associative memory, the kind of network John Hopfield described.
+
+It was a landmark. It also did not grow. For seven years nobody built a much bigger one, and the reason is on the list you just heard. Each neuron needed its own threshold, tuned to the right value. Negative weights doubled the strand count. Every added neuron brought more species, more leak and more crosstalk.
+
+Then in twenty eighteen, Kevin Cherry and Lulu Qian changed the architecture, and that is the real lesson here. They did not build a better neuron. They asked what the network was for. It was for classification: deciding which stored pattern an input most resembles. And for that job you do not need a threshold on every neuron. You only need to know which neuron has the largest sum.
+
+That is called winner-take-all, and here is how they did it.
+
+Step one, as before: for each class, compute a weighted sum. If there are nine classes, you now have nine sum strands at nine different concentrations.
+
+Step two is the new idea. Add molecules that make any two different sum strands destroy each other, pair by pair, one for one. Think of nine piles of chips, and a rule that says: take one chip from each of two piles and throw both away. Keep going. The smaller piles vanish. In the end, one pile has chips left: the one that started largest.
+
+Step three: restore. Whatever survives is amplified to a full-strength output, which lights up a fluorescent reporter for that class.
+
+Notice what that bought. No thresholds to tune. No negative weights. The comparison is done by annihilation, which is a reaction, and chemistry is good at reactions.
+
+And it scaled. The network sorted patterns into as many as nine classes. Each input was a ten-by-ten grid of pixels, so a hundred bits, with each bit standing for one particular strand. Each stored pattern was a set of twenty strands, out of the hundred, tracing a handwritten digit from one to nine. And it gave the right answer even when thirty of the hundred bits had been flipped. The earlier networks had managed four patterns of four strands each.
+
+[B] Then let me ask the phase-three question. In machine-learning terms, what is this thing?
+
+Good. Strip away the chemistry and name it.
+
+It is a single layer. There is no hidden layer. For each class, it takes the dot product of the input with a stored template, and it reports the class with the largest dot product. A statistician would call it a nearest-template classifier. It is a close cousin of the nearest-centroid method you may have met alongside random forests.
+
+And where did the templates come from? From a laptop. The authors took many handwritten examples of each digit, averaged them, and kept the twenty pixels most often switched on. Those twenty became the weight molecules. So the learning happened in software. The tube did the inference.
+
+That is not a criticism. It is a description, and you should be able to give one like it for every network in this phase. Ask four things. How many layers? Where do the weights live? Who computed them? And how long does one answer take?
+
+For this network: one layer. Weights as the presence or absence of weight molecules. Computed in software by averaging. And an answer takes hours, because it is a cascade of bimolecular reactions at nanomolar concentrations.
+
+Add two more facts from the scorecard. It runs once. And it needs a few hundred distinct species for a network that a microcontroller would not notice.
+
+So why does it matter? Because it settled an argument. It showed that a tube of molecules can take a noisy, high-dimensional input and classify it by similarity to a memory. And it showed something about design that I want you to carry into your own work. The jump from four patterns to nine classes of a hundred bits did not come from better chemistry. It came from choosing an architecture that asks the chemistry to do what it is good at: pool, annihilate, amplify. And from dropping what it is bad at: precise thresholds and subtraction.
+
+Three sentences. A DNA neuron stores each weight as the concentration of a weight molecule, gets the sum for free because identical strands pool, and uses threshold and amplification as its nonlinearity. The twenty eighteen winner-take-all network replaced per-neuron thresholds with pairwise annihilation and reached nine classes of hundred-bit patterns. In machine-learning terms it is a single-layer, nearest-template classifier whose weights were computed in software.
+
+[B] Your questions. One: in a DNA neuron, what physical quantity is the weight, and why is the sum free? Two: what did winner-take-all remove from the design, and what reaction replaced it? Three: for the twenty eighteen network, answer the four descriptive questions: how many layers, where the weights live, who computed them, and how long an answer takes.
+
+---
+
+=== 5.10 ===
+# 5.10 DNA neural networks II: analog accuracy, reuse and learning in the tube
+
+At the start of twenty twenty-five, every DNA neural network ever built shared three weaknesses. Its weights were worked out on a computer. It ran once. And its arithmetic was rough. By the end of that year, each of the three had been attacked in print. This lesson is about what those three papers showed, and just as much about what they did not.
+
+Quick recall. In machine-learning terms, what kind of classifier is the twenty eighteen winner-take-all network, and where did its weights come from?
+
+A single-layer, nearest-template classifier. Its weights came from software, by averaging training examples.
+
+Take the weaknesses one at a time.
+
+First: learning. In September twenty twenty-five, Kevin Cherry and Lulu Qian published a network that learns in the tube. Here is the idea in plain terms. The tube starts with its memory blank. The weight molecules are there, but switched off. During training, you add an example as molecules: the strands for its pattern of bits, together with a strand that says which class it belongs to. A weight molecule is switched on only when its particular input bit and its particular class label are present together. Add another example, and more weights switch on. The memory builds up, example by example, as concentrations.
+
+Then training ends, and you add a test pattern with no label. The network classifies it by winner-take-all, as before, but now using weights that it wrote itself. They trained it on three different sets of hundred-bit patterns.
+
+That is a first, and it matters. The information went from molecular examples into molecular memory with no computer in between.
+
+[B] Is that training, in the sense phase three meant?
+
+No, and being precise about the difference is worth more than the headline.
+
+Think about what gradient descent does. It makes a prediction. It compares the prediction with the right answer. It measures the error. And it changes each weight in the direction that shrinks the error. Then it does that again, a million times.
+
+The DNA network does none of that. It never makes a prediction during training. It never sees an error. What it does is simpler and older: when this input and this label occur together, strengthen the connection between them. That is the rule usually summed up as cells that fire together, wire together. Each example adds to the memory once, and that is all.
+
+So what it learns is, in effect, an average of its examples for each class: the same templates that the twenty eighteen authors computed on a laptop, now computed by the chemistry. It cannot correct a mistake. It cannot improve by seeing the data twice. It cannot learn anything that an average cannot express.
+
+I am not saying that to diminish it. I am saying it so that you can see exactly where the next step is. In lesson three point seventeen, this kind of learning was the last of the nine routes: store the examples and compare. The harder routes, where the system uses its own errors, are still open in chemistry.
+
+Second weakness: running once. A month later, Tianqi Song and Lulu Qian published the answer to that one. The power supply for a DNA circuit is its own strained structure, and once the reactions have run, the strain is gone. Their insight was that heat can put it back. Warm the spent circuit, cool it again, and the strands fold back into their loaded configurations, because those happen to be the ones that form fastest on cooling. The circuit is caught in a trap, in the good sense: it is poised, ready to fire, and stable until an input arrives.
+
+The numbers: circuits with more than two hundred distinct molecular species, both logic circuits and neural networks. Recharged within minutes. At least sixteen rounds of computation, with different inputs in each round.
+
+[B] Why does that matter more than its title suggests?
+
+Because everything iterative needs it. A clock needs it. A program with a loop needs it. And training, of any kind that improves with repetition, needs it. Until this paper, a DNA computer was a firework. Now it is closer to a battery.
+
+But notice a tension, and keep it in your pocket, because it is a research problem. Heat resets the circuit to its starting state. A learned memory is a departure from the starting state. So if you want a network that both learns and recharges, the memory has to live somewhere that heat does not erase. Nobody has shown that yet.
+
+Third weakness: rough arithmetic. In November twenty twenty-five, a group in China led by Xianjin Xiao published a design they call CALCUL. Its target is the accuracy of the weighted sum.
+
+In their scheme, a weight is not a single concentration. It is a ratio between two strands that compete for the same input, which gives a number between zero and one that is much less sensitive to pipetting error. They report weighted sums accurate to within a few percent. Negative weights are handled by letting positive and negative strands annihilate. And they assemble these units into small convolutional and fully connected networks.
+
+Now the honest accounting, which the authors themselves provide. The networks have fewer than thirty parameters. The tasks are tiny: telling two letters or two digits apart on images of about a hundred pixels. A single weighted sum takes up to forty minutes. The nonlinear step, the equivalent of a ReLU, is not a reaction at all. It is a purification with magnetic beads that takes about two hours of incubation, and then a person, or a robot, moves the liquid on. And reset was shown for two rounds.
+
+So CALCUL shows that analog accuracy of a few percent is reachable, which is five or six bits. It does not yet show a network that runs by itself.
+
+[B] Put the three side by side for me.
+
+Here is the table, in words.
+
+Cherry and Qian: learning, yes, of the additive kind. Autonomous, yes. Reuse, no. Depth, one layer.
+
+Song and Qian: reuse, yes, sixteen rounds. Learning, no.
+
+CALCUL: accuracy, yes, a few percent. Depth, yes, three small layers. Autonomous, no. Reuse, two rounds.
+
+Each paper bought one property, and nobody has yet bought all of them at once. That is what an early field looks like, and it is good news for someone arriving now.
+
+There is also a theoretical result to file next to these, from Marko Vasić and David Soloveichik in twenty twenty. They showed that a network with weights of plus or minus one, and ReLU units, trained in the ordinary way in software, can be translated directly into a set of reactions whose final answer does not depend on how fast any of the reactions go. Rates are the thing chemists can least control, so a design that is indifferent to them is a real gift. It has not been built at scale.
+
+So where does the field stand at the end of twenty twenty-six? Networks with a few hundred weights at most. One layer, or a few very small ones. Minutes to hours for an answer. Learning that memorises but does not yet correct itself. Reuse counted in tens of cycles.
+
+And here are three milestones that would each be a paper people remember. One: a tube that gets measurably better on its second pass through the same examples, because it used its own errors. Two: two layers, both of whose weights were set inside the tube. Three: a network that learns, recharges, and keeps what it learned, for a hundred cycles.
+
+Three sentences. In twenty twenty-five, learning in the tube, reuse by heat, and analog accuracy of a few percent were each shown, in three separate systems. The learning is additive memory-writing with no error signal, the reuse erases state, and the accurate network needs hours of manual steps. The open ground is combining them, and above all error-driven learning in chemistry.
+
+[B] Questions. One: describe the difference between what the learning network does during training and what gradient descent does. Two: why is reuse a precondition for training, and what is the tension between heat recharging and learning? Three: name one property each of the three twenty twenty-five systems has, and one it lacks.
+
+---
+
+=== 5.20 ===
+# 5.20 DNA storage as a computer's memory
+
+Every computer you have ever used keeps its data in one place and does its thinking in another, and spends much of its time and energy carrying data between the two. DNA storage was invented as the ultimate version of the first place: the coldest, densest, slowest archive there is. This lesson asks what happens if you refuse to carry the data anywhere, and do the thinking inside the archive.
+
+Quick recall. What do the nucleation classifier, the equilibrium computer and a Hopfield network have in common?
+
+In all three, the program is an energy landscape, and the answer is the state the system settles into.
+
+Let us start with storage as plain storage, because you need the pipeline in your head. It has seven steps.
+
+Encode: turn bits into bases, avoiding sequences that are hard to make or read, such as long runs of one letter. Index: give every strand an address, because a pool of strands has no order. Add redundancy: the error-correcting codes from lesson one point eight. Synthesise: make the strands, typically a hundred and fifty to three hundred bases each. Store: dry, cold, and preferably sealed. Access: pull out the strands you want. Read: sequence them, and decode.
+
+Now the scorecard numbers. Density: about two hundred petabytes per gram has been demonstrated, which is a data centre in a sugar cube. Energy to keep it: none. Lifetime: thousands of years if kept cold. Against that, writing is the bottleneck: slow, and far too expensive per bit to compete with tape. And reading takes hours.
+
+So as a memory tier, DNA sits below tape: denser, more durable, slower, and write-once in practice.
+
+[B] How do you get one file out without reading the whole archive?
+
+That is random access, and there are two classic ways. Both are lookups by content, which is why I spent a depth lesson on that idea.
+
+The first is amplification. Every strand in a file carries the same short address sequence at its ends. You add primers that match that address, run a polymerase chain reaction, and only that file gets copied until it swamps everything else. The address is a key, and the reaction is the lookup.
+
+The second is capture. You add a probe strand, fixed to a bead, that binds the address, and you pull the bead out.
+
+Either way, notice what is doing the work: hybridisation, which is specific binding between sequences. And notice the weakness. Each access consumes or alters some of the archive, and wrong strands come along for the ride.
+
+That weakness is where your own lab's line of work begins, so let me tell that story in order.
+
+In twenty twenty, the NC State group showed a way of reading a file that leaves the original alone. Instead of amplifying the stored DNA itself, they attached a promoter to each file, so that an enzyme transcribes the file into RNA. The RNA copy is what gets read. The DNA stays where it is. Reading by copying out, and not by using up.
+
+In twenty twenty-one came two more pieces. One showed that primers which deliberately match several addresses can select groups of files: an operation on the file system, done with chemistry. The other, on which Karishma Matange was first author, argued that chemical stability has to be designed in from the start and not bolted on.
+
+Then in twenty twenty-four, the paper called A primordial DNA store and compute engine, from the Keung and Velev groups together. The files sit on particles about fifty micrometres across, made of cellulose acetate, with a branching, feathery structure that gives them an enormous surface. They named the material a dendricolloid. On it, the DNA survives being dried and rewetted many more times than bare DNA does. From accelerated ageing, they project half-lives of about six thousand years at four degrees Celsius, and about two million years at minus eighteen. Files can be erased and replaced. Reading is by transcription, from a separate promoter for each file, so the DNA is not consumed. The RNA is read directly on a nanopore sequencer. And the RNA can be computed on with enzymes: they solved simplified three-by-three chess and sudoku problems.
+
+Take the word primordial seriously. The claim is not that this beats a hard disk. The claim is that one material now supports the full set of basic operations: store, read without destroying, erase, rewrite, and compute. A system that does all of those is a computer in the plainest sense, however simple.
+
+[B] Then what does computing on stored data look like, concretely? Give me the kinds.
+
+Three kinds have been shown, and they are worth keeping distinct.
+
+Kind one: search by similarity. This came from the University of Washington and Microsoft in twenty twenty-one. Ordinary retrieval needs the exact address. But what if you want the images that look like this one? They trained a neural network to turn each image into a DNA sequence, with one requirement: images that look alike must get sequences that bind each other. Then a query image is turned into a probe strand, and the probe fishes out its neighbours from a pool holding one point six million images. Results were comparable to good software methods. The neural network did not do the search. The neural network designed the molecules so that chemistry could do the search.
+
+Kind two: a program run on every record at once. From David Soloveichik's group in twenty twenty-three. Here, each stored molecule is a small register, a few bits long, with the bits written as the pattern of breaks in one strand of a double helix. An instruction is a set of strands that you add to the tube. Every register in the tube responds at the same time, each according to its own contents. Then you add the next instruction. They ran binary counting, and a cellular automaton known as Rule one hundred and ten, which is capable in principle of any computation at all. The registers were four bits. So: unlimited parallelism across records, a few bits per record, and one step every time you add strands.
+
+Kind three is the newest, and it is from your lab. Ordinary design tries to make strands ignore each other. Suppose instead you want a network of deliberate partial matches: this record should bind these three probes and not those five. To design that, you need to predict binding between sequences that are far from perfect complements, which is exactly where the standard thermodynamic tools are weakest. That is the gap BINND fills. In the twenty twenty-six paper, the model was used to design a small searchable database of storybook characters, where each character's strand binds a chosen set of attribute probes. And they built it, and it worked.
+
+Notice the pattern across kinds one and three. In both, machine learning is not running in the DNA. Machine learning is the design tool that makes the DNA computable. That is a role for AI in this field that needs no breakthrough in molecular hardware, and it is available now.
+
+Now step back and look at this the way a computer architect would. Modern AI systems lean heavily on one operation: given a query, find the closest matches in a very large memory. Attention does a soft version of it inside the model. Retrieval systems do it across whole libraries. In silicon, that operation is limited by how fast memory can be scanned.
+
+DNA storage is a memory in which that operation is built into the physics. Every molecule is compared with the probe at once. It is slow per query and enormous in breadth. So the question for this route is whether there are workloads that want breadth and can wait. Archives are one. Screening a library for everything related to a query is another.
+
+Three sentences. DNA is the densest and most durable memory tier, and the slowest, with writing as its bottleneck. The NC State engine showed store, non-destructive read, erase, rewrite and compute in a single material. Computing on stored data has taken three forms: similarity search with learned encodings, parallel programs on small registers, and designed cross-binding networks, and in two of those three, machine learning is the tool that designs the molecules.
+
+[B] Questions. One: name the seven steps of the storage pipeline. Two: how does reading by transcription differ from reading by amplification, and why does it matter? Three: in the similarity search work, what exactly did the neural network do, and what did the chemistry do?
+
+---
+
+=== 6.5 ===
+# 6.5 Open problems, and how to choose yours
+
+Richard Hamming used to walk into the lunchroom at Bell Labs and ask the chemists: what are the important problems in your field? And then, a week later: why are you not working on them?
+
+This is the last lesson of the core path. It gives you a list of ten open problems in molecular computing, says what a result on each would look like, and then offers a way to choose among them that makes use of what you, in particular, are good at.
+
+Quick recall. When one cycle of your computer takes minutes, what are the three design rules?
+
+Few, fat steps: do as much as possible in each cycle. Read rarely. And keep the state in the molecules between cycles, instead of pulling it out and putting it back.
+
+Ten problems. I will give them in three groups, so they are easier to hold.
+
+The first group is about parts that work. Four problems.
+
+One: predicting cross-binding at scale. BINND covers strands of twenty bases, with a yes-or-no answer, under one kind of assay, and it was trained with twenty-six baits. A result here would be a model that handles any length, predicts strength and speed and not only yes or no, takes salt and temperature as inputs, and stays accurate on sequences unlike anything it was trained on.
+
+Two: circuits you can run again and again. Sixteen rounds is the published mark. A result would be a hundred rounds or more with no drift in the answer.
+
+Three: accurate analog arithmetic. A few percent has been shown for small sums with manual steps. A result would be five or six bits, automatically, through several layers.
+
+Four: compartments you can address. Many small reactors, each with its own contents, that can be made to exchange material on command. This is route seven from the design space: giving molecules a position.
+
+The second group is about learning. Three problems.
+
+Five: error-driven learning in chemistry. A system that makes a prediction, compares it with the truth, and changes itself to do better. A result is simple to state: accuracy that rises on the second pass through the same data.
+
+Six: a training loop with the tube in it. A robot, a reader, a model of the chemistry, and a circuit that recharges. A result would be a DNA network whose weights were found by that loop, and which beats the same network designed from simulation alone.
+
+Seven: computing by settling to equilibrium, for the things AI needs, which are sampling and optimisation. A result would be an equilibrium machine that draws samples from a distribution you chose.
+
+The third group is about whole systems. Three problems.
+
+Eight: AI operations inside storage. Similarity search over a billion records. Retrieval that feeds a model. A result would be an archive that answers a question which the electronic version answers more slowly, or at higher cost, at the same scale.
+
+Nine: a compiler. You hand it a trained network. It hands back the strands, with an estimate of how many species, how long, how much it will cost, and how often it will be wrong. Chips have had this for fifty years.
+
+Ten: benchmarks. The field has no agreed way to say that one molecular computer is better than another. A result would be a small set of standard tasks and a few numbers that everyone reports: operations per litre per second, error per operation, cycles of reuse, cost per answer.
+
+[B] Ten is a menu. How do I order from it?
+
+With three questions, and I will be direct about the third.
+
+First: importance. If you solved it completely, what else would become possible? By that test, problems one, two and five are near the top, because so much else waits on them. Nothing large can be built without predictable binding. Nothing iterative can be built without reuse. And nothing can be called training without error-driven learning.
+
+Second: tractability. Is there a first experiment you could run in three months that would teach you something whichever way it came out? Prefer problems where failure is informative. If a negative result would only tell you that you did it badly, the problem is too far away.
+
+Third: your edge. What do you bring that most people in this field do not?
+
+Look at who is in it. Computer scientists, who think in algorithms and proofs. Biochemists and biophysicists, who think in mechanisms. Very few people who think like a chemical engineer. So consider what that training gives you.
+
+You think in rates and residence times. The dilution law, and the time each step takes, are reactor design problems.
+
+You think in transport. Compartments, exchange between them, and reactions on surfaces are transport problems.
+
+You think in scale-up. Going from one tube to a million droplets is a question your discipline has asked about everything else.
+
+You think in control. A training loop with a tube in it is a control loop.
+
+And you think in process economics. Almost nobody in this field can tell you the cost per operation of their computer. You could.
+
+Put the three questions together, and some problems stand out for you specifically. The benchmark problem, number ten, is unglamorous, important, and made for someone who counts cost per unit. The training loop, number six, is control engineering. Addressable compartments, number four, is transport and reactor design. And the binding predictor, number one, is already under your roof.
+
+[B] And once I have picked? How do I avoid losing two years?
+
+Four habits, each drawn from a paper you have met in this course.
+
+Build the measurement first. BINND did not begin as a neural network. It began as an assay that could measure a hundred and forty-four million pairs. The model was what the measurement made possible. In a young field, whoever can measure something a thousand times faster usually wins.
+
+Keep three things going together: an experiment, a simulation of it, and a learned model. When all three agree, you understand the system. When they disagree, you have found your next paper.
+
+Choose a number and make it move. Rounds of reuse. Bits of accuracy. Species in one pot. Records searched. Progress in engineering is a number going up.
+
+And write down your kill criteria before you start. Decide in advance what result, by what date, would tell you this direction is dead. It is much easier to be honest in advance than afterwards.
+
+There is one more thing, and it comes from the essay on the hardware lottery. You are entering a field whose hardware does not yet exist in the form that would win. That means the ideas that suit it have not been chosen yet. Deep, narrow, precise networks won on silicon because silicon is what there was. Nobody knows what wins on molecules. You are early enough to help decide.
+
+That is the end of the core path. The desk capstone asks you to put it to use: two pages arguing for one architecture, with a resource estimate from the scorecard, a first experiment, and three kill criteria. Then give it to Claude and ask for the review a sceptical computer architect would write.
+
+Three sentences. The open problems fall into parts that work, learning, and whole systems, and the ones most things wait on are predictable binding, reuse, and error-driven learning. Choose by importance, by whether a first experiment would teach you something either way, and by your own edge, which is rates, transport, scale-up, control and cost. Then build the measurement first, keep experiment, simulation and model together, move a number, and set your kill criteria in advance.
+
+[B] Your last three questions. One: which three problems does most of the field wait on, and why those? Two: name four things a chemical engineer brings that this field is short of. Three: what would have to be true, by when, for you to drop the direction you are most excited about today?
+
+---
