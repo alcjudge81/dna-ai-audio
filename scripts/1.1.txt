@@ -1,0 +1,57 @@
+# 1.1 Bits, gates and the digital abstraction
+
+A light switch. A telephone relay. A valve in a water pipe. A row of dominoes. Every one of those has been used to build a working computer. So what do they have in common, and does a strand of DNA have it too?
+
+Quick recall first. In the map, I gave you three questions to ask of any computer. Can you name them?
+
+They were: what carries the signal, how is the signal kept clean, and what limits the machine's size. This lesson is about the first two.
+
+Start with the smallest unit. A bit is usually introduced as a zero or a one. That is the wrong place to begin, because it sounds like arithmetic. A bit is a physical distinction that a system can make reliably. A wire is at high voltage or low voltage. A valve is open or shut. A tank is full or empty. What matters is not the two labels. What matters is that there are two regions, well separated, with a forbidden zone between them, so that a small disturbance never carries you from one to the other.
+
+Why only two? Because telling two states apart is the easiest measurement there is. You could carve the same voltage range into ten levels and carry more information on each wire, and some systems do. But every level you add shrinks the gap between neighbours, and the gap is your protection against noise. Two levels is the choice that gives the most protection. Remember that trade. It comes back in phase two as the whole argument between analog and digital.
+
+Now, what do you do with bits? You combine them, with gates. Think in plumbing. Put two valves in series on one pipe: water flows only if the first and the second are open. That is an AND gate. Put two valves in parallel: water flows if either one is open. That is an OR gate. Now take a valve that is normally open, and closes when its control line is pressurised. Pressure in, no flow out. That is a NOT gate.
+
+Here is the first remarkable fact of computer science, and it is worth saying slowly. Those three are enough. Any rule that turns input bits into output bits, any rule at all, can be built by wiring together ANDs, ORs and NOTs. Adding two numbers. Comparing them. Choosing a chess move. In fact you can do it with a single type of gate, called NAND, which is an AND followed by a NOT. A circuit that adds two numbers takes a few dozen of them. A modern processor takes tens of billions. Nothing new is needed on the way up. It is the same gate, over and over.
+
+So the recipe for a computer is short. One kind of reliable gate, a great many copies of it, and a way of wiring outputs to inputs.
+
+[B] If the recipe is that short, why isn't everything a computer? A stirred tank reactor has inputs and outputs. Why can't I call that a gate?
+
+Because a device has to pass five tests before you can build with it, and most physical processes fail at least one. These five are the heart of the lesson.
+
+Test one: it must be nonlinear. If a device's output is simply proportional to its input, then all it can do is scale and add. Chain a thousand devices that scale and add, and the result still only scales and adds. That will never produce an AND, where the output stays at nothing until both inputs are present. You need a bend in the response: a threshold. You know threshold devices. A pressure relief valve does nothing, and nothing, and nothing, and then opens. A thermostat is off, and then it is on.
+
+Test two: it must have gain, which is what makes restoration possible. This is the most important of the five. A good gate accepts a sloppy input and produces a clean output. Say that high means one volt. A digital gate will treat anything above about two thirds of a volt as high, and it will put out a clean, full one volt. So an input that has sagged to zero point eight comes out as one point zero again. The error is erased at every single step. That is why you can copy a digital file a million times and the millionth copy is perfect, while a photocopy of a photocopy of a photocopy turns to mud. The gap between what a gate accepts and what it emits is called the noise margin, and the whole digital world stands on it.
+
+Test three: fan-out. One output must be able to drive several inputs. A signal that can be used only once is a dead end, because real circuits branch constantly. Fan-out means the power in a gate's output cannot come from its input signal. It has to come from a separate supply, with the input acting only as a control. In your terms, the input is the signal to the control valve, and not the process stream.
+
+Test four: the output must be the same kind of thing as the input. Voltage in, voltage out. If your gate takes pressure in and gives light out, you cannot connect it to the next gate. Engineers call this being cascadable.
+
+Test five: isolation. Information has to flow one way. The output must not push back on the input, and a gate must not disturb its neighbours. Otherwise every part of the circuit is talking to every other part, and you can no longer reason about one gate at a time.
+
+A transistor with a power supply passes all five, superbly. That, and not anything special about electrons, is why computers are made of transistors. Your stirred tank fails test two and test five at the very least.
+
+[B] Fine. Now do DNA. Does a DNA gate pass?
+
+Let us check, one test at a time, using the design that made DNA circuits scale: the seesaw gate, published by Lulu Qian and Erik Winfree in twenty eleven. You will meet its mechanics in phase five. For now, here is how it scores.
+
+The signal is the concentration of one particular free strand of DNA. High might be a hundred nanomolar. Low is close to nothing.
+
+Nonlinearity. The gate comes with a threshold: a second complex that grabs incoming strands faster than the gate itself does, and uses them up, until it is exhausted. Below the threshold amount, nothing gets through. Above it, the remainder does. That is the relief valve.
+
+Gain. An input strand that gets past the threshold releases an output strand, and then a fuel strand knocks the input back off, so it can go round again. One input, many outputs. That is catalysis, and here it is doing the job of an amplifier. A threshold followed by amplification means that a sloppy input comes out as a clean, full-strength output. That is restoration, done with molecules. It is the reason this design could be chained into circuits of more than a hundred strands, when earlier designs could not.
+
+Fan-out. The same catalytic cycle supplies it. The power supply is chemical: the fuel strands, which are consumed.
+
+Same kind of thing in and out. Yes. The output is a strand with the same format as the input, so it can serve as the input to the next gate.
+
+Isolation. This is where DNA is weakest. Gates sometimes release their output with no input present at all. That is called leak. Strands with partly matching sequences stick to the wrong partners. That is called crosstalk. And unlike a wire, a solution has no insulation: every molecule can meet every other molecule. Much of the engineering in this field, including the binding predictor from your own lab, is an attack on test five.
+
+So, the verdict. DNA can pass all five tests, which is why digital circuits in a test tube exist at all. It passes them slowly, taking minutes to hours where a transistor takes trillionths of a second. It passes the isolation test only with effort. And notice something silicon never worries about: the power supply gets used up. Most DNA circuits run once.
+
+Let me pull it together in three sentences. A bit is a reliable physical distinction, and one kind of gate, copied enough times, can compute anything. To build with a device, it must be nonlinear, restore its signal, drive several successors, speak the same language in and out, and keep to itself. DNA gates can do all five, and the one they do worst, isolation, is where much of the field's effort goes.
+
+[B] Three questions to take with you. First: why can no linear device, however precise, serve as a logic gate? Second: in one sentence, what does gain buy you? Third: of the five tests, which does a DNA gate pass least well, and what are the two names for its failures?
+
+---

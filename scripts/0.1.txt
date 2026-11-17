@@ -1,0 +1,55 @@
+# 0.1 The map
+
+Suppose you handed a computer architect a test tube of DNA and said: this is a computer. What would they ask you first?
+
+Not how fast it is. Not how much it costs. They would ask three things. What carries the signal? How do you keep that signal clean? And what stops you from making the machine bigger? Those three questions are the spine of this course, and by the end you will be able to answer them for a silicon chip, for a brain, and for a tube of DNA, with numbers.
+
+This is lesson zero point one, the map. It is short. Its job is to tell you where we are going and how the course works, so that everything after it has a place to land.
+
+Start with the destination. You are setting out to build DNA systems that compute, with the long-range goal of computation as demanding as training and running AI models. You already have the chemistry: kinetics, thermodynamics, transport. What you have less of is the computing side. So the course is built to give you six abilities.
+
+One. Explain what computation is without mentioning silicon, and say what any physical system must provide before it can compute.
+
+Two. Put numbers on the trade between analog and digital machines: what precision costs, and what a single operation costs in energy and time.
+
+Three. Follow an AI model from raw data, to trained weights, to predictions, and say what each step demands of the hardware.
+
+Four. Direct Claude to build, test and criticise a model like BINND, the binding predictor from your own lab, and know which judgments stay yours.
+
+Five. Pick up any paper in molecular computing and place it on a map within ten minutes.
+
+Six. Estimate what an AI workload would demand of a molecular system, compare the architectures on offer, and choose problems worth several years of your life.
+
+[B] That is a lot of ground. What order does it come in?
+
+Seven phases, numbered from zero. Phase zero is this lesson and one short radio segment about your lab's work. Phase one is computing from the ground up: bits, gates, memory, what can be computed and what it costs, and error correction. Phase two is analog against digital, and the physics of computation: noise, precision, energy. Phase three is how AI models are built, trained and run. Phase four is building models like BINND, with Claude as your pair of hands. Phase five is the field of molecular computing itself, from Adleman's first experiment in nineteen ninety-four to papers published this autumn. Phase six pulls it together: what AI in DNA would really take, and where the open problems are.
+
+Now, how the course works. There are four kinds of item.
+
+First, lessons like this one, written for you. Each one opens with a quick recall question about the lesson before, because pulling an idea back out of memory is what makes it stick. Each one ends with two or three questions and no answers. The answers arrive at the start of the next lesson. You will also hear a second voice from time to time.
+
+[B] That would be me. I ask what a sharp chemical engineer would ask, and I read the questions at the end.
+
+Second, things other people made: podcast episodes, audiobooks, a few recorded talks. Each of those gets a short lead-in that says why it is on the list and what to listen for.
+
+Third, papers. You will hear those through NotebookLM, the way you already do. For each paper, the course hub gives you the link, the length setting, and a focus prompt to paste in, so that the hosts talk to a chemical engineer and not to a computer scientist.
+
+Fourth, a handful of desk labs. Audio can make you fluent. It cannot teach your hands to train a model. The labs do that, and nothing in the audio depends on them.
+
+Every item is marked core or depth. The core path is complete on its own. Depth is optional, each piece is attached to a particular core item, and it will wait for you. If a topic grabs you, go deep there and then. If not, move on and come back later.
+
+[B] How do I know I am learning, and not just listening?
+
+One habit. After every item, before you start the next, say one sentence out loud that connects what you just heard to DNA. Out loud, in the car, to nobody. If you cannot make the sentence, that is useful information: replay the last few minutes. If you can, you have just done the work that turns listening into knowing.
+
+Let me come back to the three questions, because they are the tool you will use most.
+
+What carries the signal? In a chip, a voltage on a wire. In a tube, the concentration of a particular strand.
+
+How is the signal kept clean? In a chip, every gate snaps a sloppy voltage back to a clean one. In a tube, that job is much harder, and how well a design does it tells you most of what you need to know about that design.
+
+What limits its size? In a chip: heat, wiring, and the cost of factories. In a tube: the number of different sequences that can share a solution without sticking to each other, and how slowly dilute molecules find one another.
+
+Hold on to those three. Every lesson that follows elaborates one of them.
+
+Next is a seventeen-minute radio segment in which your own advisor explains the lab's work to a general audience. Listen for every claim about density, speed or energy, and ask yourself whether you could defend it with a number. By the end of phase two, you will be able to.

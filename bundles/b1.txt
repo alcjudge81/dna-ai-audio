@@ -1,0 +1,239 @@
+=== 0.1 ===
+# 0.1 The map
+
+Suppose you handed a computer architect a test tube of DNA and said: this is a computer. What would they ask you first?
+
+Not how fast it is. Not how much it costs. They would ask three things. What carries the signal? How do you keep that signal clean? And what stops you from making the machine bigger? Those three questions are the spine of this course, and by the end you will be able to answer them for a silicon chip, for a brain, and for a tube of DNA, with numbers.
+
+This is lesson zero point one, the map. It is short. Its job is to tell you where we are going and how the course works, so that everything after it has a place to land.
+
+Start with the destination. You are setting out to build DNA systems that compute, with the long-range goal of computation as demanding as training and running AI models. You already have the chemistry: kinetics, thermodynamics, transport. What you have less of is the computing side. So the course is built to give you six abilities.
+
+One. Explain what computation is without mentioning silicon, and say what any physical system must provide before it can compute.
+
+Two. Put numbers on the trade between analog and digital machines: what precision costs, and what a single operation costs in energy and time.
+
+Three. Follow an AI model from raw data, to trained weights, to predictions, and say what each step demands of the hardware.
+
+Four. Direct Claude to build, test and criticise a model like BINND, the binding predictor from your own lab, and know which judgments stay yours.
+
+Five. Pick up any paper in molecular computing and place it on a map within ten minutes.
+
+Six. Estimate what an AI workload would demand of a molecular system, compare the architectures on offer, and choose problems worth several years of your life.
+
+[B] That is a lot of ground. What order does it come in?
+
+Seven phases, numbered from zero. Phase zero is this lesson and one short radio segment about your lab's work. Phase one is computing from the ground up: bits, gates, memory, what can be computed and what it costs, and error correction. Phase two is analog against digital, and the physics of computation: noise, precision, energy. Phase three is how AI models are built, trained and run. Phase four is building models like BINND, with Claude as your pair of hands. Phase five is the field of molecular computing itself, from Adleman's first experiment in nineteen ninety-four to papers published this autumn. Phase six pulls it together: what AI in DNA would really take, and where the open problems are.
+
+Now, how the course works. There are four kinds of item.
+
+First, lessons like this one, written for you. Each one opens with a quick recall question about the lesson before, because pulling an idea back out of memory is what makes it stick. Each one ends with two or three questions and no answers. The answers arrive at the start of the next lesson. You will also hear a second voice from time to time.
+
+[B] That would be me. I ask what a sharp chemical engineer would ask, and I read the questions at the end.
+
+Second, things other people made: podcast episodes, audiobooks, a few recorded talks. Each of those gets a short lead-in that says why it is on the list and what to listen for.
+
+Third, papers. You will hear those through NotebookLM, the way you already do. For each paper, the course hub gives you the link, the length setting, and a focus prompt to paste in, so that the hosts talk to a chemical engineer and not to a computer scientist.
+
+Fourth, a handful of desk labs. Audio can make you fluent. It cannot teach your hands to train a model. The labs do that, and nothing in the audio depends on them.
+
+Every item is marked core or depth. The core path is complete on its own. Depth is optional, each piece is attached to a particular core item, and it will wait for you. If a topic grabs you, go deep there and then. If not, move on and come back later.
+
+[B] How do I know I am learning, and not just listening?
+
+One habit. After every item, before you start the next, say one sentence out loud that connects what you just heard to DNA. Out loud, in the car, to nobody. If you cannot make the sentence, that is useful information: replay the last few minutes. If you can, you have just done the work that turns listening into knowing.
+
+Let me come back to the three questions, because they are the tool you will use most.
+
+What carries the signal? In a chip, a voltage on a wire. In a tube, the concentration of a particular strand.
+
+How is the signal kept clean? In a chip, every gate snaps a sloppy voltage back to a clean one. In a tube, that job is much harder, and how well a design does it tells you most of what you need to know about that design.
+
+What limits its size? In a chip: heat, wiring, and the cost of factories. In a tube: the number of different sequences that can share a solution without sticking to each other, and how slowly dilute molecules find one another.
+
+Hold on to those three. Every lesson that follows elaborates one of them.
+
+Next is a seventeen-minute radio segment in which your own advisor explains the lab's work to a general audience. Listen for every claim about density, speed or energy, and ask yourself whether you could defend it with a number. By the end of phase two, you will be able to.
+
+=== 1.1 ===
+# 1.1 Bits, gates and the digital abstraction
+
+A light switch. A telephone relay. A valve in a water pipe. A row of dominoes. Every one of those has been used to build a working computer. So what do they have in common, and does a strand of DNA have it too?
+
+Quick recall first. In the map, I gave you three questions to ask of any computer. Can you name them?
+
+They were: what carries the signal, how is the signal kept clean, and what limits the machine's size. This lesson is about the first two.
+
+Start with the smallest unit. A bit is usually introduced as a zero or a one. That is the wrong place to begin, because it sounds like arithmetic. A bit is a physical distinction that a system can make reliably. A wire is at high voltage or low voltage. A valve is open or shut. A tank is full or empty. What matters is not the two labels. What matters is that there are two regions, well separated, with a forbidden zone between them, so that a small disturbance never carries you from one to the other.
+
+Why only two? Because telling two states apart is the easiest measurement there is. You could carve the same voltage range into ten levels and carry more information on each wire, and some systems do. But every level you add shrinks the gap between neighbours, and the gap is your protection against noise. Two levels is the choice that gives the most protection. Remember that trade. It comes back in phase two as the whole argument between analog and digital.
+
+Now, what do you do with bits? You combine them, with gates. Think in plumbing. Put two valves in series on one pipe: water flows only if the first and the second are open. That is an AND gate. Put two valves in parallel: water flows if either one is open. That is an OR gate. Now take a valve that is normally open, and closes when its control line is pressurised. Pressure in, no flow out. That is a NOT gate.
+
+Here is the first remarkable fact of computer science, and it is worth saying slowly. Those three are enough. Any rule that turns input bits into output bits, any rule at all, can be built by wiring together ANDs, ORs and NOTs. Adding two numbers. Comparing them. Choosing a chess move. In fact you can do it with a single type of gate, called NAND, which is an AND followed by a NOT. A circuit that adds two numbers takes a few dozen of them. A modern processor takes tens of billions. Nothing new is needed on the way up. It is the same gate, over and over.
+
+So the recipe for a computer is short. One kind of reliable gate, a great many copies of it, and a way of wiring outputs to inputs.
+
+[B] If the recipe is that short, why isn't everything a computer? A stirred tank reactor has inputs and outputs. Why can't I call that a gate?
+
+Because a device has to pass five tests before you can build with it, and most physical processes fail at least one. These five are the heart of the lesson.
+
+Test one: it must be nonlinear. If a device's output is simply proportional to its input, then all it can do is scale and add. Chain a thousand devices that scale and add, and the result still only scales and adds. That will never produce an AND, where the output stays at nothing until both inputs are present. You need a bend in the response: a threshold. You know threshold devices. A pressure relief valve does nothing, and nothing, and nothing, and then opens. A thermostat is off, and then it is on.
+
+Test two: it must have gain, which is what makes restoration possible. This is the most important of the five. A good gate accepts a sloppy input and produces a clean output. Say that high means one volt. A digital gate will treat anything above about two thirds of a volt as high, and it will put out a clean, full one volt. So an input that has sagged to zero point eight comes out as one point zero again. The error is erased at every single step. That is why you can copy a digital file a million times and the millionth copy is perfect, while a photocopy of a photocopy of a photocopy turns to mud. The gap between what a gate accepts and what it emits is called the noise margin, and the whole digital world stands on it.
+
+Test three: fan-out. One output must be able to drive several inputs. A signal that can be used only once is a dead end, because real circuits branch constantly. Fan-out means the power in a gate's output cannot come from its input signal. It has to come from a separate supply, with the input acting only as a control. In your terms, the input is the signal to the control valve, and not the process stream.
+
+Test four: the output must be the same kind of thing as the input. Voltage in, voltage out. If your gate takes pressure in and gives light out, you cannot connect it to the next gate. Engineers call this being cascadable.
+
+Test five: isolation. Information has to flow one way. The output must not push back on the input, and a gate must not disturb its neighbours. Otherwise every part of the circuit is talking to every other part, and you can no longer reason about one gate at a time.
+
+A transistor with a power supply passes all five, superbly. That, and not anything special about electrons, is why computers are made of transistors. Your stirred tank fails test two and test five at the very least.
+
+[B] Fine. Now do DNA. Does a DNA gate pass?
+
+Let us check, one test at a time, using the design that made DNA circuits scale: the seesaw gate, published by Lulu Qian and Erik Winfree in twenty eleven. You will meet its mechanics in phase five. For now, here is how it scores.
+
+The signal is the concentration of one particular free strand of DNA. High might be a hundred nanomolar. Low is close to nothing.
+
+Nonlinearity. The gate comes with a threshold: a second complex that grabs incoming strands faster than the gate itself does, and uses them up, until it is exhausted. Below the threshold amount, nothing gets through. Above it, the remainder does. That is the relief valve.
+
+Gain. An input strand that gets past the threshold releases an output strand, and then a fuel strand knocks the input back off, so it can go round again. One input, many outputs. That is catalysis, and here it is doing the job of an amplifier. A threshold followed by amplification means that a sloppy input comes out as a clean, full-strength output. That is restoration, done with molecules. It is the reason this design could be chained into circuits of more than a hundred strands, when earlier designs could not.
+
+Fan-out. The same catalytic cycle supplies it. The power supply is chemical: the fuel strands, which are consumed.
+
+Same kind of thing in and out. Yes. The output is a strand with the same format as the input, so it can serve as the input to the next gate.
+
+Isolation. This is where DNA is weakest. Gates sometimes release their output with no input present at all. That is called leak. Strands with partly matching sequences stick to the wrong partners. That is called crosstalk. And unlike a wire, a solution has no insulation: every molecule can meet every other molecule. Much of the engineering in this field, including the binding predictor from your own lab, is an attack on test five.
+
+So, the verdict. DNA can pass all five tests, which is why digital circuits in a test tube exist at all. It passes them slowly, taking minutes to hours where a transistor takes trillionths of a second. It passes the isolation test only with effort. And notice something silicon never worries about: the power supply gets used up. Most DNA circuits run once.
+
+Let me pull it together in three sentences. A bit is a reliable physical distinction, and one kind of gate, copied enough times, can compute anything. To build with a device, it must be nonlinear, restore its signal, drive several successors, speak the same language in and out, and keep to itself. DNA gates can do all five, and the one they do worst, isolation, is where much of the field's effort goes.
+
+[B] Three questions to take with you. First: why can no linear device, however precise, serve as a logic gate? Second: in one sentence, what does gain buy you? Third: of the five tests, which does a DNA gate pass least well, and what are the two names for its failures?
+
+---
+
+=== 2.2 ===
+# 2.2 The precision bill
+
+Here is a puzzle. In the nineteen fifties, analog computers were solving differential equations in real time with a few hundred components. A digital machine of the day needed a room full of hardware to do the same job worse. Twenty years later, analog computers were museum pieces. What killed them was not speed, and it was not cost. It was a bill that grows faster than anyone can pay. Call it the precision bill.
+
+Quick recall. Last lesson I claimed that a chemical reaction network is an analog computer. What are its state variables, and what does the integrating?
+
+The state variables are concentrations, and mass-action kinetics does the integrating. Nobody has to build an integrator. The chemistry is one.
+
+Now the bill. Begin with a fact you cannot engineer away: every physical signal jitters. A voltage on a wire trembles with the thermal motion of its electrons. A pressure reading wanders. So an analog value is never a point. It is a small blurred range. And that blur sets how many different values you can tell apart.
+
+Suppose your signal runs from zero to one volt, and the blur is a hundredth of a volt. Then you can distinguish about a hundred levels. In the language of lesson one point eight, a hundred levels is a little under seven bits. To get one more bit, you need two hundred levels, which means cutting the blur in half relative to the signal.
+
+Here is where the bill arrives. Thermal noise has a fixed power, set by the temperature. You cannot turn it down without a refrigerator. So the only way to halve the blur relative to the signal is to make the signal twice as large. And power goes as the square of amplitude. Twice the voltage is four times the power.
+
+One more bit costs four times the energy. Say that again, because it is the single most important number in this phase: in a noise-limited analog system, each extra bit of precision costs four times the energy.
+
+Follow that out. Ten bits costs four multiplied by itself ten times, which is about a million times the energy of one bit. Twenty bits costs a million million times. That is exponential growth, and exponential bills do not get paid.
+
+Now do the same sum for a digital machine. You want one more bit of precision in a number? Add one more wire, carrying one more two-level signal, at the same modest energy as all the others. Ten bits costs about ten times what one bit costs. Multiplying two numbers is a little worse, growing roughly as the square of the number of bits, but that is still gentle. The digital bill grows like a staircase. The analog bill grows like an explosion.
+
+[B] Then why would anyone ever use analog?
+
+Because at the low end, the comparison runs the other way, and by a wide margin. To add two numbers in analog, you join two wires and the currents add. That is the whole adder: a junction. A digital adder at even modest precision takes dozens of gates. To multiply in analog, you can use a single device whose output depends on the product of two inputs. So at low precision, analog can be ten or a hundred or a thousand times cheaper, in parts and in energy.
+
+Put the two curves on one graph and they cross. Rahul Sarpeshkar worked this out carefully in a classic nineteen ninety-eight paper, which is the next item in this phase. The crossing point depends on the details, but it sits somewhere around six to eight bits, which is roughly one percent accuracy. Below that, analog wins. Above it, digital wins, and the further above, the more crushing the win.
+
+There is a second charge on the bill, and it concerns depth. In an analog machine, every stage adds its own little error and passes along the errors it received. After a hundred stages, they have piled up. A digital machine, as you heard in lesson one point one, wipes the error clean at every gate. So analog is not only limited in precision. It is limited in how many steps you can chain before the answer dissolves.
+
+Put those together and you have the rule of thumb for the whole course. Analog is for computations that are shallow and tolerant. Digital is for computations that are deep or exact.
+
+Sarpeshkar drew one more conclusion, and it is the one to hold on to. The best machines are hybrids. Do a little computing in analog, where it is cheap. Then snap the result back to one of a few clean levels, which is restoration. Then compute a little more. He argued that this is what neurons do: they sum their inputs in analog, and then fire an all-or-nothing spike.
+
+[B] So bring it home. Where does the noise in my tube come from? Is it thermal, like the wire?
+
+Good question, and the answer surprises people. In chemistry the obvious noise source is counting. If a signal is carried by N molecules, random fluctuation is about the square root of N. So the relative blur is one over the square root of N.
+
+Run the number for a real experiment. Ten microlitres at one nanomolar. That is about six billion molecules. The square root of six billion is about eighty thousand. So the counting noise is one part in eighty thousand. That would be sixteen bits. Counting noise, in a tube, is nothing.
+
+Now shrink the container. One femtolitre is roughly the volume of a bacterium. At one nanomolar, a femtolitre holds, on average, less than one molecule. There, counting noise is everything, which is why gene expression in single cells is so ragged.
+
+So in the bulk experiments that make up nearly all of DNA computing today, your precision is not limited by physics at all. It is limited by you. Pipetting is good to perhaps one to five percent. The concentration printed on a tube of strands may be off by five or ten percent. Some fraction of every synthesised strand is truncated. Rate constants shift with sequence in ways that models only partly predict. And gates leak. Add those up, and a bulk DNA signal is good to somewhere between three and five bits.
+
+And here is the uncomfortable part. On a wire, you can buy precision with energy. In a tube, you cannot buy it with more molecules, because your errors are not random fluctuations that average away. They are systematic. A pipette that delivers three percent too much delivers three percent too much of every molecule. In a tube, precision is bought with calibration and with restoration, and not with material.
+
+[B] Three to five bits sounds hopeless for AI.
+
+It is less hopeless than it sounds, and phase three will show you why. A trained neural network making predictions gets by on four to eight bits per number. Some run on one or two. Training is more demanding, and we will come to that. But the match between what a tube naturally offers and what a trained network needs is the reason DNA neural networks exist at all.
+
+And notice that the hybrid recipe is one you have already met. The seesaw gate from lesson one point one adds concentrations together, in analog, for free. Then it applies a threshold and an amplifier, and the signal comes out clean. Compute a little in analog. Restore. Repeat. The most successful design in the field is a hybrid.
+
+Three sentences to keep. Each extra bit costs an analog system four times the energy, and a digital system one more wire, so analog wins below about six to eight bits and loses above. Analog errors pile up with depth, and digital errors are wiped at every gate. In a bulk tube your noise is systematic, so a DNA signal carries three to five bits, and you improve it by calibrating and restoring, not by adding molecules.
+
+[B] Your questions. One: why does halving the noise relative to the signal cost four times the energy? Two: in ten microlitres at one nanomolar, is counting noise your problem, and if not, what is? Three: state the hybrid strategy in a single sentence.
+
+---
+
+=== 2.7 ===
+# 2.7 What a bit costs: the thermodynamics of computation
+
+Is there a smallest possible price for a computation? Not a price in dollars. A price in energy, set by physics, that no engineer could ever get under?
+
+There is, and it is astonishingly small. And the machine that comes closest to it is not in any data centre. It is a molecular one. That sounds like wonderful news for DNA computing. By the end of this lesson, you will see why it is more complicated than that.
+
+Quick recall. Last lesson was about mortal computation. A DNA computer holds knowledge in two forms. Which form can be copied exactly, and which cannot?
+
+Sequence can be copied exactly: that is what a polymerase does. Concentrations cannot. The pattern of how much of each strand is in your tube dies with the tube.
+
+Now, the price of a bit. In nineteen sixty-one, Rolf Landauer at IBM asked what part of computing truly requires energy. His answer: erasing. When you wipe a bit, you take something that could have been in either of two states and force it into one. You have squeezed out a little disorder, and the second law says that disorder has to go somewhere. It goes out as heat. The minimum is k T times the natural log of two, where k T is the thermal energy you know from every Arrhenius plot. At room temperature that is about three times ten to the minus twenty-one joules. Three zeptojoules, to erase one bit.
+
+Then Charles Bennett, also at IBM, noticed a loophole. Only erasing has a minimum cost. If you compute without throwing information away, so that every step could be run backwards, there is no minimum at all. He called it reversible computing. The catch is speed. A reversible computer has to be nudged forward gently, and the more gently you push, the less you waste and the longer you wait.
+
+Bennett's favourite example should make you sit up. It was RNA polymerase. Here is a machine that walks along a template, reading one symbol and writing one symbol per step. It is driven forward by a modest chemical push. It can and does step backwards. By his estimate, it spends around twenty k T for each base it copies. Bennett called this a Brownian computer: one that drifts through its computation on thermal motion, with a slight bias to keep it going the right way. The thermodynamics of computing was worked out, in part, by looking at nucleic acids.
+
+[B] Twenty k T means nothing to me yet. Twenty compared with what?
+
+Let us build the ladder, from the floor up. I will give everything in units of k T, so you can compare.
+
+The floor, Landauer's limit: a little under one k T.
+
+A polymerase copying a base: tens of k T.
+
+One step of DNA strand displacement, the basic move of DNA computing: about ten to twenty k T. That is simply the binding energy of the short single-stranded toehold that drives the reaction.
+
+One transistor switching once, in a modern chip: of the order of ten thousand k T.
+
+One synaptic event in your brain, taking twenty watts spread over all your synapses: roughly a million k T, give or take a factor of ten.
+
+And one arithmetic operation on a graphics processor, counting everything it takes to run the chip: about ten to the minus twelve joules, which is a couple of hundred million k T.
+
+So, from a strand displacement step to a graphics processor operation, there are seven orders of magnitude. Ten million to one. On that ladder, DNA sits right next to the floor.
+
+[B] So DNA computing is ten million times more efficient than a GPU. Why isn't that the headline of every paper?
+
+Because that comparison cheats, and you need to be the person in the room who knows how.
+
+The figure of twenty k T is for one molecule doing one thing. But a DNA gate in a test tube is not one molecule. Take a typical experiment: a signal at one hundred nanomolar in twenty microlitres. Count the molecules. It is about ten to the twelfth: a million million copies. Every one of them goes through the reaction, and every one of them carries the same single bit.
+
+So multiply. A million million molecules, at fifteen k T each, comes to about ten to the minus seven joules for one logical operation. Compare that with the graphics processor at ten to the minus twelve. The bulk DNA gate is not ten million times better. It is a hundred thousand times worse.
+
+That is the honest account, and it tells you exactly where the opportunity is. Molecular computing is superbly efficient per molecular event, and ruinously wasteful when a million million molecules all say the same thing. There are two ways out.
+
+One: shrink the volume. Run the same gate in a droplet the size of a cell, with a few thousand molecules per signal, and the energy per operation drops by nine orders of magnitude. Then you really are far below silicon. The price, as you heard in lesson two point two, is that counting noise comes back.
+
+Two, and this one matters more: make every molecule do different work. Picture a tube of stored data, where each of those million million molecules holds a different record, and a single probe strand is searching all of them at once. Now each molecular event is a distinct, useful comparison, at twenty k T apiece. That is where DNA's energy advantage is real. Not in a gate. In a search.
+
+[B] And where does the energy come from in the first place? There is no plug on a test tube.
+
+It was put in before you started. The gates are built in a strained, high-energy arrangement, with bases left unpaired that would rather be paired. The computation is the system rolling downhill. Which means two things. The energy bill was paid when the strands were synthesised and assembled, and synthesis is expensive. And when the system reaches the bottom of the hill, it stops. That is why most DNA circuits run exactly once.
+
+There is one more piece of physics to carry with you: a three-way trade between speed, accuracy and energy. You met it in lesson one point nine as kinetic proofreading. A ribosome could be more accurate if it went slower, or if it burned more fuel checking its work. It cannot have all three. Every molecular computer lives somewhere on that triangle, and you get to choose where.
+
+Two recent results show how alive these questions are.
+
+In twenty twenty-five, Tianqi Song and Lulu Qian at Caltech showed that plain heat can serve as a universal power supply. Warm a spent circuit and cool it again, and the molecules fold back into their strained, loaded states. They recharged circuits of more than two hundred different molecular species within minutes, and ran at least sixteen rounds of computation, with fresh inputs each time. Heat in, computation out, and reset.
+
+And in September of this year, a team at Maynooth University in Ireland, led by Damien Woods, published what they call a thermodynamically favoured molecular computer. It goes the opposite way. Instead of holding the system far from equilibrium and guarding it against errors, they arrange things so that the correct answer is the equilibrium state. The computation is the relaxation. They ran ten programs, including the addition of two twenty-five-bit numbers. It can be reused dozens of times, small instances finish in under a minute, and it needs no error correction, because the answer is where the system wants to be anyway. That is Bennett's idea, built.
+
+So, three sentences. Physics sets a floor of about one k T per erased bit, and nucleic acid machinery works within a factor of tens of it. A bulk DNA gate throws that advantage away by using a million million molecules to carry one bit, so it costs more than silicon, not less. The advantage becomes real when volumes are tiny, or when every molecule does different work, which points toward search across stored data and away from copying silicon's logic gates.
+
+[B] Questions for the road. One: why does erasing a bit cost energy, when computing with it need not? Two: a strand displacement step costs about twenty k T and a graphics processor operation costs hundreds of millions. Why is a test tube gate still the more expensive of the two? Three: name the two ways to make DNA's energy advantage real.
+
+---

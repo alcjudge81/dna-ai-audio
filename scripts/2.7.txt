@@ -1,0 +1,65 @@
+# 2.7 What a bit costs: the thermodynamics of computation
+
+Is there a smallest possible price for a computation? Not a price in dollars. A price in energy, set by physics, that no engineer could ever get under?
+
+There is, and it is astonishingly small. And the machine that comes closest to it is not in any data centre. It is a molecular one. That sounds like wonderful news for DNA computing. By the end of this lesson, you will see why it is more complicated than that.
+
+Quick recall. Last lesson was about mortal computation. A DNA computer holds knowledge in two forms. Which form can be copied exactly, and which cannot?
+
+Sequence can be copied exactly: that is what a polymerase does. Concentrations cannot. The pattern of how much of each strand is in your tube dies with the tube.
+
+Now, the price of a bit. In nineteen sixty-one, Rolf Landauer at IBM asked what part of computing truly requires energy. His answer: erasing. When you wipe a bit, you take something that could have been in either of two states and force it into one. You have squeezed out a little disorder, and the second law says that disorder has to go somewhere. It goes out as heat. The minimum is k T times the natural log of two, where k T is the thermal energy you know from every Arrhenius plot. At room temperature that is about three times ten to the minus twenty-one joules. Three zeptojoules, to erase one bit.
+
+Then Charles Bennett, also at IBM, noticed a loophole. Only erasing has a minimum cost. If you compute without throwing information away, so that every step could be run backwards, there is no minimum at all. He called it reversible computing. The catch is speed. A reversible computer has to be nudged forward gently, and the more gently you push, the less you waste and the longer you wait.
+
+Bennett's favourite example should make you sit up. It was RNA polymerase. Here is a machine that walks along a template, reading one symbol and writing one symbol per step. It is driven forward by a modest chemical push. It can and does step backwards. By his estimate, it spends around twenty k T for each base it copies. Bennett called this a Brownian computer: one that drifts through its computation on thermal motion, with a slight bias to keep it going the right way. The thermodynamics of computing was worked out, in part, by looking at nucleic acids.
+
+[B] Twenty k T means nothing to me yet. Twenty compared with what?
+
+Let us build the ladder, from the floor up. I will give everything in units of k T, so you can compare.
+
+The floor, Landauer's limit: a little under one k T.
+
+A polymerase copying a base: tens of k T.
+
+One step of DNA strand displacement, the basic move of DNA computing: about ten to twenty k T. That is simply the binding energy of the short single-stranded toehold that drives the reaction.
+
+One transistor switching once, in a modern chip: of the order of ten thousand k T.
+
+One synaptic event in your brain, taking twenty watts spread over all your synapses: roughly a million k T, give or take a factor of ten.
+
+And one arithmetic operation on a graphics processor, counting everything it takes to run the chip: about ten to the minus twelve joules, which is a couple of hundred million k T.
+
+So, from a strand displacement step to a graphics processor operation, there are seven orders of magnitude. Ten million to one. On that ladder, DNA sits right next to the floor.
+
+[B] So DNA computing is ten million times more efficient than a GPU. Why isn't that the headline of every paper?
+
+Because that comparison cheats, and you need to be the person in the room who knows how.
+
+The figure of twenty k T is for one molecule doing one thing. But a DNA gate in a test tube is not one molecule. Take a typical experiment: a signal at one hundred nanomolar in twenty microlitres. Count the molecules. It is about ten to the twelfth: a million million copies. Every one of them goes through the reaction, and every one of them carries the same single bit.
+
+So multiply. A million million molecules, at fifteen k T each, comes to about ten to the minus seven joules for one logical operation. Compare that with the graphics processor at ten to the minus twelve. The bulk DNA gate is not ten million times better. It is a hundred thousand times worse.
+
+That is the honest account, and it tells you exactly where the opportunity is. Molecular computing is superbly efficient per molecular event, and ruinously wasteful when a million million molecules all say the same thing. There are two ways out.
+
+One: shrink the volume. Run the same gate in a droplet the size of a cell, with a few thousand molecules per signal, and the energy per operation drops by nine orders of magnitude. Then you really are far below silicon. The price, as you heard in lesson two point two, is that counting noise comes back.
+
+Two, and this one matters more: make every molecule do different work. Picture a tube of stored data, where each of those million million molecules holds a different record, and a single probe strand is searching all of them at once. Now each molecular event is a distinct, useful comparison, at twenty k T apiece. That is where DNA's energy advantage is real. Not in a gate. In a search.
+
+[B] And where does the energy come from in the first place? There is no plug on a test tube.
+
+It was put in before you started. The gates are built in a strained, high-energy arrangement, with bases left unpaired that would rather be paired. The computation is the system rolling downhill. Which means two things. The energy bill was paid when the strands were synthesised and assembled, and synthesis is expensive. And when the system reaches the bottom of the hill, it stops. That is why most DNA circuits run exactly once.
+
+There is one more piece of physics to carry with you: a three-way trade between speed, accuracy and energy. You met it in lesson one point nine as kinetic proofreading. A ribosome could be more accurate if it went slower, or if it burned more fuel checking its work. It cannot have all three. Every molecular computer lives somewhere on that triangle, and you get to choose where.
+
+Two recent results show how alive these questions are.
+
+In twenty twenty-five, Tianqi Song and Lulu Qian at Caltech showed that plain heat can serve as a universal power supply. Warm a spent circuit and cool it again, and the molecules fold back into their strained, loaded states. They recharged circuits of more than two hundred different molecular species within minutes, and ran at least sixteen rounds of computation, with fresh inputs each time. Heat in, computation out, and reset.
+
+And in September of this year, a team at Maynooth University in Ireland, led by Damien Woods, published what they call a thermodynamically favoured molecular computer. It goes the opposite way. Instead of holding the system far from equilibrium and guarding it against errors, they arrange things so that the correct answer is the equilibrium state. The computation is the relaxation. They ran ten programs, including the addition of two twenty-five-bit numbers. It can be reused dozens of times, small instances finish in under a minute, and it needs no error correction, because the answer is where the system wants to be anyway. That is Bennett's idea, built.
+
+So, three sentences. Physics sets a floor of about one k T per erased bit, and nucleic acid machinery works within a factor of tens of it. A bulk DNA gate throws that advantage away by using a million million molecules to carry one bit, so it costs more than silicon, not less. The advantage becomes real when volumes are tiny, or when every molecule does different work, which points toward search across stored data and away from copying silicon's logic gates.
+
+[B] Questions for the road. One: why does erasing a bit cost energy, when computing with it need not? Two: a strand displacement step costs about twenty k T and a graphics processor operation costs hundreds of millions. Why is a test tube gate still the more expensive of the two? Three: name the two ways to make DNA's energy advantage real.
+
+---

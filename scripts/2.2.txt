@@ -1,0 +1,55 @@
+# 2.2 The precision bill
+
+Here is a puzzle. In the nineteen fifties, analog computers were solving differential equations in real time with a few hundred components. A digital machine of the day needed a room full of hardware to do the same job worse. Twenty years later, analog computers were museum pieces. What killed them was not speed, and it was not cost. It was a bill that grows faster than anyone can pay. Call it the precision bill.
+
+Quick recall. Last lesson I claimed that a chemical reaction network is an analog computer. What are its state variables, and what does the integrating?
+
+The state variables are concentrations, and mass-action kinetics does the integrating. Nobody has to build an integrator. The chemistry is one.
+
+Now the bill. Begin with a fact you cannot engineer away: every physical signal jitters. A voltage on a wire trembles with the thermal motion of its electrons. A pressure reading wanders. So an analog value is never a point. It is a small blurred range. And that blur sets how many different values you can tell apart.
+
+Suppose your signal runs from zero to one volt, and the blur is a hundredth of a volt. Then you can distinguish about a hundred levels. In the language of lesson one point eight, a hundred levels is a little under seven bits. To get one more bit, you need two hundred levels, which means cutting the blur in half relative to the signal.
+
+Here is where the bill arrives. Thermal noise has a fixed power, set by the temperature. You cannot turn it down without a refrigerator. So the only way to halve the blur relative to the signal is to make the signal twice as large. And power goes as the square of amplitude. Twice the voltage is four times the power.
+
+One more bit costs four times the energy. Say that again, because it is the single most important number in this phase: in a noise-limited analog system, each extra bit of precision costs four times the energy.
+
+Follow that out. Ten bits costs four multiplied by itself ten times, which is about a million times the energy of one bit. Twenty bits costs a million million times. That is exponential growth, and exponential bills do not get paid.
+
+Now do the same sum for a digital machine. You want one more bit of precision in a number? Add one more wire, carrying one more two-level signal, at the same modest energy as all the others. Ten bits costs about ten times what one bit costs. Multiplying two numbers is a little worse, growing roughly as the square of the number of bits, but that is still gentle. The digital bill grows like a staircase. The analog bill grows like an explosion.
+
+[B] Then why would anyone ever use analog?
+
+Because at the low end, the comparison runs the other way, and by a wide margin. To add two numbers in analog, you join two wires and the currents add. That is the whole adder: a junction. A digital adder at even modest precision takes dozens of gates. To multiply in analog, you can use a single device whose output depends on the product of two inputs. So at low precision, analog can be ten or a hundred or a thousand times cheaper, in parts and in energy.
+
+Put the two curves on one graph and they cross. Rahul Sarpeshkar worked this out carefully in a classic nineteen ninety-eight paper, which is the next item in this phase. The crossing point depends on the details, but it sits somewhere around six to eight bits, which is roughly one percent accuracy. Below that, analog wins. Above it, digital wins, and the further above, the more crushing the win.
+
+There is a second charge on the bill, and it concerns depth. In an analog machine, every stage adds its own little error and passes along the errors it received. After a hundred stages, they have piled up. A digital machine, as you heard in lesson one point one, wipes the error clean at every gate. So analog is not only limited in precision. It is limited in how many steps you can chain before the answer dissolves.
+
+Put those together and you have the rule of thumb for the whole course. Analog is for computations that are shallow and tolerant. Digital is for computations that are deep or exact.
+
+Sarpeshkar drew one more conclusion, and it is the one to hold on to. The best machines are hybrids. Do a little computing in analog, where it is cheap. Then snap the result back to one of a few clean levels, which is restoration. Then compute a little more. He argued that this is what neurons do: they sum their inputs in analog, and then fire an all-or-nothing spike.
+
+[B] So bring it home. Where does the noise in my tube come from? Is it thermal, like the wire?
+
+Good question, and the answer surprises people. In chemistry the obvious noise source is counting. If a signal is carried by N molecules, random fluctuation is about the square root of N. So the relative blur is one over the square root of N.
+
+Run the number for a real experiment. Ten microlitres at one nanomolar. That is about six billion molecules. The square root of six billion is about eighty thousand. So the counting noise is one part in eighty thousand. That would be sixteen bits. Counting noise, in a tube, is nothing.
+
+Now shrink the container. One femtolitre is roughly the volume of a bacterium. At one nanomolar, a femtolitre holds, on average, less than one molecule. There, counting noise is everything, which is why gene expression in single cells is so ragged.
+
+So in the bulk experiments that make up nearly all of DNA computing today, your precision is not limited by physics at all. It is limited by you. Pipetting is good to perhaps one to five percent. The concentration printed on a tube of strands may be off by five or ten percent. Some fraction of every synthesised strand is truncated. Rate constants shift with sequence in ways that models only partly predict. And gates leak. Add those up, and a bulk DNA signal is good to somewhere between three and five bits.
+
+And here is the uncomfortable part. On a wire, you can buy precision with energy. In a tube, you cannot buy it with more molecules, because your errors are not random fluctuations that average away. They are systematic. A pipette that delivers three percent too much delivers three percent too much of every molecule. In a tube, precision is bought with calibration and with restoration, and not with material.
+
+[B] Three to five bits sounds hopeless for AI.
+
+It is less hopeless than it sounds, and phase three will show you why. A trained neural network making predictions gets by on four to eight bits per number. Some run on one or two. Training is more demanding, and we will come to that. But the match between what a tube naturally offers and what a trained network needs is the reason DNA neural networks exist at all.
+
+And notice that the hybrid recipe is one you have already met. The seesaw gate from lesson one point one adds concentrations together, in analog, for free. Then it applies a threshold and an amplifier, and the signal comes out clean. Compute a little in analog. Restore. Repeat. The most successful design in the field is a hybrid.
+
+Three sentences to keep. Each extra bit costs an analog system four times the energy, and a digital system one more wire, so analog wins below about six to eight bits and loses above. Analog errors pile up with depth, and digital errors are wiped at every gate. In a bulk tube your noise is systematic, so a DNA signal carries three to five bits, and you improve it by calibrating and restoring, not by adding molecules.
+
+[B] Your questions. One: why does halving the noise relative to the signal cost four times the energy? Two: in ten microlitres at one nanomolar, is counting noise your problem, and if not, what is? Three: state the hybrid strategy in a single sentence.
+
+---
