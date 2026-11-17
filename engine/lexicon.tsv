@@ -1,0 +1,17 @@
+# regex<TAB>spoken form. Applied to audio only; scripts keep real spellings.
+\bBINND\b	bind
+\bQian\b	Chee-en
+\bReLU\b	rell-you
+\bPyTorch\b	pie torch
+\bNUPACK\b	new pack
+\bAdleman\b	Aydelman
+\bLandauer\b	Lan-dower
+\bSoloveichik\b	Solo-vay-chick
+\bSeelig\b	See-lig
+\bSarpeshkar\b	Sar-pesh-kar
+\bStérin\b	Stair-an
+\bPrimer3\b	Primer three
+\bRoBERTa\b	Roberta
+\bCALCUL\b	cal-cul
+\bSciPy\b	sigh pie
+\bNumPy\b	num pie

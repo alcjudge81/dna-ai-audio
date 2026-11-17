@@ -1,0 +1,7 @@
+__pycache__/
+*.tmp.wav
+*.part.mp3
+.render.lock
+render.log
+site/shot.png
+STOP_RENDER

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DNA Computing Audio Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: one narrow column; each phase is a ruled section; each item is a compact row that opens in place. */
+:root{--bg:#F2F5F7;--surface:#FFFFFF;--ink:#15202B;--muted:#586675;--line:#D3DBE2;--accent:#0E6A73;--accent-ink:#FFFFFF;--signal:#A54B08;
+--font-display:"Bricolage Grotesque","Arial Narrow",Arial,sans-serif;--font-body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;--font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E141A;--surface:#17202A;--ink:#E5ECF2;--muted:#9BA9B6;--line:#2A3743;--accent:#55C4CF;--accent-ink:#05262A;--signal:#F1A75B;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E141A;--surface:#17202A;--ink:#E5ECF2;--muted:#9BA9B6;--line:#2A3743;--accent:#55C4CF;--accent-ink:#05262A;--signal:#F1A75B;color-scheme:dark}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.5}
+main{max-width:680px;margin:0 auto;padding:26px 18px 60px;display:flex;flex-direction:column;gap:24px}
+header{display:flex;flex-direction:column;gap:10px}
+.kicker{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:700;font-size:34px;line-height:1.08;margin:0;text-wrap:balance}
+h2{font-family:var(--font-display);font-weight:600;font-size:23px;line-height:1.2;margin:0;text-wrap:balance}
+p{margin:0}.lede{color:var(--muted);max-width:62ch}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:2px}
+.tile .big{font-family:var(--font-display);font-weight:700;font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .lab{font-size:14px;color:var(--muted)}
+.controls{display:flex;flex-direction:column;gap:10px}
+.seg{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg span{font-family:var(--font-mono);font-size:12.5px;color:var(--muted);min-width:52px}
+.seg button,.jump button{font-family:var(--font-mono);font-size:13.5px;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.next{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.next .lab{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
+.next .t{font-weight:600;font-size:18px;line-height:1.3}
+.how{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.how summary{cursor:pointer;font-weight:600}.how ul{margin:10px 0 2px;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.jump{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.jump span{font-family:var(--font-mono);font-size:12.5px;color:var(--muted)}
+.phase{display:flex;flex-direction:column;gap:8px;border-top:3px solid var(--ink);padding-top:16px}
+.phase .goal{color:var(--muted);max-width:62ch}.phase .meta{font-family:var(--font-mono);font-size:12.5px;color:var(--muted)}
+.list{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;padding:11px 0;border-top:1px solid var(--line)}
+.row[hidden]{display:none}
+.row input[type=checkbox]{width:22px;height:22px;margin:3px 0 0;accent-color:var(--accent)}
+.row details>summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.row details>summary::-webkit-details-marker{display:none}
+.sline{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.chip{border:1px solid var(--line);border-radius:4px;padding:1px 6px;color:var(--ink);background:var(--surface)}
+.row.k-lesson .chip{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tag{color:var(--signal);border:1px dashed var(--signal);border-radius:4px;padding:0 5px}
+.title{font-weight:500;font-size:16.5px;line-height:1.3;overflow-wrap:anywhere}
+.row.depth .title{font-weight:400}
+.row.done .title{color:var(--muted);text-decoration:line-through}
+.panel{display:flex;flex-direction:column;gap:10px;padding:10px 0 4px}
+.panel p{max-width:64ch}.source,.note{font-size:14.5px;color:var(--muted)}.pairs{font-family:var(--font-mono);font-size:12.5px;color:var(--muted)}
+.btn{display:inline-block;font-family:var(--font-body);font-weight:500;font-size:15px;line-height:1.2;padding:9px 14px;border-radius:8px;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink);text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.links{display:flex;flex-direction:column;gap:8px}.link{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chk{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.nlm{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--surface);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.nlm-h{font-family:var(--font-mono);font-size:12.5px;color:var(--accent)}
+.nlm textarea{width:100%;font-family:var(--font-body);font-size:14px;line-height:1.45;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;resize:vertical}
+.script{border-left:3px solid var(--line);padding-left:12px;display:flex;flex-direction:column;gap:10px;font-size:16px}
+.script p.vb{color:var(--accent);font-weight:500}.script hr{border:0;border-top:1px solid var(--line);width:100%;margin:2px 0}
+audio{width:100%;height:44px}
+footer{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:6px}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="kicker">Personal course · Keung lab, NC State</div>
+<h1>DNA Computing Audio Course</h1>
+<p class="lede" id="lede">Seven phases, from what a computer is to what AI in DNA would take.</p>
+</header>
+<section aria-label="Progress" class="controls">
+<div class="tiles">
+<div class="tile"><div class="big" id="t-core">0</div><div class="lab" id="l-core">core items done</div></div>
+<div class="tile"><div class="big" id="t-depth">0</div><div class="lab" id="l-depth">depth items done</div></div>
+</div>
+<div class="seg" role="group" aria-label="Which items to show"><span>Show</span>
+<button type="button" id="v-all" data-view="all" aria-pressed="true">Core and depth</button>
+<button type="button" id="v-core" data-view="core" aria-pressed="false">Core only</button>
+<button type="button" id="v-depth" data-view="depth" aria-pressed="false">Depth left</button></div>
+<div class="seg" role="group" aria-label="Playback speed for lessons on this page"><span>Speed</span>
+<button type="button" id="r-100" data-rate="1" aria-pressed="false">1×</button>
+<button type="button" id="r-125" data-rate="1.25" aria-pressed="true">1.25×</button>
+<button type="button" id="r-150" data-rate="1.5" aria-pressed="false">1.5×</button></div>
+</section>
+<section class="next" aria-label="Next up"><div class="lab">Next on the core path</div><div class="t" id="next-t">Loading.</div><div class="source" id="next-m"></div><button type="button" class="btn" id="next-b">Go to it</button></section>
+<details class="how"><summary>How to use this page</summary>
+<ul>
+<li>Lessons play here. Once you follow the course feed in your podcast app, listen there instead: it keeps playing with the phone locked.</li>
+<li>Papers: open the link, save the PDF, add it to a NotebookLM notebook, choose Deep Dive and the length shown, paste the focus prompt, and generate.</li>
+<li>Depth items are optional. Tick what you finish. Depth left lists the ones you skipped, so you can come back.</li>
+<li>Each link says how it was checked. A search link opens a search for the item until a direct link has been verified.</li>
+</ul></details>
+<nav class="jump" aria-label="Jump to a phase" id="jump"><span>Phase</span></nav>
+<div id="phases"></div>
+<footer><div>Links were checked on 16 November 2026. Paper records and DOIs come from PubMed.</div><div>Progress and speed are saved in this browser only.</div><div id="upd"></div></footer>
+</main>
+<script id="course-data" type="application/json">__DATA__</script>
+<script>
+(function(){
+var D=JSON.parse(document.getElementById("course-data").textContent);
+var store={done:{},view:"all",rate:1.25};
+try{var s=localStorage.getItem("dnaCourseV1");if(s){var o=JSON.parse(s);if(o&&typeof o==="object"){store.done=o.done||{};store.view=o.view||"all";store.rate=o.rate||1.25;}}}catch(e){}
+function save(){try{localStorage.setItem("dnaCourseV1",JSON.stringify(store));}catch(e){}}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls){e.className=cls;}if(text!=null){e.textContent=text;}return e;}
+function fmt(m){if(m<60){return m+" min";}var h=Math.floor(m/60),r=m%60;return h+" h"+(r?" "+r+" min":"");}
+function hrs(m){return Math.round(m/60)+" h";}
+function rid(id){return "item-"+id.replace(".","-");}
+var KIND={lesson:"Lesson",podcast:"Podcast",audiobook:"Audiobook",paper:"Paper",article:"Article",video:"Video",lab:"Desk lab"};
+var CHECK={opened:"opened 16 Nov",indexed:"found by search 16 Nov",record:"database record",pattern:"address pattern checked",search:"search link, direct link to follow"};
+var all=[],phasesEl=document.getElementById("phases"),jump=document.getElementById("jump");
+function blobFallback(a,src,note){if(a.getAttribute("data-tried")){note.textContent="The audio could not load here. Use the podcast feed instead.";return;}a.setAttribute("data-tried","1");
+fetch(src).then(function(r){if(!r.ok){throw new Error("HTTP "+r.status);}return r.blob();}).then(function(b){a.src=URL.createObjectURL(b);a.load();}).catch(function(e){note.textContent="The audio could not load here ("+e.message+"). Use the podcast feed instead.";});}
+function panel(it){var p=el("div","panel");
+if(it.source){p.appendChild(el("p","source",it.source));}
+if(it.sum){p.appendChild(el("p",null,it.sum));}
+if(it.why){p.appendChild(el("p",null,it.why));}
+if(it.pairs){p.appendChild(el("p","pairs","Pairs with "+it.pairs));}
+if(it.kind==="lesson"){
+if(it.audio){var a=el("audio"),an=el("p","note","");a.controls=true;a.preload="none";a.src="audio/"+it.id+".mp3";
+a.addEventListener("play",function(){try{a.playbackRate=store.rate;}catch(e){}try{if("mediaSession" in navigator&&window.MediaMetadata){navigator.mediaSession.metadata=new MediaMetadata({title:it.id+" "+it.title,artist:"DNA Computing Audio Course"});}}catch(e){}});
+a.addEventListener("error",function(){blobFallback(a,"audio/"+it.id+".mp3",an);});p.appendChild(a);p.appendChild(an);}
+else{p.appendChild(el("p","note",it.script?"Script written. Audio not rendered yet.":"Script not written yet."));}
+if(it.script){var b=el("button","btn ghost","Read the script"),box=el("div","script");b.type="button";box.hidden=true;
+b.addEventListener("click",function(){if(!box.hidden){box.hidden=true;b.textContent="Read the script";return;}box.hidden=false;b.textContent="Hide the script";
+if(!box.getAttribute("data-loaded")){box.textContent="Loading.";fetch("scripts/"+it.id+".txt").then(function(r){if(!r.ok){throw new Error("HTTP "+r.status);}return r.text();}).then(function(t){box.textContent="";box.setAttribute("data-loaded","1");
+t.split(/\n\s*\n/).forEach(function(par){par=par.trim();if(!par||par.charAt(0)==="#"){return;}if(par==="---"){box.appendChild(el("hr"));return;}var isB=par.indexOf("[B]")===0;box.appendChild(el("p",isB?"vb":null,par.replace(/^\[[AB]\]\s*/,"")));});
+}).catch(function(e){box.textContent="The script could not load ("+e.message+").";});}});
+p.appendChild(b);p.appendChild(box);}}
+if(it.nlm){var n=el("div","nlm"),full=D.preamble+" "+it.nlm.focus,ta=el("textarea"),c=el("button","btn","Copy prompt");
+n.appendChild(el("div","nlm-h","NotebookLM · "+it.nlm.format+" · "+it.nlm.length+" length"));
+ta.readOnly=true;ta.value=full;ta.rows=7;ta.id="nlm-"+it.id.replace(".","-");ta.setAttribute("aria-label","NotebookLM focus prompt");c.type="button";
+c.addEventListener("click",function(){function ok(){c.textContent="Copied";setTimeout(function(){c.textContent="Copy prompt";},1500);}function manual(){ta.focus();ta.select();c.textContent="Select all, then copy";}
+try{navigator.clipboard.writeText(full).then(ok,manual);}catch(e){manual();}});
+n.appendChild(ta);n.appendChild(c);p.appendChild(n);}
+if(it.note){p.appendChild(el("p","note",it.note));}
+if(it.links&&it.links.length){var L=el("div","links");it.links.forEach(function(l){var w=el("div","link"),a2=el("a","btn",l.label);a2.href=l.url;a2.target="_blank";a2.rel="noopener";w.appendChild(a2);w.appendChild(el("span","chk",CHECK[l.check]||""));L.appendChild(w);});p.appendChild(L);}
+return p;}
+function row(it){var r=el("div","row "+it.track+" k-"+it.kind),cb=el("input"),d=el("details"),s=el("summary"),top=el("span","sline"),filled=false;
+r.id=rid(it.id);cb.type="checkbox";cb.id="cb-"+it.id.replace(".","-");cb.checked=!!store.done[it.id];cb.setAttribute("aria-label","Done: "+it.title);
+cb.addEventListener("change",function(){if(cb.checked){store.done[it.id]=1;}else{delete store.done[it.id];}save();refresh();});
+top.appendChild(el("span","chip",KIND[it.kind]||it.kind));top.appendChild(el("span",null,it.id));
+if(it.track==="depth"){top.appendChild(el("span","tag",it.pick?"Depth pick":"Depth"));}
+top.appendChild(el("span",null,fmt(it.mins)));s.appendChild(top);s.appendChild(el("span","title",it.title));d.appendChild(s);
+d.addEventListener("toggle",function(){if(d.open&&!filled){filled=true;d.appendChild(panel(it));}});
+r.appendChild(cb);r.appendChild(d);return r;}
+D.phases.forEach(function(ph){var sec=el("section","phase"),list=el("div","list"),cm=0,cn=0,dn=0,jb=el("button",null,String(ph.n));
+sec.id="phase-"+ph.n;sec.appendChild(el("h2",null,"Phase "+ph.n+": "+ph.title));sec.appendChild(el("p","goal",ph.goal));
+ph.items.forEach(function(it){all.push(it);list.appendChild(row(it));if(it.track==="core"){cn++;cm+=it.mins;}else{dn++;}});
+sec.appendChild(el("p","meta",cn+" core items, "+fmt(cm)+(dn?" · "+dn+" depth items":"")));sec.appendChild(list);phasesEl.appendChild(sec);
+jb.type="button";jb.id="j-"+ph.n;jb.setAttribute("aria-label","Go to phase "+ph.n);jb.addEventListener("click",function(){sec.scrollIntoView({behavior:"smooth",block:"start"});});jump.appendChild(jb);});
+function openItem(it){var r=document.getElementById(rid(it.id));if(!r){return;}if(r.hidden){store.view="all";save();refresh();}var d=r.querySelector("details");d.open=true;r.scrollIntoView({behavior:"smooth",block:"center"});}
+var nextIt=null;document.getElementById("next-b").addEventListener("click",function(){if(nextIt){openItem(nextIt);}});
+function refresh(){var cN=0,cD=0,dN=0,dD=0,cM=0,dM=0,aM=0;nextIt=null;
+all.forEach(function(it){var d=!!store.done[it.id],r=document.getElementById(rid(it.id));
+if(it.track==="core"){cN++;cM+=it.mins;if(it.kind!=="lab"){aM+=it.mins;}if(d){cD++;}else if(!nextIt){nextIt=it;}}else{dN++;dM+=it.mins;if(d){dD++;}}
+r.classList.toggle("done",d);r.hidden=(store.view==="core"&&it.track==="depth")||(store.view==="depth"&&(it.track==="core"||d));});
+document.getElementById("t-core").textContent=cD+" / "+cN;document.getElementById("l-core").textContent="core items done";
+document.getElementById("t-depth").textContent=dD+" / "+dN;document.getElementById("l-depth").textContent="depth items done";
+document.getElementById("lede").textContent="Seven phases, from what a computer is to what AI in DNA would take. The core path is about "+hrs(aM)+" of audio and "+hrs(cM-aM)+" at a desk. Depth adds about "+hrs(dM)+".";
+document.getElementById("next-t").textContent=nextIt?(nextIt.id+" "+nextIt.title):"Core path complete.";
+document.getElementById("next-m").textContent=nextIt?((KIND[nextIt.kind]||"")+" · "+fmt(nextIt.mins)):"";
+document.getElementById("next-b").hidden=!nextIt;
+["all","core","depth"].forEach(function(v){document.getElementById("v-"+v).setAttribute("aria-pressed",store.view===v?"true":"false");});
+[["r-100",1],["r-125",1.25],["r-150",1.5]].forEach(function(x){document.getElementById(x[0]).setAttribute("aria-pressed",store.rate===x[1]?"true":"false");});}
+["all","core","depth"].forEach(function(v){document.getElementById("v-"+v).addEventListener("click",function(){store.view=v;save();refresh();});});
+[["r-100",1],["r-125",1.25],["r-150",1.5]].forEach(function(x){document.getElementById(x[0]).addEventListener("click",function(){store.rate=x[1];save();refresh();Array.prototype.forEach.call(document.querySelectorAll("audio"),function(a){try{a.playbackRate=store.rate;}catch(e){}});});});
+document.getElementById("upd").textContent="Syllabus updated "+D.updated+".";
+refresh();
+})();
+</script>
+</body>
+</html>

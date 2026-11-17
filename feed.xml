@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel>
+<title>DNA Computing Audio Course</title>
+<link>https://alcjudge81.github.io/dna-ai-audio/</link>
+<language>en-us</language>
+<description>A personal audio course on computing, analog and digital machines, how AI models are built, and molecular computing. Lessons are numbered in listening order.</description>
+<itunes:author>DNA Computing Audio Course</itunes:author>
+<itunes:type>serial</itunes:type>
+<itunes:explicit>false</itunes:explicit>
+<itunes:image href="https://alcjudge81.github.io/dna-ai-audio/cover.jpg"/>
+<itunes:category text="Education"/>
+<itunes:block>Yes</itunes:block>
+</channel>
+</rss>
