@@ -145,7 +145,7 @@ Depth. Reinforcement learning in outline (policy, reward, exploration); evolutio
 
 ## Phase 4: Building models like BINND, with Claude
 
-### 4.2 BINND dissected: a design review (core, about 18 min)
+### 4.2 BINND dissected: a design review (core, about 10 min)
 
 KEYSTONE. All CHECKED against the paper. Task: do two 20-base strands bind in a pulldown. Data: 26 biotinylated bait 20-mers (pairwise Hamming distance at least 10) against a prey library; capture on streptavidin beads; NovaSeq; 28 conditions in triplicate; balanced set of about 144.6 million unique pairs; binary labels. Encoding: one-hot 4 by 40, the two strands interleaved so complementary positions are adjacent. Model: five convolutional and three fully connected layers, ReLU, batch normalisation, dropout; 4,467,969 parameters; BINND-Lite 1,092,225; PyTorch 2.6. Training: stratified random 8:1:1 split; Ray Tune with ASHA; early stopping, patience two; L40S GPUs. Results on about 14.5 million test pairs: 83 percent accuracy, area under the ROC curve 0.88; at threshold 0.5 it is conservative (few false positives, about 73 percent of true binders found). Baselines: NUPACK 0.73, Primer3 0.79, Levenshtein 0.74; a network trained on simulated free energies 66 percent. Speed: 54 times NUPACK, 7 times Primer3 on a GPU. Generalisation: training on few baits gives 0.55, about eleven baits 0.8; salt robust. Transformer: plus 0.1 percent at 13.5 times the training time. Use: a 26 by 96 bait-prey network of storybook characters, verified by pulldown. Limits: 20 bases only, binary label, one assay, random split (3-mer Jaccard check), 26 baits. Close with questions to ask of any such paper and five extensions.
 
@@ -207,11 +207,11 @@ Domains; toehold (four to eight bases) and branch-migration domain; mechanism; r
 
 Reaction network = species, reactions, rate constants. Two semantics: deterministic equations at high counts, stochastic at low. Three computing styles: analog steady state; rate-independent computation, whose answers do not depend on rates and which computes exactly the continuous piecewise-linear functions (so minimum, maximum and ReLU are natural); stochastic networks, universal with small error. DNA as universal substrate (2010): each formal reaction becomes a few displacement steps with fuel; cost in strands; accuracy limits. Built examples: consensus (Chen 2013), oscillator (Srinivas 2017). A chemical engineer's advantage: steady states, stability, residence times.
 
-### 5.6 Digital circuits in a test tube, and the scaling wall (core, about 15 min)
+### 5.6 Digital circuits in a test tube, and the scaling wall (core, about 7 min)
 
 Seesaw gate: threshold soaks up input until exhausted; catalysis with fuel amplifies to full output: restoration. Dual-rail logic. Square-root circuit, 130 strands, hours (Qian and Winfree 2011). Six walls: leak grows with gate count; finite orthogonal sequence space; concentration per species falls as species rise, so speed falls; strand quality and cost; single use; hard to observe. Routes round each: leakless design, localisation, enzymes, compartments, heat recharge, learned predictors of cross-binding (BINND).
 
-### 5.8 DNA neural networks I: how a tube computes a weighted sum (core, about 15 min)
+### 5.8 DNA neural networks I: how a tube computes a weighted sum (core, about 8 min)
 
 Inputs as strands; weights as concentrations of weight molecules; sum is free because converted strands are identical; nonlinearity by threshold and amplification; negative weights need dual rail or annihilation. 2011: four neurons (Qian, Winfree, Bruck). 2018 winner-take-all (CHECKED): weighted sums per class, pairwise annihilation until one remains, restoration reports it; up to nine classes; each pattern 20 molecules chosen from 100 representing a ten by ten image; correct with up to 30 of 100 bits flipped. In machine-learning terms: a single layer, nearest-template classifier with weights computed in software by averaging.
 

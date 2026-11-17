@@ -1163,11 +1163,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "BINND dissected: a design review",
-     "mins": 18,
+     "mins": 10,
      "sum": "The paper taken apart decision by decision: framing, data, encoding, architecture, training, evaluation and limits, with the questions to ask of any model like it.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "4.3",
@@ -1548,11 +1548,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "Digital circuits in a test tube, and the scaling wall",
-     "mins": 15,
+     "mins": 7,
      "sum": "How seesaw gates restore signals, what the square-root circuit proved, and the six reasons well-mixed circuits stop growing.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "5.7",
@@ -1583,11 +1583,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "DNA neural networks I: how a tube computes a weighted sum",
-     "mins": 15,
+     "mins": 8,
      "sum": "Weights as concentrations, sums for free, thresholds and winner-take-all, and what kind of classifier the 2018 network really is.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "5.9",

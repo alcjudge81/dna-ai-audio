@@ -132,5 +132,38 @@
 <itunes:episode>17</itunes:episode>
 <itunes:episodeType>full</itunes:episodeType>
 </item>
+<item>
+<title>4.2 BINND dissected: a design review</title>
+<description>The paper taken apart decision by decision: framing, data, encoding, architecture, training, evaluation and limits, with the questions to ask of any model like it.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/4.2.mp3" length="3436093" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-4.2</guid>
+<pubDate>Mon, 16 Nov 2026 13:03:00 +0000</pubDate>
+<itunes:duration>573</itunes:duration>
+<itunes:season>4</itunes:season>
+<itunes:episode>2</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>5.6 Digital circuits in a test tube, and the scaling wall</title>
+<description>How seesaw gates restore signals, what the square-root circuit proved, and the six reasons well-mixed circuits stop growing.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/5.6.mp3" length="2674930" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-5.6</guid>
+<pubDate>Mon, 16 Nov 2026 13:27:00 +0000</pubDate>
+<itunes:duration>446</itunes:duration>
+<itunes:season>5</itunes:season>
+<itunes:episode>6</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>5.8 DNA neural networks I: how a tube computes a weighted sum</title>
+<description>Weights as concentrations, sums for free, thresholds and winner-take-all, and what kind of classifier the 2018 network really is.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/5.8.mp3" length="2930678" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-5.8</guid>
+<pubDate>Mon, 16 Nov 2026 13:29:00 +0000</pubDate>
+<itunes:duration>488</itunes:duration>
+<itunes:season>5</itunes:season>
+<itunes:episode>8</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
 </channel>
 </rss>
