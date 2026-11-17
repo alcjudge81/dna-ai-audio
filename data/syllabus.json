@@ -2841,11 +2841,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "Open problems, and how to choose yours",
-     "mins": 17,
+     "mins": 8,
      "sum": "Ten open problems, what a result on each would look like, and a way of choosing among them that uses what a chemical engineer is good at.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "6.6",

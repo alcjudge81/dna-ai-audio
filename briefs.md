@@ -253,7 +253,7 @@ KEYSTONE. Seven routes, each with what is shown, what binds, the tenfold levers.
 
 Budget for input and output: synthesis (cost per base, days), enzymatic synthesis, premade libraries assembled combinatorially, epigenetic writing (2024: 350 bits per reaction); dispensing; reading by fluorescence, sequencing, nanopore. The clock: stepped protocols, thermal cycling, microfluidics; cycle times of minutes. Design consequences: few fat steps, sparse read-out, state kept in molecules, the robot as part of the computer. A cost model: dollars per cycle plus dollars per molecule-operation.
 
-### 6.5 Open problems, and how to choose yours (core, about 17 min)
+### 6.5 Open problems, and how to choose yours (core, about 8 min)
 
 KEYSTONE. Ten open problems with what a result looks like: cross-binding prediction at scale; reusable clocked circuits for hundreds of cycles; error-driven learning in vitro; automated hybrid training loops; AI primitives inside storage; calibrated analog sums to five or six bits; a compiler from a trained network to strands with cost estimates; benchmarks and metrics; addressable compartment arrays; equilibrium computing for sampling and optimisation. Choosing: importance, tractability, your edge (kinetics, transport, reactor thinking, scale-up, automation, process economics); prefer problems where a negative result teaches; build the measurement first; set kill criteria.
 

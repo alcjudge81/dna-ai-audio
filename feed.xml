@@ -231,5 +231,16 @@
 <itunes:episode>4</itunes:episode>
 <itunes:episodeType>full</itunes:episodeType>
 </item>
+<item>
+<title>6.5 Open problems, and how to choose yours</title>
+<description>Ten open problems, what a result on each would look like, and a way of choosing among them that uses what a chemical engineer is good at.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/6.5.mp3" length="2995315" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-6.5</guid>
+<pubDate>Mon, 16 Nov 2026 14:23:00 +0000</pubDate>
+<itunes:duration>499</itunes:duration>
+<itunes:season>6</itunes:season>
+<itunes:episode>5</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
 </channel>
 </rss>
