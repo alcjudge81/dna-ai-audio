@@ -165,5 +165,38 @@
 <itunes:episode>8</itunes:episode>
 <itunes:episodeType>full</itunes:episodeType>
 </item>
+<item>
+<title>5.10 DNA neural networks II: analog accuracy, reuse and learning in the tube</title>
+<description>The three advances of 2025, what each really showed, and how far learning in chemistry still is from training.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/5.10.mp3" length="3105078" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-5.10</guid>
+<pubDate>Mon, 16 Nov 2026 13:31:00 +0000</pubDate>
+<itunes:duration>517</itunes:duration>
+<itunes:season>5</itunes:season>
+<itunes:episode>10</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>5.15 Beyond the well-mixed tube: enzymes, surfaces, compartments and cells</title>
+<description>Why the stirred tube is the least scalable architecture, and what enzymes, tethering, droplets and living cells each buy.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/5.15.mp3" length="2533396" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-5.15</guid>
+<pubDate>Mon, 16 Nov 2026 13:36:00 +0000</pubDate>
+<itunes:duration>422</itunes:duration>
+<itunes:season>5</itunes:season>
+<itunes:episode>15</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>5.20 DNA storage as a computer's memory</title>
+<description>Writing, reading and random access, the NC State line of work, and the three ways people have computed on stored data.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/5.20.mp3" length="3280865" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-5.20</guid>
+<pubDate>Mon, 16 Nov 2026 13:41:00 +0000</pubDate>
+<itunes:duration>547</itunes:duration>
+<itunes:season>5</itunes:season>
+<itunes:episode>20</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
 </channel>
 </rss>

@@ -1623,11 +1623,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "DNA neural networks II: analog accuracy, reuse and learning in the tube",
-     "mins": 16,
+     "mins": 9,
      "sum": "The three advances of 2025, what each really showed, and how far learning in chemistry still is from training.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "5.11",
@@ -1745,11 +1745,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "Beyond the well-mixed tube: enzymes, surfaces, compartments and cells",
-     "mins": 16,
+     "mins": 7,
      "sum": "Why the stirred tube is the least scalable architecture, and what enzymes, tethering, droplets and living cells each buy.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "5.16",
@@ -1854,11 +1854,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "DNA storage as a computer's memory",
-     "mins": 17,
+     "mins": 9,
      "sum": "Writing, reading and random access, the NC State line of work, and the three ways people have computed on stored data.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "5.21",

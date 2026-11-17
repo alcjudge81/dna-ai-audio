@@ -215,11 +215,11 @@ Seesaw gate: threshold soaks up input until exhausted; catalysis with fuel ampli
 
 Inputs as strands; weights as concentrations of weight molecules; sum is free because converted strands are identical; nonlinearity by threshold and amplification; negative weights need dual rail or annihilation. 2011: four neurons (Qian, Winfree, Bruck). 2018 winner-take-all (CHECKED): weighted sums per class, pairwise annihilation until one remains, restoration reports it; up to nine classes; each pattern 20 molecules chosen from 100 representing a ten by ten image; correct with up to 30 of 100 bits flipped. In machine-learning terms: a single layer, nearest-template classifier with weights computed in software by averaging.
 
-### 5.10 DNA neural networks II: analog accuracy, reuse and learning in the tube (core, about 16 min)
+### 5.10 DNA neural networks II: analog accuracy, reuse and learning in the tube (core, about 9 min)
 
 Three 2025 advances, each CHECKED. Learning: Cherry and Qian, training examples as molecules, written into concentrations, then used to classify three sets of 100-bit patterns; additive, not error-driven. Reuse: Song and Qian, heat ramp re-arms more than 200 species within minutes, at least 16 rounds. Analog accuracy: CALCUL (Liu et al.), weights as concentration ratios, weighted sums accurate to a few percent, negative weights by annihilation, ReLU by a bead purification step taking hours, networks under 30 parameters, reset shown for two rounds. Plus theory: rate-independent ReLU networks (Vasić 2020). Where it stands and the next three milestones.
 
-### 5.15 Beyond the well-mixed tube: enzymes, surfaces, compartments and cells (core, about 16 min)
+### 5.15 Beyond the well-mixed tube: enzymes, surfaces, compartments and cells (core, about 7 min)
 
 Why well-mixed is the least scalable architecture. Enzymes (polymerase-nickase-exonuclease toolbox; transcriptional genelets): sustained dynamics and sharp thresholds; Okumura 2022 (CHECKED: majority on ten bits, two-layer network, cell-sized droplets). Localisation on origami (Chatterjee 2017): neighbours react fast, sequences reused. Compartments: droplets, gels, the dendricolloid: many small computers, lower molecule counts, noise returns. Cells: analog gene circuits (Daniel 2013), perceptrons in bacteria (Rizik 2022), protein winner-take-all in mammalian cells (Chen 2024). Biology keeps tens of thousands of species apart with recognition, location and proofreading, not base pairing alone.
 
@@ -227,7 +227,7 @@ Why well-mixed is the least scalable architecture. Enzymes (polymerase-nickase-e
 
 Tile assembly as computation (Winfree 1998); Woods 2019: one tile set, many six-bit algorithms. Nucleation as classifier (Evans 2024, CHECKED): 917 tiles, three structures, 18 images of 30 by 30 pixels, trained in silico, 150-hour anneal. Equilibrium computing (Stérin 2026, CHECKED). Common thread with Hopfield networks: the program is an energy landscape.
 
-### 5.20 DNA storage as a computer's memory (core, about 17 min)
+### 5.20 DNA storage as a computer's memory (core, about 9 min)
 
 KEYSTONE. Pipeline: encode, index, add redundancy, synthesise a pool, store, access, sequence, decode. Density about 215 petabytes per gram shown. NC State line (CHECKED for the 2024 paper): files on 50-micrometre cellulose-acetate dendricolloid particles; non-destructive reading by transcription from separate promoters; erase and replace; projected half-lives about 6,000 years at 4 Celsius and 2 million years at minus 18; RNA read by nanopore; enzymatic computation on simplified 3 by 3 chess and sudoku problems. Computing on stored data three ways: similarity search (Bee 2021: 1.6 million images, learned image-to-sequence encoding, probes as queries); parallel programs on registers (Wang 2023: data in nicks, binary counting and Rule 110, 4-bit registers, 244 strand exchanges); and designed cross-binding networks (BINND 2026). Architecture view: DNA as a memory tier with associative search built in.
 
