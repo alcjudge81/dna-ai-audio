@@ -39,7 +39,7 @@ Voices: A = `af_heart` (narrator), B = `am_michael` (short questions only). Rend
 
 ## State on 16 November 2026
 
-Done: syllabus (146 items), briefs for all 50 lessons and 7 desk labs, the tools above, the hub.
+Done: syllabus (146 items), briefs for all 50 lessons and 7 desk labs, the tools above, the hub, and 21 lesson scripts (every keystone).
 Scripts written so far are whatever is in `scripts/`. Everything else below is open.
 
 ## Remaining work, in order
