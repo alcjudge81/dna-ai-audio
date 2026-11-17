@@ -1,0 +1,202 @@
+=== 2.10 ===
+# 2.10 A scorecard for any computing substrate
+
+Every few months, a headline announces a new kind of computer. Made of light. Made of living neurons. Made of DNA. How do you tell, in five minutes, whether you are looking at a curiosity or a contender?
+
+You need a scorecard: a fixed list of questions that you ask of every machine, in the same order, so that nothing gets skipped because it happens to be inconvenient. This lesson gives you one, with thirteen questions, and then uses it on five machines. It is the longest lesson in this phase, and it is the one to replay.
+
+Quick recall. Last time: in a tube, what plays the part of the converter going in, the converter coming out, and the clock?
+
+Going in is writing: synthesising strands, or dispensing ready-made ones. Coming out is reading: fluorescence or sequencing. And the clock is whatever steps the protocol along, which usually means a robot or a thermal cycler.
+
+Thirteen questions is too many to hold in your head as a list, so hold them as four families.
+
+The first family is about the signal. Four questions. One: what physically carries the signal? Two: what are the primitive operations, the things this machine does in a single step? Three: is there gain, so that signals can be restored? Four: is there fan-out, so that one result can feed many successors?
+
+The second family has a single question, and for molecules it is the big one. Five: how is the machine wired? How does a signal get to the right place and no other place, and how many different places can there be?
+
+The third family is the budget. Five questions. Six: how long does one operation take? Seven: how much energy does one operation cost? Eight: how dense is it, in operations or bits per unit volume? Nine: how often does an operation go wrong? Ten: how many operations can happen at the same moment?
+
+The fourth family is about living with the machine. Three questions. Eleven: what do input and output cost, in money and in delay? Twelve: can you reprogram it, and can you run it again? Thirteen: what does it cost to make?
+
+Signal, wiring, budget, living with it. Four, one, five, three. Now let us use it.
+
+Machine one: silicon logic. The signal is a voltage. The primitive is a logic gate. Restoration happens at every gate, and fan-out is easy. Wiring is metal, laid down by lithography, and a wire is identified by where it is. That is why you can have billions of them: positions do not interfere with each other. An operation takes tens of picoseconds and costs of the order of ten thousand k T. Density is around a hundred million transistors in a square millimetre. Errors are so rare that you can ignore them. Input and output are fast and nearly free. It can be reprogrammed without limit and run forever. And the cost to make it is strange: tens of billions of dollars for the factory, and almost nothing for each transistor. Silicon's weak rows are energy at the scale of modern AI, and the traffic between memory and processor.
+
+Machine two: the brain. The signal is a mixture of electrical spikes and chemical concentrations. The primitive is a neuron: a weighted sum, then a threshold. The spike is all-or-nothing, so there is restoration, and the brain is a hybrid in exactly Sarpeshkar's sense. Wiring is physical, by grown fibres: something like a hundred trillion connections. An operation takes about a millisecond, a hundred million times slower than a transistor. The whole thing runs on twenty watts. The parts are noisy, and it copes through redundancy. It is massively parallel. It programs itself by learning. It cannot be copied. And it builds itself.
+
+Machine three: an analog in-memory chip, from lesson two point four. The signal is a current. The primitive is enormous: an entire matrix times a vector in one step. Restoration happens only at the converters on the edges. Precision is four to six bits. Wiring is a grid, again addressed by position. It is fast and frugal in the middle, and it pays for that at the converters. It can be rewritten, though imprecisely. It is good at running trained networks and poor at training them.
+
+[B] Those three I can picture. Now do the one I care about.
+
+Machine four: a well-mixed DNA strand displacement circuit. Take the questions in order.
+
+The signal is the concentration of a particular strand. The primitive is one strand displacing another. Adding signals is free, because molecules of the same kind simply pool. There is gain, through catalysis, and so there is restoration, through a threshold followed by catalysis. Fan-out comes the same way.
+
+Wiring. Here is the row to stare at. In a solution, nothing has a position. So a wire cannot be a place. A wire has to be a sequence. Every signal in the circuit needs its own sequence, different enough from all the others that it sticks only to its intended partners. The largest circuits demonstrated use a few hundred distinct species. Compare that with billions of wires on a chip.
+
+Time. A single reaction takes seconds to minutes when concentrations are generous, and a circuit with several layers takes hours. Energy is tiny for each molecular event, and as you heard in lesson two point seven, not tiny at all once you count a million million copies. Errors, from leak and crosstalk, run at a few percent per layer until a restoring gate cleans them up. Parallelism is total, in the sense that every reaction runs at once, and wasted, in the sense that all the copies are doing the same thing.
+
+Living with it. Input is a pipette, output is fluorescence or sequencing, and both are slow. To reprogram it, you order new strands and wait days. And until twenty twenty-five, you could run it exactly once.
+
+Machine five: DNA storage. Same molecule, a very different scorecard. The signal is the sequence itself, which is digital: four letters. The primitive operations are few: copy, select by binding, and read. Restoration is done with error-correcting codes. Density is spectacular: about two hundred petabytes per gram has been demonstrated. Keeping the data costs no energy at all. The NC State group projects half-lives of thousands of years at refrigerator temperature. Input is the bottleneck: writing is slow and expensive. Reading takes hours.
+
+And now look at the wiring row for storage. How many distinct addresses? Billions. Trillions, in principle.
+
+[B] Hold on. The same molecule gives a few hundred addresses in machine four and billions in machine five. How?
+
+That is the most useful question you can ask of this whole field, and the answer is in what the molecules are being asked to do.
+
+In a circuit, every species is present at once, at working concentration, and has to react quickly with its partners while ignoring everyone else, for hours. Every pair of species is a chance for crosstalk, and the number of pairs grows as the square of the number of species.
+
+In storage, the molecules are doing nothing. They sit there. They only have to answer when one particular probe comes looking, and you can take your time and wash away the mistakes.
+
+So the address space of DNA is enormous when molecules are passive, and small when they are active. The frontier of this field lies between rows four and five: how much computing can you do while keeping the address space of storage? That is the question behind your own lab's work, and it is a good way to read any paper you pick up.
+
+One last use of the scorecard. For each weak row, ask whether it is physics or engineering.
+
+Time per reaction, at a given concentration, is physics. Molecules find each other by diffusion, and you cannot hurry diffusion. But concentration is a choice. Tether two molecules side by side and their local concentration is thousands of times higher.
+
+Energy per molecular event is physics, and it is excellent. Energy per useful operation is engineering.
+
+Running only once was engineering, and in twenty twenty-five it started to fall.
+
+The cost and delay of writing and reading are engineering, and they are falling for reasons that have nothing to do with computing, because the whole of genomics wants the same thing.
+
+The address space is some of each, and nobody yet knows the proportions. That is a research question, and you are standing closer to it than most.
+
+Three sentences. Ask of any machine: what is the signal, how is it wired, what is the budget, and what is it like to live with. Silicon wins nearly every row and loses on energy and on memory traffic. For DNA, the telling row is wiring, where the same molecule offers a few hundred addresses when it computes and billions when it stores.
+
+[B] Your questions. One: name the four families of the scorecard, and how many questions sit in each. Two: why can a chip have billions of wires while a well-mixed circuit has hundreds? Three: pick one weak row for DNA and say whether it is physics or engineering, and why.
+
+---
+
+=== 6.1 ===
+# 6.1 Sizing the problem
+
+Before you design a reactor, you write down the throughput you need and the conversion you can get, and you see whether the two can ever meet. Nobody skips that step. So let us do it for the largest question in this course. What does an AI workload demand, what does chemistry offer, and where, if anywhere, do the two meet?
+
+Quick recall. In the last lesson of phase five, I described three ways that people have computed on DNA that is sitting in storage. Can you name them?
+
+Searching by similarity, where a probe finds the records most like a query. Running a program in parallel on every stored register at once. And designing networks of strands that are meant to cross-bind, which is what BINND made possible.
+
+Now, the demand side. From phase three, you know the shape of an AI workload. Four numbers describe it.
+
+First, operations. A model's forward pass costs about two arithmetic operations for every parameter, for every token it reads. Training a large model takes of the order of ten to the twenty-fifth operations in total.
+
+Second, depth. Those operations cannot all happen at once. Layers run one after another, and training is a chain of updates, each depending on the last. A big training run has around a million sequential updates.
+
+Third, precision. Four to eight bits will do for running a trained model. Training wants more.
+
+Fourth, speed on the other side of the comparison. One modern accelerator chip performs about ten to the fifteenth operations every second.
+
+Hold those. Now the supply side. What is in chemistry's wallet?
+
+Molecules, to begin with. A micromole is six times ten to the seventeenth molecules, and a micromole of short DNA strands is a few tens of milligrams. Nothing in electronics comes in those numbers.
+
+Time. A reaction between two molecules in solution takes a time equal to one over the rate constant times the concentration. For strand displacement at its fastest, the rate constant is around a million per molar per second. So at one micromolar, a reaction takes about a second. At one nanomolar, about a thousand seconds, which is seventeen minutes.
+
+Precision: three to five bits, from lesson two point two.
+
+And one more item, which turns out to be the scarce one: distinct species that can work in the same pot. A few hundred, so far.
+
+[B] Why is that the scarce one? I would have guessed time.
+
+Because the two are the same problem, and here is the piece of arithmetic that shows it. I will call it the dilution law, and it deserves a place in your head next to the precision bill.
+
+There is a ceiling on the total concentration of DNA you can have in a tube. Push much past a hundred micromolar in total and the cost climbs, the solution thickens, and stray interactions multiply. So total concentration is fixed. Now divide that total among your species. With a thousand species, each one is at a hundred nanomolar, and a reaction takes about ten seconds. With a million species, each one is at a hundred picomolar, and a reaction takes ten thousand seconds. That is nearly three hours, for one step.
+
+Every time you add a wire, every other wire slows down. Silicon has nothing like this. On a chip, adding a transistor on one side does not slow a transistor on the other.
+
+Now apply that to the obvious plan, which is to copy a neural network into chemistry directly: one species per weight, concentrations as values, mass action doing the multiplying. A single layer a thousand wide has a million weights. That is a million species. It fails twice over. Nobody can design a million sequences that ignore each other. And if somebody could, each step would take hours.
+
+So the direct copy does not scale. This is not a reason for despair. It is a signpost, and it points toward the scorecard row we finished on in phase two.
+
+[B] The storage row. Where addresses are plentiful.
+
+Yes. Turn the design inside out. Stop making each weight a species. Make each molecule a record. One molecule holds one piece of data, with its address and its contents written in its sequence. Then you operate on all the records at once with a small number of instruction strands. Those instruction strands can stay concentrated, because there are only a few kinds of them. The dilution law lets go of you.
+
+What do you pay? The operations are simple: match, bind, cut, join, copy. Each round takes minutes to hours. And so depth, the number of rounds, becomes the precious thing.
+
+Let us put numbers on that style of computing, because the first calculation is humbling and the second is startling.
+
+The humbling one. Say you have ten to the fifteenth molecules, and each performs one elementary operation in a round that takes an hour. That is ten to the fifteenth operations per hour. One accelerator chip does ten to the fifteenth per second. So your tube is thirty-six hundred times slower than a single chip, and each of its operations is a crude one. To match one chip, you would need about a fifth of a gram of DNA, cycled every hour. A data centre holds a hundred thousand chips.
+
+Now the startling one. Stop thinking about diffusion and think about enzymes. A fast polymerase adds hundreds of bases per second. Each addition is a small templated decision: read a letter, write a letter. A micromole of polymerase molecules, each adding a hundred bases a second, makes six times ten to the nineteenth of those small decisions every second. In raw event count, that is tens of thousands of accelerator chips, in a test tube.
+
+So which is it? Is molecular computing thousands of times too slow, or tens of thousands of times faster?
+
+Both, and that is the lesson. Raw throughput is not the bottleneck. Molecules can supply almost any number of events you like. The bottleneck is organisation. Can you make those events add up to the arithmetic you want? That takes four things: addressing, so the right molecules meet. Precision, so the answer means something. Depth, so that steps can follow steps. And a way to get data in and results out. Those four are where this field's problems live. Not in throughput.
+
+Take depth, because it is the hardest. Training by gradient descent takes about a million sequential updates. At one hour per round, that is a hundred and fourteen years. At one minute per round, which is about as fast as a thermal cycler goes, it is still nearly two years. So training in chemistry by silicon's recipe is out, and it is depth that rules it out, not throughput.
+
+Take input. A large model has a hundred billion weights. You cannot write a hundred billion numbers into DNA by synthesis at any price worth paying. So if a molecular system is ever to hold a large model, the weights must be made inside the system, by learning in place, or they must be data that was going to be stored anyway.
+
+[B] Then tell me straight. Is training an AI model in DNA impossible?
+
+By the recipe that silicon uses, yes, for any future I can see. But remember the essay from phase three, The Hardware Lottery. That recipe was chosen because it suits chips: modest width, great depth, a million tiny precise steps. A substrate with the opposite profile would favour the opposite recipe. Enormous width. Very few steps. Each step fat, doing as much as possible in parallel. Learning rules that write memories in one pass, or that work by selection across a huge population.
+
+So let me finish with five places where the two columns of this ledger meet.
+
+One: retrieval from very large archives, where the job is limited by memory and can tolerate delay. Finding the stored items most like a query is something modern AI does constantly, and molecules do it natively.
+
+Two: search by selection. A tube can test a million million candidates at once and amplify the winners.
+
+Three: computations that are extremely wide and shallow, performed on stored data, where sequence does the addressing.
+
+Four: computing in places electronics cannot go. Inside a diagnostic, a droplet, a cell, a material.
+
+Five: computing right at the energy floor, by letting a system settle to equilibrium.
+
+The next lesson takes those meeting points and turns them into seven concrete architectures.
+
+Three sentences. An AI workload is wide, deep, modest in precision and vast in operation count, and chemistry offers endless events at three to five bits, with few interacting species and slow steps. The dilution law says that adding species slows every reaction, so one species per weight cannot scale, while one molecule per record can. Throughput is not the bottleneck: organisation is, meaning addressing, precision, depth, and input and output.
+
+[B] Three questions. One: state the dilution law, and say what it does to a network with a million weights. Two: a tube can out-count a data centre in raw events, so what are the four things that stand between those events and useful arithmetic? Three: why does depth, and not throughput, rule out training by gradient descent in a tube?
+
+---
+
+=== 6.2 ===
+# 6.2 The design space: seven routes to molecular AI
+
+If you had to bet five years of your working life on one way of getting molecules to do the work of AI, which way would you choose?
+
+You cannot answer that until you can see all the options side by side. So this lesson lays out seven routes. For each one I will tell you three things: what has been shown, what holds it back, and where a tenfold improvement could come from. Some of these are crowded. Some are nearly empty. One of them is not a route at all, but the road surface under the other six.
+
+Quick recall. What is the dilution law? And if throughput is not the bottleneck for molecular computing, what is?
+
+The dilution law: total concentration is capped, so each species you add leaves less for the others, and every reaction slows. And the bottleneck is organisation: addressing, precision, depth, and getting data in and out.
+
+Route one: train in software, run in chemistry. You train a small network on an ordinary computer, then translate its weights into concentrations and build it. Almost every DNA neural network before twenty twenty-five was made this way. Four neurons in twenty eleven. Nine classes of hundred-bit patterns in twenty eighteen. Enzymatic networks in twenty twenty-two. Classifiers that read gene expression for diagnosis. What holds it back is the gap between the model and the tube. Your simulation says one thing, and leak, crosstalk and uncertain rate constants say another. And every design is a one-off. The tenfold levers are better predictors of what strands really do to each other, which is what BINND is, better compilers, and designs whose answers do not depend on reaction rates at all, like the rate-independent networks of Vasić and Soloveichik. This route is the workhorse. It is also where a molecular computer has its clearest practical use: making a decision inside a sample, where no chip can go.
+
+Route two: put the tube in the training loop. This is physics-aware training, from phase two, applied to chemistry. The forward pass happens in the real tube. You read out the result. A digital model of the chemistry works out how to adjust the concentrations. A robot makes the adjustment, and you go round again. The tube's own quirks get trained around instead of modelled away. To my knowledge, nobody has yet done this at any scale for a DNA circuit. What it needs is fast read-out, automation, a differentiable model of the reactions, and circuits that can be run more than once. Each of those now exists somewhere. A mass-action model is a set of differential equations, and you can differentiate through those. Heat recharging gives you at least sixteen runs. This route is open, and it suits someone who thinks in kinetics and automation.
+
+Route three: learning rules in the chemistry itself. No computer in the loop at all. The molecules change themselves in response to examples. The first real demonstration came in twenty twenty-five, from Kevin Cherry and Lulu Qian: a network that is shown training patterns as molecules and writes them into its own concentrations. That learning is additive. It memorises. It does not yet correct its own mistakes. What holds this route back is that error-driven learning needs subtraction, a sign, and many repeated rounds, and each of those is hard in chemistry. The levers are reuse, and enzymes, which can keep a system running instead of letting it wind down. Of the seven, this is the most novel as science, and the furthest from use.
+
+[B] Those three all try to make chemistry behave like a neural network. Is there a route that doesn't?
+
+Yes, and it starts from the other end. Routes four, five and six ask what molecules already do well, and then look for the AI workload that matches.
+
+Route four: computing centred on storage. The data is in DNA anyway. So bring the computation to it. Three things have been shown. Similarity search across one point six million images, in twenty twenty-one. Programs run in parallel on every stored register, in twenty twenty-three. And from NC State in twenty twenty-four, a material that holds files, lets you read them without using them up, and supports simple enzymatic computation. What holds it back: writing is expensive, reading is slow, the set of operations is small, and binding gets less specific as the archive grows. The levers: encodings learned by a neural network, so that similar things bind. Binding predictors like BINND, so that you can design which things stick. And cheaper writing. The AI role is easy to state. Modern models lean constantly on retrieval: find me the stored items closest to this one. That operation is limited by memory, it tolerates delay, and it is what hybridisation does. This is the route where the molecular step is already the natural one.
+
+Route five: evolution and selection as the learning algorithm. Chemists have done this for decades and never called it machine learning. You make a million million variants. You apply a selection: only the ones that bind, or catalyse, survive. You amplify the survivors with a few mutations. You repeat. That is an optimiser. The population is the batch, selection is the loss function, amplification with mutation is the update. It needs only forward evaluations, it is perfectly parallel, and it needs tens of rounds where gradient descent needs a million. What holds it back is that the thing being optimised is the molecule itself. To make it learn something else, you would have to write a model's parameters into sequence, and build a selection that rewards computing the right answer. Nobody has a general way to do that. It is the least explored route on this list, and it is the one that uses DNA's most distinctive trick, which is that it can be copied with variation.
+
+Route six: let the answer be the equilibrium. Instead of driving a system through a sequence of steps, shape its energy landscape so that the state it settles into is the answer. In twenty twenty-four, a set of nine hundred and seventeen DNA tiles classified images by which of three structures nucleated first. It took a hundred and fifty hours. In twenty twenty-six, the Maynooth computer ran ten programs by relaxing to equilibrium, could be reused dozens of times, and finished small instances in under a minute. What holds this route back is knowing how to design landscapes for large problems, and how settling time grows with size. The lever is theory that already exists. Hopfield networks and Boltzmann machines are energy landscapes. Sampling and optimisation are things AI needs. This is the dark horse.
+
+Route seven is the road surface: space. Tethering gates side by side on a scaffold. Compartments, in droplets or in porous particles. Enzymes that supply power. Living cells. None of these is a way of doing AI. Each of them loosens a limit for the other six. Put two gates next to each other and the dilution law stops applying, because local concentration no longer depends on what else is in the tube. Give things positions and you can reuse the same sequences in different places, which is how a chip gets billions of wires. Make a million droplets and you have a million small independent computers. If the earlier routes are algorithms, route seven is the hardware.
+
+[B] You said some architectures favour the opposite of what silicon does. What does that mean in practice?
+
+It means this, and I will state it as a hypothesis, because that is all it is. For molecules, depth is expensive and width is nearly free. For chips it is the other way about. So the neural networks everyone uses are deep and modestly wide, because that is what chips reward. The natural molecular network would be extremely wide and very shallow. Two questions stand in the way. The first belongs to machine learning: can a very wide, shallow model do what a deep one does? There are reasons to think width can stand in for some depth, and there is no settled answer. The second belongs to you: a wide layer needs a wide address space, and only the storage row of the scorecard has one. So even this idea leads back to routes four and seven.
+
+One more thing before we stop. In every realistic version, the machine is a hybrid. An electronic controller handles sequencing, arithmetic and decisions. A molecular co-processor handles one step. So here is the test to apply to any proposal, your own included. Which step is the molecular step? And in the all-electronic version of the system, is that step the bottleneck? If it is not, the molecular version has nothing to win.
+
+[B] So which would you bet on?
+
+Here is a judgment, and treat it as one. For usefulness soon: route four, on top of route seven. For a first-of-its-kind demonstration: route two, the tube in the loop, because every ingredient now exists and nobody has put them together. For the long game: route six. And route five is the one I would keep reading about, because it is so empty.
+
+Three sentences. Three routes make chemistry imitate a neural network: train in software, train with the tube in the loop, or learn in the chemistry. Three start from what molecules do well: retrieval from storage, selection across huge populations, and settling to equilibrium. Under all of them lies space, which is what loosens the limits on wiring and speed.
+
+[B] Questions. One: name the seven routes. Two: for route four, say which step is the molecular step, and why it is a bottleneck in the electronic version. Three: what are the two open questions behind the idea of very wide, very shallow molecular networks?
+
+---

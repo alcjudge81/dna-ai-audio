@@ -1,0 +1,71 @@
+# 2.10 A scorecard for any computing substrate
+
+Every few months, a headline announces a new kind of computer. Made of light. Made of living neurons. Made of DNA. How do you tell, in five minutes, whether you are looking at a curiosity or a contender?
+
+You need a scorecard: a fixed list of questions that you ask of every machine, in the same order, so that nothing gets skipped because it happens to be inconvenient. This lesson gives you one, with thirteen questions, and then uses it on five machines. It is the longest lesson in this phase, and it is the one to replay.
+
+Quick recall. Last time: in a tube, what plays the part of the converter going in, the converter coming out, and the clock?
+
+Going in is writing: synthesising strands, or dispensing ready-made ones. Coming out is reading: fluorescence or sequencing. And the clock is whatever steps the protocol along, which usually means a robot or a thermal cycler.
+
+Thirteen questions is too many to hold in your head as a list, so hold them as four families.
+
+The first family is about the signal. Four questions. One: what physically carries the signal? Two: what are the primitive operations, the things this machine does in a single step? Three: is there gain, so that signals can be restored? Four: is there fan-out, so that one result can feed many successors?
+
+The second family has a single question, and for molecules it is the big one. Five: how is the machine wired? How does a signal get to the right place and no other place, and how many different places can there be?
+
+The third family is the budget. Five questions. Six: how long does one operation take? Seven: how much energy does one operation cost? Eight: how dense is it, in operations or bits per unit volume? Nine: how often does an operation go wrong? Ten: how many operations can happen at the same moment?
+
+The fourth family is about living with the machine. Three questions. Eleven: what do input and output cost, in money and in delay? Twelve: can you reprogram it, and can you run it again? Thirteen: what does it cost to make?
+
+Signal, wiring, budget, living with it. Four, one, five, three. Now let us use it.
+
+Machine one: silicon logic. The signal is a voltage. The primitive is a logic gate. Restoration happens at every gate, and fan-out is easy. Wiring is metal, laid down by lithography, and a wire is identified by where it is. That is why you can have billions of them: positions do not interfere with each other. An operation takes tens of picoseconds and costs of the order of ten thousand k T. Density is around a hundred million transistors in a square millimetre. Errors are so rare that you can ignore them. Input and output are fast and nearly free. It can be reprogrammed without limit and run forever. And the cost to make it is strange: tens of billions of dollars for the factory, and almost nothing for each transistor. Silicon's weak rows are energy at the scale of modern AI, and the traffic between memory and processor.
+
+Machine two: the brain. The signal is a mixture of electrical spikes and chemical concentrations. The primitive is a neuron: a weighted sum, then a threshold. The spike is all-or-nothing, so there is restoration, and the brain is a hybrid in exactly Sarpeshkar's sense. Wiring is physical, by grown fibres: something like a hundred trillion connections. An operation takes about a millisecond, a hundred million times slower than a transistor. The whole thing runs on twenty watts. The parts are noisy, and it copes through redundancy. It is massively parallel. It programs itself by learning. It cannot be copied. And it builds itself.
+
+Machine three: an analog in-memory chip, from lesson two point four. The signal is a current. The primitive is enormous: an entire matrix times a vector in one step. Restoration happens only at the converters on the edges. Precision is four to six bits. Wiring is a grid, again addressed by position. It is fast and frugal in the middle, and it pays for that at the converters. It can be rewritten, though imprecisely. It is good at running trained networks and poor at training them.
+
+[B] Those three I can picture. Now do the one I care about.
+
+Machine four: a well-mixed DNA strand displacement circuit. Take the questions in order.
+
+The signal is the concentration of a particular strand. The primitive is one strand displacing another. Adding signals is free, because molecules of the same kind simply pool. There is gain, through catalysis, and so there is restoration, through a threshold followed by catalysis. Fan-out comes the same way.
+
+Wiring. Here is the row to stare at. In a solution, nothing has a position. So a wire cannot be a place. A wire has to be a sequence. Every signal in the circuit needs its own sequence, different enough from all the others that it sticks only to its intended partners. The largest circuits demonstrated use a few hundred distinct species. Compare that with billions of wires on a chip.
+
+Time. A single reaction takes seconds to minutes when concentrations are generous, and a circuit with several layers takes hours. Energy is tiny for each molecular event, and as you heard in lesson two point seven, not tiny at all once you count a million million copies. Errors, from leak and crosstalk, run at a few percent per layer until a restoring gate cleans them up. Parallelism is total, in the sense that every reaction runs at once, and wasted, in the sense that all the copies are doing the same thing.
+
+Living with it. Input is a pipette, output is fluorescence or sequencing, and both are slow. To reprogram it, you order new strands and wait days. And until twenty twenty-five, you could run it exactly once.
+
+Machine five: DNA storage. Same molecule, a very different scorecard. The signal is the sequence itself, which is digital: four letters. The primitive operations are few: copy, select by binding, and read. Restoration is done with error-correcting codes. Density is spectacular: about two hundred petabytes per gram has been demonstrated. Keeping the data costs no energy at all. The NC State group projects half-lives of thousands of years at refrigerator temperature. Input is the bottleneck: writing is slow and expensive. Reading takes hours.
+
+And now look at the wiring row for storage. How many distinct addresses? Billions. Trillions, in principle.
+
+[B] Hold on. The same molecule gives a few hundred addresses in machine four and billions in machine five. How?
+
+That is the most useful question you can ask of this whole field, and the answer is in what the molecules are being asked to do.
+
+In a circuit, every species is present at once, at working concentration, and has to react quickly with its partners while ignoring everyone else, for hours. Every pair of species is a chance for crosstalk, and the number of pairs grows as the square of the number of species.
+
+In storage, the molecules are doing nothing. They sit there. They only have to answer when one particular probe comes looking, and you can take your time and wash away the mistakes.
+
+So the address space of DNA is enormous when molecules are passive, and small when they are active. The frontier of this field lies between rows four and five: how much computing can you do while keeping the address space of storage? That is the question behind your own lab's work, and it is a good way to read any paper you pick up.
+
+One last use of the scorecard. For each weak row, ask whether it is physics or engineering.
+
+Time per reaction, at a given concentration, is physics. Molecules find each other by diffusion, and you cannot hurry diffusion. But concentration is a choice. Tether two molecules side by side and their local concentration is thousands of times higher.
+
+Energy per molecular event is physics, and it is excellent. Energy per useful operation is engineering.
+
+Running only once was engineering, and in twenty twenty-five it started to fall.
+
+The cost and delay of writing and reading are engineering, and they are falling for reasons that have nothing to do with computing, because the whole of genomics wants the same thing.
+
+The address space is some of each, and nobody yet knows the proportions. That is a research question, and you are standing closer to it than most.
+
+Three sentences. Ask of any machine: what is the signal, how is it wired, what is the budget, and what is it like to live with. Silicon wins nearly every row and loses on energy and on memory traffic. For DNA, the telling row is wiring, where the same molecule offers a few hundred addresses when it computes and billions when it stores.
+
+[B] Your questions. One: name the four families of the scorecard, and how many questions sit in each. Two: why can a chip have billions of wires while a well-mixed circuit has hundreds? Three: pick one weak row for DNA and say whether it is physics or engineering, and why.
+
+---

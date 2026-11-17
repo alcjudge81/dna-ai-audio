@@ -1,0 +1,83 @@
+# 6.1 Sizing the problem
+
+Before you design a reactor, you write down the throughput you need and the conversion you can get, and you see whether the two can ever meet. Nobody skips that step. So let us do it for the largest question in this course. What does an AI workload demand, what does chemistry offer, and where, if anywhere, do the two meet?
+
+Quick recall. In the last lesson of phase five, I described three ways that people have computed on DNA that is sitting in storage. Can you name them?
+
+Searching by similarity, where a probe finds the records most like a query. Running a program in parallel on every stored register at once. And designing networks of strands that are meant to cross-bind, which is what BINND made possible.
+
+Now, the demand side. From phase three, you know the shape of an AI workload. Four numbers describe it.
+
+First, operations. A model's forward pass costs about two arithmetic operations for every parameter, for every token it reads. Training a large model takes of the order of ten to the twenty-fifth operations in total.
+
+Second, depth. Those operations cannot all happen at once. Layers run one after another, and training is a chain of updates, each depending on the last. A big training run has around a million sequential updates.
+
+Third, precision. Four to eight bits will do for running a trained model. Training wants more.
+
+Fourth, speed on the other side of the comparison. One modern accelerator chip performs about ten to the fifteenth operations every second.
+
+Hold those. Now the supply side. What is in chemistry's wallet?
+
+Molecules, to begin with. A micromole is six times ten to the seventeenth molecules, and a micromole of short DNA strands is a few tens of milligrams. Nothing in electronics comes in those numbers.
+
+Time. A reaction between two molecules in solution takes a time equal to one over the rate constant times the concentration. For strand displacement at its fastest, the rate constant is around a million per molar per second. So at one micromolar, a reaction takes about a second. At one nanomolar, about a thousand seconds, which is seventeen minutes.
+
+Precision: three to five bits, from lesson two point two.
+
+And one more item, which turns out to be the scarce one: distinct species that can work in the same pot. A few hundred, so far.
+
+[B] Why is that the scarce one? I would have guessed time.
+
+Because the two are the same problem, and here is the piece of arithmetic that shows it. I will call it the dilution law, and it deserves a place in your head next to the precision bill.
+
+There is a ceiling on the total concentration of DNA you can have in a tube. Push much past a hundred micromolar in total and the cost climbs, the solution thickens, and stray interactions multiply. So total concentration is fixed. Now divide that total among your species. With a thousand species, each one is at a hundred nanomolar, and a reaction takes about ten seconds. With a million species, each one is at a hundred picomolar, and a reaction takes ten thousand seconds. That is nearly three hours, for one step.
+
+Every time you add a wire, every other wire slows down. Silicon has nothing like this. On a chip, adding a transistor on one side does not slow a transistor on the other.
+
+Now apply that to the obvious plan, which is to copy a neural network into chemistry directly: one species per weight, concentrations as values, mass action doing the multiplying. A single layer a thousand wide has a million weights. That is a million species. It fails twice over. Nobody can design a million sequences that ignore each other. And if somebody could, each step would take hours.
+
+So the direct copy does not scale. This is not a reason for despair. It is a signpost, and it points toward the scorecard row we finished on in phase two.
+
+[B] The storage row. Where addresses are plentiful.
+
+Yes. Turn the design inside out. Stop making each weight a species. Make each molecule a record. One molecule holds one piece of data, with its address and its contents written in its sequence. Then you operate on all the records at once with a small number of instruction strands. Those instruction strands can stay concentrated, because there are only a few kinds of them. The dilution law lets go of you.
+
+What do you pay? The operations are simple: match, bind, cut, join, copy. Each round takes minutes to hours. And so depth, the number of rounds, becomes the precious thing.
+
+Let us put numbers on that style of computing, because the first calculation is humbling and the second is startling.
+
+The humbling one. Say you have ten to the fifteenth molecules, and each performs one elementary operation in a round that takes an hour. That is ten to the fifteenth operations per hour. One accelerator chip does ten to the fifteenth per second. So your tube is thirty-six hundred times slower than a single chip, and each of its operations is a crude one. To match one chip, you would need about a fifth of a gram of DNA, cycled every hour. A data centre holds a hundred thousand chips.
+
+Now the startling one. Stop thinking about diffusion and think about enzymes. A fast polymerase adds hundreds of bases per second. Each addition is a small templated decision: read a letter, write a letter. A micromole of polymerase molecules, each adding a hundred bases a second, makes six times ten to the nineteenth of those small decisions every second. In raw event count, that is tens of thousands of accelerator chips, in a test tube.
+
+So which is it? Is molecular computing thousands of times too slow, or tens of thousands of times faster?
+
+Both, and that is the lesson. Raw throughput is not the bottleneck. Molecules can supply almost any number of events you like. The bottleneck is organisation. Can you make those events add up to the arithmetic you want? That takes four things: addressing, so the right molecules meet. Precision, so the answer means something. Depth, so that steps can follow steps. And a way to get data in and results out. Those four are where this field's problems live. Not in throughput.
+
+Take depth, because it is the hardest. Training by gradient descent takes about a million sequential updates. At one hour per round, that is a hundred and fourteen years. At one minute per round, which is about as fast as a thermal cycler goes, it is still nearly two years. So training in chemistry by silicon's recipe is out, and it is depth that rules it out, not throughput.
+
+Take input. A large model has a hundred billion weights. You cannot write a hundred billion numbers into DNA by synthesis at any price worth paying. So if a molecular system is ever to hold a large model, the weights must be made inside the system, by learning in place, or they must be data that was going to be stored anyway.
+
+[B] Then tell me straight. Is training an AI model in DNA impossible?
+
+By the recipe that silicon uses, yes, for any future I can see. But remember the essay from phase three, The Hardware Lottery. That recipe was chosen because it suits chips: modest width, great depth, a million tiny precise steps. A substrate with the opposite profile would favour the opposite recipe. Enormous width. Very few steps. Each step fat, doing as much as possible in parallel. Learning rules that write memories in one pass, or that work by selection across a huge population.
+
+So let me finish with five places where the two columns of this ledger meet.
+
+One: retrieval from very large archives, where the job is limited by memory and can tolerate delay. Finding the stored items most like a query is something modern AI does constantly, and molecules do it natively.
+
+Two: search by selection. A tube can test a million million candidates at once and amplify the winners.
+
+Three: computations that are extremely wide and shallow, performed on stored data, where sequence does the addressing.
+
+Four: computing in places electronics cannot go. Inside a diagnostic, a droplet, a cell, a material.
+
+Five: computing right at the energy floor, by letting a system settle to equilibrium.
+
+The next lesson takes those meeting points and turns them into seven concrete architectures.
+
+Three sentences. An AI workload is wide, deep, modest in precision and vast in operation count, and chemistry offers endless events at three to five bits, with few interacting species and slow steps. The dilution law says that adding species slows every reaction, so one species per weight cannot scale, while one molecule per record can. Throughput is not the bottleneck: organisation is, meaning addressing, precision, depth, and input and output.
+
+[B] Three questions. One: state the dilution law, and say what it does to a network with a million weights. Two: a tube can out-count a data centre in raw events, so what are the four things that stand between those events and useful arithmetic? Three: why does depth, and not throughput, rule out training by gradient descent in a tube?
+
+---
