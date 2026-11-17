@@ -101,11 +101,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "What can be computed, and at what cost",
-     "mins": 16,
+     "mins": 8,
      "sum": "Turing machines, universality, and why Adleman's experiment could not scale: what massive parallelism buys and what it never will.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "1.6",
@@ -244,11 +244,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "The precision bill",
-     "mins": 15,
+     "mins": 8,
      "sum": "Why each extra bit costs an analog system four times the energy and a digital system one more wire, where the crossover sits, and where the noise in a tube of DNA really comes from.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "2.3",
@@ -279,11 +279,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "The analog comeback: why AI reopened the question",
-     "mins": 15,
+     "mins": 7,
      "sum": "How a grid of resistors multiplies a matrix in one step, what goes wrong when you build it, and what the same structure looks like in chemistry.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "2.5",

@@ -33,5 +33,38 @@
 <itunes:episode>3</itunes:episode>
 <itunes:episodeType>full</itunes:episodeType>
 </item>
+<item>
+<title>1.5 What can be computed, and at what cost</title>
+<description>Turing machines, universality, and why Adleman's experiment could not scale: what massive parallelism buys and what it never will.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/1.5.mp3" length="2982499" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-1.5</guid>
+<pubDate>Mon, 16 Nov 2026 12:07:00 +0000</pubDate>
+<itunes:duration>497</itunes:duration>
+<itunes:season>1</itunes:season>
+<itunes:episode>7</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>2.2 The precision bill</title>
+<description>Why each extra bit costs an analog system four times the energy and a digital system one more wire, where the crossover sits, and where the noise in a tube of DNA really comes from.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/2.2.mp3" length="3041375" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-2.2</guid>
+<pubDate>Mon, 16 Nov 2026 12:17:00 +0000</pubDate>
+<itunes:duration>507</itunes:duration>
+<itunes:season>2</itunes:season>
+<itunes:episode>2</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>2.4 The analog comeback: why AI reopened the question</title>
+<description>How a grid of resistors multiplies a matrix in one step, what goes wrong when you build it, and what the same structure looks like in chemistry.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/2.4.mp3" length="2686446" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-2.4</guid>
+<pubDate>Mon, 16 Nov 2026 12:19:00 +0000</pubDate>
+<itunes:duration>448</itunes:duration>
+<itunes:season>2</itunes:season>
+<itunes:episode>4</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
 </channel>
 </rss>
