@@ -290,11 +290,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "Mortal computation: machines that learn in their own physics",
-     "mins": 14,
+     "mins": 8,
      "sum": "Hinton's argument for hardware whose knowledge cannot be copied, the training methods it needs, and the odd position DNA holds, with a copyable part and a mortal part.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "2.6",
@@ -330,11 +330,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "What a bit costs: the thermodynamics of computation",
-     "mins": 16,
+     "mins": 9,
      "sum": "Landauer's limit, Bennett's reversible computers, the trade between speed, accuracy and energy, and an honest energy account for a DNA gate.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "2.8",
@@ -376,11 +376,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "A scorecard for any computing substrate",
-     "mins": 18,
+     "mins": 10,
      "sum": "Thirteen questions that size up any computer, applied to silicon, the brain, analog chips, a well-mixed DNA circuit and DNA storage.",
      "pairs": null,
      "script": true,
-     "audio": false
+     "audio": true
     },
     {
      "id": "2.11",
