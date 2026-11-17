@@ -1,0 +1,69 @@
+# 3.14 The compute behind AI
+
+People say that training a large AI model takes an enormous amount of computing. How much is enormous? Could you write the number down? And once you had it, could you say which part of it is truly unavoidable, and which part is just the way silicon happens to do things?
+
+That second question is the one that matters for you. Any new kind of hardware, molecular or otherwise, has to meet the unavoidable part. It is free to do the rest differently.
+
+Quick recall. What is in-context learning?
+
+A model changing its behaviour because of examples placed in its input, with no change to its weights at all.
+
+Let us count. Begin with one forward pass. You saw in lesson three point two that a layer is a matrix times a vector, and that every weight gets used once: one multiplication, one addition. So a forward pass costs about two arithmetic operations for every parameter. For a language model, that is two per parameter for each token it reads.
+
+Training costs more, because of the backward pass. A good rule is three times the forward cost. So about six operations per parameter, per token.
+
+Now put in numbers of the size people use. A model with a hundred billion parameters. Trained on ten trillion tokens. Six operations for each pairing. Multiply it out, and you get six times ten to the twenty-fourth. Call it ten to the twenty-fifth operations for one training run.
+
+That is the number. Ten to the twenty-fifth. Let us make it mean something.
+
+One top accelerator chip performs about ten to the fifteenth operations per second, and draws about a kilowatt once you include cooling and everything around it. So one chip would need ten to the tenth seconds. That is three hundred years. Which is why nobody uses one chip. With ten thousand chips, three hundred years becomes about twelve days if nothing is ever idle, and in practice a good deal longer.
+
+Energy. A kilowatt, for ten to the fifteenth operations a second, is ten to the minus twelve joules per operation. You met that figure in the thermodynamics lesson. Times ten to the twenty-fifth operations gives ten to the thirteenth joules. That is about three gigawatt-hours at the very least: roughly what a few hundred homes use in a year. Real runs, with real inefficiencies, use several times more.
+
+[B] What is the chip actually doing that is so special? Why not ordinary processors?
+
+A graphics processor is a very simple idea executed at huge scale. It is thousands of small arithmetic units, side by side, all doing the same operation on different numbers at the same moment. That is all a matrix multiplication needs: millions of independent multiply-and-adds. An ordinary processor is built to do complicated, branching, one-after-another work. A neural network is the opposite kind of job, simple and wide, and so it wants the opposite kind of chip.
+
+Two more facts about the hardware, both of which bear on any alternative.
+
+The first is about number formats. The standard used to be thirty-two bits per number, which is about seven decimal digits. Training now mostly uses sixteen bits, about three or four digits, because half the bits means half the memory and half the traffic. Inference often uses eight bits, or four. So the trend, for a decade, has been steadily downward in precision. The next lesson is about how far down it can go.
+
+The second fact surprises people. The limit on speed is usually not arithmetic. It is memory traffic. To produce one token, the chip must read every weight in the model once. A hundred billion weights at two bytes each is two hundred gigabytes. The memory attached to an accelerator can deliver a few thousand gigabytes per second. So the chip spends its time waiting for weights to arrive, not multiplying them. This is the von Neumann bottleneck from lesson one point four, in its modern form. Hold on to it, because DNA is a memory.
+
+[B] You said some of this is unavoidable and some is just silicon's way. Which is which?
+
+Here is the heart of it. Look at how the work can be arranged in time.
+
+Some of it can run side by side. Different examples in a batch do not depend on each other. Different positions in a sequence can be processed together. Within a layer, every multiply-and-add is independent. All of that is width, and width can be spread across as many arithmetic units as you own.
+
+Some of it cannot. Layer two needs the output of layer one. So the layers run in order: perhaps a hundred of them. And training step two needs the weights produced by step one. So the steps run in order too, and a training run has around a million of them. All of that is depth, and depth cannot be bought off with more hardware. It takes as long as it takes.
+
+So an AI workload has a shape. It is very wide, and it also has an irreducible depth: about a hundred layers per pass, and about a million passes in sequence.
+
+Now I can give you the workload profile: four lines that any new hardware has to answer to.
+
+Line one: the work is dominated by a single operation. Multiply and accumulate, repeated ten to the twenty-fifth times.
+
+Line two: it is extremely wide. Billions of those operations can go at once.
+
+Line three: it has irreducible depth. A hundred layers in sequence, and for training, a million updates in sequence.
+
+Line four: it is limited by memory traffic, by how fast weights can be brought to where the arithmetic happens.
+
+Hold each line against a tube of molecules, and you get a preview of phase six.
+
+Line one, multiply and accumulate. Chemistry does that natively. Mass action multiplies concentrations, and pooling adds them.
+
+Line two, width. That is molecules' great strength. A micromole is nearly a million million million of them.
+
+Line three, depth. That is the weakness. A chemical step takes seconds to hours, not picoseconds, so a million sequential steps is out of the question. Any molecular approach to learning has to need very few steps.
+
+Line four, memory traffic. Here the comparison turns over completely. In silicon, memory and arithmetic are in different places, and the road between them is the bottleneck. DNA is the densest memory known. If the arithmetic can happen where the data already sits, there is no road.
+
+So the profile tells you where to look. Not at copying a deep network step for step. At workloads that are wide, shallow, and bound by memory.
+
+Three sentences. A training run costs about six operations per parameter per token, which for a large model comes to around ten to the twenty-fifth operations, at about ten to the minus twelve joules each. The work is extremely wide and can be spread across hardware, but about a hundred layers and a million update steps must happen in sequence. Any new hardware must supply multiply-and-accumulate, exploit the width, cope with the depth, and ease the memory traffic, and molecules are strong on the first two, weak on the third, and potentially transformative on the fourth.
+
+[B] Three questions. One: roughly how many arithmetic operations does a forward pass cost per parameter, and how many does training cost? Two: what limits the speed of a large model on a modern chip, if not arithmetic? Three: give the four lines of the workload profile, and say which one is DNA's weakness.
+
+---

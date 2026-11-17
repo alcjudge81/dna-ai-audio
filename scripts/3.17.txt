@@ -1,0 +1,57 @@
+# 3.17 Learning without backpropagation
+
+Your brain learned to recognise a face without ever running backpropagation. It has no mirror-image network to carry errors backwards, and no memory bank holding every intermediate value. So there must be other ways to learn. How many are there, and could any of them run in a test tube?
+
+This lesson is a menu: nine ways for a system to learn. For each, I will give you the idea in a sentence, what it demands of the hardware, and whether anyone has done it in chemistry.
+
+Quick recall. Why can a trained network make predictions with only a few bits per number, when training it needs many more?
+
+Prediction averages over many weights, and the network was trained to be robust. But training works by tiny adjustments, each a small fraction of a weight, and at low precision those adjustments round away to nothing.
+
+Nine ways, in three families. The first family keeps backpropagation, but moves it. The second replaces it with rules that are local. The third does without gradients altogether.
+
+Family one. Keep backpropagation, and move it.
+
+Way one: train in software, then deploy. Do all the learning on an ordinary computer, and build the finished network in your exotic hardware. The hardware only has to do inference. The demand is that your model of the hardware be accurate, because any difference between model and reality becomes error. In chemistry, this is how every DNA neural network before twenty twenty-five was made.
+
+Way two: the hybrid. Run the forward pass in the real hardware, so that all its quirks are included. Measure the result. Then do the backward pass in a software model. You met this in phase two as physics-aware training. The demand: you must be able to read the hardware's state, adjust its parameters, and run it again and again. It has been shown in optics, mechanics and electronics. To my knowledge, it has not yet been shown for a DNA circuit.
+
+Family two. Local rules. The idea uniting these is that each connection changes using only information that is physically present at that connection. No message from far away.
+
+Way three: the oldest rules. The Hebbian rule says: when the input side and the output side of a connection are active together, strengthen it. Its supervised cousin, the delta rule, says: change each weight in proportion to its input, times the error at its output. That second one is the perceptron's learning rule, from the nineteen fifties. Both need only what is at hand. Their limit is that they train a single layer well, and deep networks poorly. In chemistry, there have been designs and simulations for over a decade. And the first experiment, in twenty twenty-five, was of the Hebbian kind: Cherry and Qian's network strengthens a weight when its input bit and its class label are present together.
+
+Way four: energy-based learning. Picture a network that does not compute layer by layer, but settles, like a ball rolling into a valley. Learning means reshaping the landscape. In a Boltzmann machine, you let the system settle twice: once with the right answer held in place, and once left free. Then you adjust each connection by the difference in how its two ends behaved in the two cases. A more recent method, equilibrium propagation, does something similar with a gentle nudge. The demand is a system that truly relaxes to equilibrium, with symmetric interactions. Chemistry has plenty of those. A chemical Boltzmann machine was worked out in theory in twenty seventeen. Nobody has trained one in a tube.
+
+Way five: forward-forward. This is Geoffrey Hinton's proposal from twenty twenty-two. Replace the backward pass with a second forward pass. Show the network real data, and have each layer adjust itself to be more active. Show it fake data, and have each layer adjust to be less active. Each layer has its own local goal. It demands no mirror network and no stored activations. It also does not yet match backpropagation on hard problems.
+
+Way six: feedback alignment. A surprising result from twenty sixteen. Send the error backwards through fixed, random connections, and not through a mirror of the forward weights. It still works, because the forward weights gradually adapt to make use of whatever feedback they are given. This removes the weight transport problem, the first of the four demands.
+
+[B] Those all still compute some kind of error and send it somewhere. What if the hardware can only run forwards?
+
+Then you are in family three, and for molecules, this is where it gets interesting.
+
+Way seven: perturb and select. Make a random change. Run forwards. If the result is better, keep the change. That is the nudge-one-weight idea I dismissed in the backpropagation lesson as hopeless, and for one network on one chip, it is. But suppose you are not limited to one. Suppose you can make a million million variants, try them all at the same moment, and keep the best. Then the arithmetic changes completely. This is the family of evolution strategies and genetic algorithms. The demand is the ability to make many variants, evaluate them in parallel, and copy the winners. And that is a description of what DNA does better than any other material. Chemists call it directed evolution. It has optimised molecules for decades. What nobody has shown is how to make it optimise a computation.
+
+Way eight: the reservoir. Take any system with rich, complicated, fixed dynamics. Do not train it at all. Feed your input in, let the system churn, and train only a simple read-out on top: a single linear layer, which is easy. The demand is nearly nothing: the system only has to be complicated and repeatable. A reaction network is both. This was proposed for DNA more than ten years ago, and has been demonstrated with other kinds of reaction network.
+
+Way nine: learning by remembering. Do not adjust anything in response to error. Store the examples, or a summary of them. When a new case arrives, find the stored ones it most resembles, and answer as they did. Nearest-neighbour methods work this way. So, in a sense, does in-context learning. The demand is a memory, and a way to compare. Both are things DNA does natively: storage, and hybridisation.
+
+[B] Nine is a lot. Which ones should I actually remember?
+
+Remember the three questions that sort them, because you can rebuild the list from those.
+
+Does the method need a model of the hardware? Ways one and two do. The rest do not.
+
+Does it need error information to travel? Backpropagation does, across the whole network. The local rules need it only next door. The third family needs none.
+
+And how many sequential steps does it take? That one decides everything for a slow substrate. Gradient methods take a million. Selection takes tens of rounds, but each round is enormous. Remembering takes one pass.
+
+Now apply the lesson of the compute profile. Molecules are wide and slow. So the methods that suit them are the ones that trade steps for width. Selection across a vast population. A reservoir with a trained read-out. Memory with comparison. And settling to equilibrium, where the physics does the iterating for you.
+
+Notice what that list is not. It is not backpropagation. If learning in molecules ever becomes powerful, it will probably not look like what happens in a data centre, and you should be suspicious of any plan that tries to make it look that way.
+
+Three sentences. There are three families of learning: move backpropagation elsewhere, replace it with local rules, or abandon gradients for selection, reservoirs and memory. They differ in whether they need a model of the hardware, how far error information must travel, and how many sequential steps they take. A wide, slow substrate favours the ones that take few steps, and so far chemistry has demonstrated the simplest of them: remembering.
+
+[B] Your questions. One: name the three families, and one method from each. Two: which of the four demands of backpropagation does feedback alignment remove? Three: why does perturb-and-select look hopeless on a chip and promising in a tube?
+
+---

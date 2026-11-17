@@ -11,5 +11,27 @@
 <itunes:image href="https://alcjudge81.github.io/dna-ai-audio/cover.jpg"/>
 <itunes:category text="Education"/>
 <itunes:block>Yes</itunes:block>
+<item>
+<title>0.1 The map</title>
+<description>What the course builds and in what order, and the three questions to ask of any computer: what carries the signal, how it is kept clean, and what limits its size.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/0.1.mp3" length="2055108" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-0.1</guid>
+<pubDate>Mon, 16 Nov 2026 12:01:00 +0000</pubDate>
+<itunes:duration>342</itunes:duration>
+<itunes:season>1</itunes:season>
+<itunes:episode>1</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
+<item>
+<title>1.1 Bits, gates and the digital abstraction</title>
+<description>What a bit is physically, why a handful of gates is enough to build anything, and the five things a physical system needs before it can be a logic family.</description>
+<enclosure url="https://alcjudge81.github.io/dna-ai-audio/audio/1.1.mp3" length="3212036" type="audio/mpeg"/>
+<guid isPermaLink="false">dna-ai-audio-1.1</guid>
+<pubDate>Mon, 16 Nov 2026 12:03:00 +0000</pubDate>
+<itunes:duration>535</itunes:duration>
+<itunes:season>2</itunes:season>
+<itunes:episode>1</itunes:episode>
+<itunes:episodeType>full</itunes:episodeType>
+</item>
 </channel>
 </rss>

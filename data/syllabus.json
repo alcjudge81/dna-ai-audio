@@ -12,11 +12,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "The map",
-     "mins": 9,
+     "mins": 6,
      "sum": "What the course builds and in what order, and the three questions to ask of any computer: what carries the signal, how it is kept clean, and what limits its size.",
      "pairs": null,
-     "script": false,
-     "audio": false
+     "script": true,
+     "audio": true
     },
     {
      "id": "0.2",
@@ -49,11 +49,11 @@
      "kind": "lesson",
      "track": "core",
      "title": "Bits, gates and the digital abstraction",
-     "mins": 14,
+     "mins": 9,
      "sum": "What a bit is physically, why a handful of gates is enough to build anything, and the five things a physical system needs before it can be a logic family.",
      "pairs": null,
-     "script": false,
-     "audio": false
+     "script": true,
+     "audio": true
     },
     {
      "id": "1.2",
@@ -247,7 +247,7 @@
      "mins": 15,
      "sum": "Why each extra bit costs an analog system four times the energy and a digital system one more wire, where the crossover sits, and where the noise in a tube of DNA really comes from.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -333,7 +333,7 @@
      "mins": 16,
      "sum": "Landauer's limit, Bennett's reversible computers, the trade between speed, accuracy and energy, and an honest energy account for a DNA gate.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -379,7 +379,7 @@
      "mins": 18,
      "sum": "Thirteen questions that size up any computer, applied to silicon, the brain, analog chips, a well-mixed DNA circuit and DNA storage.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -655,7 +655,7 @@
      "mins": 17,
      "sum": "How a network assigns blame to millions of weights in one backward sweep, and the four things that sweep demands of the hardware.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -840,7 +840,7 @@
      "mins": 17,
      "sum": "Counting the arithmetic in a training run, what a GPU provides, why memory traffic is the bottleneck, and the workload profile any new hardware has to meet.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -886,7 +886,7 @@
      "mins": 17,
      "sum": "The menu of learning rules a physical system could run on itself, from Hebbian rules to evolution, and which have been tried in chemistry.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -1166,7 +1166,7 @@
      "mins": 18,
      "sum": "The paper taken apart decision by decision: framing, data, encoding, architecture, training, evaluation and limits, with the questions to ask of any model like it.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -1586,7 +1586,7 @@
      "mins": 15,
      "sum": "Weights as concentrations, sums for free, thresholds and winner-take-all, and what kind of classifier the 2018 network really is.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -1626,7 +1626,7 @@
      "mins": 16,
      "sum": "The three advances of 2025, what each really showed, and how far learning in chemistry still is from training.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -1857,7 +1857,7 @@
      "mins": 17,
      "sum": "Writing, reading and random access, the NC State line of work, and the three ways people have computed on stored data.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -2782,7 +2782,7 @@
      "mins": 17,
      "sum": "What an AI workload costs in operations, memory, precision and sequential steps, and what chemistry offers in each of those currencies.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -2793,7 +2793,7 @@
      "mins": 20,
      "sum": "Seven architectures, each scored on what has been shown, what binds it, and where a tenfold gain could come from.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {
@@ -2844,7 +2844,7 @@
      "mins": 17,
      "sum": "Ten open problems, what a result on each would look like, and a way of choosing among them that uses what a chemical engineer is good at.",
      "pairs": null,
-     "script": false,
+     "script": true,
      "audio": false
     },
     {

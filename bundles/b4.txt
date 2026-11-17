@@ -1,0 +1,255 @@
+=== 3.4 ===
+# 3.4 Backpropagation out loud
+
+BINND has four and a half million weights. When it gets an answer wrong, which of those four and a half million numbers is to blame, and by how much? If you can answer that for every weight, quickly, you can train a network. If you cannot, you cannot. The procedure that answers it is called backpropagation, and it is the engine under all of modern AI.
+
+Quick recall. A layer has n inputs and m outputs. How many parameters does it have? And why must there be a nonlinearity between layers?
+
+n times m weights, plus m biases. And without a nonlinearity, a stack of layers collapses into one linear map, however many layers you stack.
+
+Start with what we want. The network makes a prediction. A loss function turns the gap between prediction and truth into one number: how wrong was that. What we want is, for every weight, the answer to a what-if question. If I nudged this one weight up a hair, would the loss go up or down, and how steeply? That steepness is the gradient. Once you have it for every weight, you step each weight a little in its downhill direction, and the network is slightly less wrong. Repeat a million times.
+
+The obvious way to get the gradient is the way you would test a valve. Nudge one weight. Run the whole network again. See how the loss changed. Put the weight back. Move on to the next weight.
+
+Count the cost. Four and a half million weights means four and a half million runs of the network, to take one single step. And training takes a million steps. That is not slow. That is never.
+
+[B] So there must be a trick that gets all four and a half million answers at once.
+
+There is, and you may have met it under another name. It is the adjoint method, or reverse-mode sensitivity analysis. One sweep forwards through the network, one sweep backwards, and you have the sensitivity of the output to every parameter. The cost is about two or three runs of the network, no matter how many weights there are.
+
+Here is the picture. Think of a process train: a dozen units in series, each taking a feed and making a product that feeds the next. At the far end, the product is off-spec. You want to know how much each setting on each unit contributed.
+
+Start at the last unit, because that is where you know the error. The last unit can work out two things from what it has on hand. First: how much of this error comes from my own settings? Second: how much comes from what I was fed? It keeps the first as its own share of the blame. It passes the second upstream, as a message to the unit before: here is how wrong your product was, as far as I am concerned.
+
+Now the second-to-last unit holds an error for its own output, and it does the same thing. Some blame to my settings. The rest passed upstream. And so on, all the way back to the feed.
+
+That is backpropagation. Blame flows backwards, one unit at a time, and each unit splits it between itself and its supplier. The mathematics behind the split is the chain rule from calculus: the sensitivity of the end to the beginning is a product of sensitivities, link by link. Backpropagation is the chain rule, organised so that no piece of work is ever done twice.
+
+Now look closely at what each unit needs in order to do its split, because this is where the lesson turns toward hardware.
+
+To decide how much blame belongs to its settings, a unit has to know what it was being fed at the time. Not on average. On this particular example. So during the forward pass, every layer must remember its input.
+
+And to pass blame upstream, a unit has to translate an error in its output into an error in its input. For a layer, that translation uses the layer's own weights, run in the reverse direction. A matrix turned on its side: what mathematicians call the transpose.
+
+So the forward pass is: multiply by the weights, and remember everything. The backward pass is: multiply by the same weights in reverse, and combine with what you remembered.
+
+[B] That sounds like bookkeeping. Why did you say this is where it turns toward hardware?
+
+Because that bookkeeping makes four demands, and every one of them is easy for a digital computer and hard for almost anything else. I want you to be able to recite these four, because they explain why running a network in chemistry is so much easier than training one there.
+
+Demand one: the backward path must know the forward weights exactly. The same numbers have to be used in both directions. In software, that is one array read twice. In a physical system, the backward signal would have to travel through a second structure that is a perfect mirror of the first. This has a name: the weight transport problem.
+
+Demand two: storage. Every activation, in every layer, for every example in the batch, has to be held from the forward pass until the backward pass reaches it. Training needs far more memory than inference does, and this is why.
+
+Demand three: the error signal is signed, and it ranges widely. Blame can be positive or negative. And it can differ by factors of a million between one weight and another. A concentration, remember, cannot be negative, and carries three to five bits.
+
+Demand four: the updates are tiny, and they must add up faithfully. Each step changes a weight by perhaps a thousandth of its value. If your hardware cannot register a change that small, the step is lost. And you need a million of them to accumulate without drifting.
+
+Exact mirrored weights. Stored activations. Signed, wide-ranging errors. Tiny, faithful updates.
+
+Now hold that list against a tube of DNA. Inference asks for a weighted sum and a threshold, and chemistry has both. Training by backpropagation asks for a mirror-image network, a memory for every intermediate value, negative numbers, and updates a thousand times finer than your pipette. That is the asymmetry. It is why every DNA neural network before twenty twenty-five was trained on a laptop.
+
+[B] Is that a dead end, then?
+
+It is a fork. One branch says: keep backpropagation, but do it somewhere else. Train in software and ship the weights to the tube, or run the forward pass in the tube and the backward pass in a model of the tube. The other branch says: find a different learning rule, one that needs only what each unit can see locally. Lesson three point seventeen walks through nine of those. And it is worth knowing that brains face the same four demands, almost certainly do not meet them, and learn anyway.
+
+One last practical thing, so the vocabulary is in your ear before the next lesson. Nobody writes backpropagation by hand any more. You write the forward pass. The software records every operation as it runs, and then replays the record backwards. That is called automatic differentiation. In PyTorch, it is the single line that says: loss, backward.
+
+Three sentences. Training needs the sensitivity of the loss to every weight, and backpropagation delivers all of them in one backward sweep by passing blame from each layer to the one before. To do that, each layer must remember its input and send the error back through its own weights in reverse. That makes four demands, exact mirrored weights, stored activations, signed wide-ranging errors, and tiny faithful updates, which digital hardware meets easily and chemistry does not.
+
+[B] Questions. One: why is nudging each weight in turn hopeless, and what does backpropagation cost instead? Two: what two things must a layer have on hand to do its share of the backward pass? Three: recite the four demands, and say which you think is hardest in a test tube.
+
+---
+
+=== 3.14 ===
+# 3.14 The compute behind AI
+
+People say that training a large AI model takes an enormous amount of computing. How much is enormous? Could you write the number down? And once you had it, could you say which part of it is truly unavoidable, and which part is just the way silicon happens to do things?
+
+That second question is the one that matters for you. Any new kind of hardware, molecular or otherwise, has to meet the unavoidable part. It is free to do the rest differently.
+
+Quick recall. What is in-context learning?
+
+A model changing its behaviour because of examples placed in its input, with no change to its weights at all.
+
+Let us count. Begin with one forward pass. You saw in lesson three point two that a layer is a matrix times a vector, and that every weight gets used once: one multiplication, one addition. So a forward pass costs about two arithmetic operations for every parameter. For a language model, that is two per parameter for each token it reads.
+
+Training costs more, because of the backward pass. A good rule is three times the forward cost. So about six operations per parameter, per token.
+
+Now put in numbers of the size people use. A model with a hundred billion parameters. Trained on ten trillion tokens. Six operations for each pairing. Multiply it out, and you get six times ten to the twenty-fourth. Call it ten to the twenty-fifth operations for one training run.
+
+That is the number. Ten to the twenty-fifth. Let us make it mean something.
+
+One top accelerator chip performs about ten to the fifteenth operations per second, and draws about a kilowatt once you include cooling and everything around it. So one chip would need ten to the tenth seconds. That is three hundred years. Which is why nobody uses one chip. With ten thousand chips, three hundred years becomes about twelve days if nothing is ever idle, and in practice a good deal longer.
+
+Energy. A kilowatt, for ten to the fifteenth operations a second, is ten to the minus twelve joules per operation. You met that figure in the thermodynamics lesson. Times ten to the twenty-fifth operations gives ten to the thirteenth joules. That is about three gigawatt-hours at the very least: roughly what a few hundred homes use in a year. Real runs, with real inefficiencies, use several times more.
+
+[B] What is the chip actually doing that is so special? Why not ordinary processors?
+
+A graphics processor is a very simple idea executed at huge scale. It is thousands of small arithmetic units, side by side, all doing the same operation on different numbers at the same moment. That is all a matrix multiplication needs: millions of independent multiply-and-adds. An ordinary processor is built to do complicated, branching, one-after-another work. A neural network is the opposite kind of job, simple and wide, and so it wants the opposite kind of chip.
+
+Two more facts about the hardware, both of which bear on any alternative.
+
+The first is about number formats. The standard used to be thirty-two bits per number, which is about seven decimal digits. Training now mostly uses sixteen bits, about three or four digits, because half the bits means half the memory and half the traffic. Inference often uses eight bits, or four. So the trend, for a decade, has been steadily downward in precision. The next lesson is about how far down it can go.
+
+The second fact surprises people. The limit on speed is usually not arithmetic. It is memory traffic. To produce one token, the chip must read every weight in the model once. A hundred billion weights at two bytes each is two hundred gigabytes. The memory attached to an accelerator can deliver a few thousand gigabytes per second. So the chip spends its time waiting for weights to arrive, not multiplying them. This is the von Neumann bottleneck from lesson one point four, in its modern form. Hold on to it, because DNA is a memory.
+
+[B] You said some of this is unavoidable and some is just silicon's way. Which is which?
+
+Here is the heart of it. Look at how the work can be arranged in time.
+
+Some of it can run side by side. Different examples in a batch do not depend on each other. Different positions in a sequence can be processed together. Within a layer, every multiply-and-add is independent. All of that is width, and width can be spread across as many arithmetic units as you own.
+
+Some of it cannot. Layer two needs the output of layer one. So the layers run in order: perhaps a hundred of them. And training step two needs the weights produced by step one. So the steps run in order too, and a training run has around a million of them. All of that is depth, and depth cannot be bought off with more hardware. It takes as long as it takes.
+
+So an AI workload has a shape. It is very wide, and it also has an irreducible depth: about a hundred layers per pass, and about a million passes in sequence.
+
+Now I can give you the workload profile: four lines that any new hardware has to answer to.
+
+Line one: the work is dominated by a single operation. Multiply and accumulate, repeated ten to the twenty-fifth times.
+
+Line two: it is extremely wide. Billions of those operations can go at once.
+
+Line three: it has irreducible depth. A hundred layers in sequence, and for training, a million updates in sequence.
+
+Line four: it is limited by memory traffic, by how fast weights can be brought to where the arithmetic happens.
+
+Hold each line against a tube of molecules, and you get a preview of phase six.
+
+Line one, multiply and accumulate. Chemistry does that natively. Mass action multiplies concentrations, and pooling adds them.
+
+Line two, width. That is molecules' great strength. A micromole is nearly a million million million of them.
+
+Line three, depth. That is the weakness. A chemical step takes seconds to hours, not picoseconds, so a million sequential steps is out of the question. Any molecular approach to learning has to need very few steps.
+
+Line four, memory traffic. Here the comparison turns over completely. In silicon, memory and arithmetic are in different places, and the road between them is the bottleneck. DNA is the densest memory known. If the arithmetic can happen where the data already sits, there is no road.
+
+So the profile tells you where to look. Not at copying a deep network step for step. At workloads that are wide, shallow, and bound by memory.
+
+Three sentences. A training run costs about six operations per parameter per token, which for a large model comes to around ten to the twenty-fifth operations, at about ten to the minus twelve joules each. The work is extremely wide and can be spread across hardware, but about a hundred layers and a million update steps must happen in sequence. Any new hardware must supply multiply-and-accumulate, exploit the width, cope with the depth, and ease the memory traffic, and molecules are strong on the first two, weak on the third, and potentially transformative on the fourth.
+
+[B] Three questions. One: roughly how many arithmetic operations does a forward pass cost per parameter, and how many does training cost? Two: what limits the speed of a large model on a modern chip, if not arithmetic? Three: give the four lines of the workload profile, and say which one is DNA's weakness.
+
+---
+
+=== 3.17 ===
+# 3.17 Learning without backpropagation
+
+Your brain learned to recognise a face without ever running backpropagation. It has no mirror-image network to carry errors backwards, and no memory bank holding every intermediate value. So there must be other ways to learn. How many are there, and could any of them run in a test tube?
+
+This lesson is a menu: nine ways for a system to learn. For each, I will give you the idea in a sentence, what it demands of the hardware, and whether anyone has done it in chemistry.
+
+Quick recall. Why can a trained network make predictions with only a few bits per number, when training it needs many more?
+
+Prediction averages over many weights, and the network was trained to be robust. But training works by tiny adjustments, each a small fraction of a weight, and at low precision those adjustments round away to nothing.
+
+Nine ways, in three families. The first family keeps backpropagation, but moves it. The second replaces it with rules that are local. The third does without gradients altogether.
+
+Family one. Keep backpropagation, and move it.
+
+Way one: train in software, then deploy. Do all the learning on an ordinary computer, and build the finished network in your exotic hardware. The hardware only has to do inference. The demand is that your model of the hardware be accurate, because any difference between model and reality becomes error. In chemistry, this is how every DNA neural network before twenty twenty-five was made.
+
+Way two: the hybrid. Run the forward pass in the real hardware, so that all its quirks are included. Measure the result. Then do the backward pass in a software model. You met this in phase two as physics-aware training. The demand: you must be able to read the hardware's state, adjust its parameters, and run it again and again. It has been shown in optics, mechanics and electronics. To my knowledge, it has not yet been shown for a DNA circuit.
+
+Family two. Local rules. The idea uniting these is that each connection changes using only information that is physically present at that connection. No message from far away.
+
+Way three: the oldest rules. The Hebbian rule says: when the input side and the output side of a connection are active together, strengthen it. Its supervised cousin, the delta rule, says: change each weight in proportion to its input, times the error at its output. That second one is the perceptron's learning rule, from the nineteen fifties. Both need only what is at hand. Their limit is that they train a single layer well, and deep networks poorly. In chemistry, there have been designs and simulations for over a decade. And the first experiment, in twenty twenty-five, was of the Hebbian kind: Cherry and Qian's network strengthens a weight when its input bit and its class label are present together.
+
+Way four: energy-based learning. Picture a network that does not compute layer by layer, but settles, like a ball rolling into a valley. Learning means reshaping the landscape. In a Boltzmann machine, you let the system settle twice: once with the right answer held in place, and once left free. Then you adjust each connection by the difference in how its two ends behaved in the two cases. A more recent method, equilibrium propagation, does something similar with a gentle nudge. The demand is a system that truly relaxes to equilibrium, with symmetric interactions. Chemistry has plenty of those. A chemical Boltzmann machine was worked out in theory in twenty seventeen. Nobody has trained one in a tube.
+
+Way five: forward-forward. This is Geoffrey Hinton's proposal from twenty twenty-two. Replace the backward pass with a second forward pass. Show the network real data, and have each layer adjust itself to be more active. Show it fake data, and have each layer adjust to be less active. Each layer has its own local goal. It demands no mirror network and no stored activations. It also does not yet match backpropagation on hard problems.
+
+Way six: feedback alignment. A surprising result from twenty sixteen. Send the error backwards through fixed, random connections, and not through a mirror of the forward weights. It still works, because the forward weights gradually adapt to make use of whatever feedback they are given. This removes the weight transport problem, the first of the four demands.
+
+[B] Those all still compute some kind of error and send it somewhere. What if the hardware can only run forwards?
+
+Then you are in family three, and for molecules, this is where it gets interesting.
+
+Way seven: perturb and select. Make a random change. Run forwards. If the result is better, keep the change. That is the nudge-one-weight idea I dismissed in the backpropagation lesson as hopeless, and for one network on one chip, it is. But suppose you are not limited to one. Suppose you can make a million million variants, try them all at the same moment, and keep the best. Then the arithmetic changes completely. This is the family of evolution strategies and genetic algorithms. The demand is the ability to make many variants, evaluate them in parallel, and copy the winners. And that is a description of what DNA does better than any other material. Chemists call it directed evolution. It has optimised molecules for decades. What nobody has shown is how to make it optimise a computation.
+
+Way eight: the reservoir. Take any system with rich, complicated, fixed dynamics. Do not train it at all. Feed your input in, let the system churn, and train only a simple read-out on top: a single linear layer, which is easy. The demand is nearly nothing: the system only has to be complicated and repeatable. A reaction network is both. This was proposed for DNA more than ten years ago, and has been demonstrated with other kinds of reaction network.
+
+Way nine: learning by remembering. Do not adjust anything in response to error. Store the examples, or a summary of them. When a new case arrives, find the stored ones it most resembles, and answer as they did. Nearest-neighbour methods work this way. So, in a sense, does in-context learning. The demand is a memory, and a way to compare. Both are things DNA does natively: storage, and hybridisation.
+
+[B] Nine is a lot. Which ones should I actually remember?
+
+Remember the three questions that sort them, because you can rebuild the list from those.
+
+Does the method need a model of the hardware? Ways one and two do. The rest do not.
+
+Does it need error information to travel? Backpropagation does, across the whole network. The local rules need it only next door. The third family needs none.
+
+And how many sequential steps does it take? That one decides everything for a slow substrate. Gradient methods take a million. Selection takes tens of rounds, but each round is enormous. Remembering takes one pass.
+
+Now apply the lesson of the compute profile. Molecules are wide and slow. So the methods that suit them are the ones that trade steps for width. Selection across a vast population. A reservoir with a trained read-out. Memory with comparison. And settling to equilibrium, where the physics does the iterating for you.
+
+Notice what that list is not. It is not backpropagation. If learning in molecules ever becomes powerful, it will probably not look like what happens in a data centre, and you should be suspicious of any plan that tries to make it look that way.
+
+Three sentences. There are three families of learning: move backpropagation elsewhere, replace it with local rules, or abandon gradients for selection, reservoirs and memory. They differ in whether they need a model of the hardware, how far error information must travel, and how many sequential steps they take. A wide, slow substrate favours the ones that take few steps, and so far chemistry has demonstrated the simplest of them: remembering.
+
+[B] Your questions. One: name the three families, and one method from each. Two: which of the four demands of backpropagation does feedback alignment remove? Three: why does perturb-and-select look hopeless on a chip and promising in a tube?
+
+---
+
+=== 4.2 ===
+# 4.2 BINND dissected: a design review
+
+You have just listened to the BINND paper. Now imagine you are in the room where it was planned, before any experiment was run, and that every choice is still open. What would you have had to decide?
+
+That is how to read a modelling paper: not as a result, but as a chain of decisions, each of which could have gone another way. I count seven. We will take them in order, and at each one I will tell you what was chosen, what the alternative was, and what the choice cost.
+
+Quick recall. I asked you to listen for three things in the paper. What were they?
+
+How the two sequences are laid out for the network. How the data were generated. And what the model was compared against.
+
+Decision one: what question is the model answering? BINND answers a narrow one. Given two strands of DNA, each twenty bases long, will they bind in a pulldown, yes or no? That is a classification with two classes. The alternative would have been to predict a quantity: how strongly, or how fast. Yes-or-no is cruder, but it matches what the experiment measures cleanly, and it makes the problem easier to learn. The price is that the model cannot tell a barely bound pair from a tightly bound one.
+
+Decision two: where do the labels come from? This is the decision that makes the paper. The standard approach is to label pairs with a thermodynamic calculation. The authors measured instead. They took twenty-six bait strands, each carrying a biotin handle, chosen so that every two baits differ from each other in at least ten of their twenty positions. They mixed each bait with a vast library of prey strands. They pulled the baits out on streptavidin beads, with whatever prey had stuck, and sequenced what came down. Twenty-eight conditions, each in triplicate. The final training set was balanced, with equal numbers of bound and unbound pairs: about a hundred and forty-four point six million of them.
+
+Hold that number against the earlier work you will hear next, which trained on two and a half million pairs labelled by simulation. BINND had more than fifty times the data, and the data were real.
+
+How much did measuring matter? The authors ran the experiment that answers it. They trained the same kind of network on labels computed from free energies and tested it on the real data. It scored sixty-six percent. The network trained on measurements scored eighty-three. A model cannot learn what its labels do not contain.
+
+[B] Decision three must be the encoding. Why did they interleave the strands?
+
+Because of what a convolution can see. A convolutional filter looks at a small window of neighbouring positions. If you simply placed strand one and then strand two end to end, base one of the first strand and the base it would pair with on the second would be at opposite ends of the input. No small filter could look at both.
+
+So they wove the strands together. The input is a grid, four rows by forty columns: four rows for the four bases, forty columns for forty positions. The first column is position one of strand one. The second column is position twenty of strand two, which is its would-be partner when the strands lie antiparallel. Then position two of strand one, then position nineteen of strand two. And so on.
+
+Now a filter three or four columns wide sees a candidate base pair together with its neighbours. And neighbouring base pairs are where the stability of a duplex comes from: the stacking between one pair and the next. The encoding hands the network the right physical neighbourhood before it has learned anything.
+
+That is the most transferable idea in the paper. Encoding is where you put what you already know.
+
+Decision four: the architecture. Five convolutional layers, then three fully connected ones. After each convolution: a ReLU, batch normalisation, and dropout. About four and a half million parameters. They also tried a transformer. It was better by about a tenth of one percent, and took thirteen and a half times as long to train. So they kept the convolutional network. That is a judgment you will make often: when two models are nearly tied, take the cheaper one. They also built a smaller version, BINND-Lite, with about a million parameters, for anyone running it on a laptop.
+
+Decision five: training. They split the data at random, eighty percent for training, ten for validation, ten for the final test. They searched the settings automatically, with a scheduler that abandons unpromising runs early. And they stopped training when the validation score failed to improve for two rounds.
+
+Decision six: how to judge it. On about fourteen and a half million test pairs: eighty-three percent accuracy, and an area under the curve of zero point eight eight. That second number is the fairer one. It asks: across every possible cut-off, how well does the model rank binders above non-binders? A half is a coin toss. One is perfect.
+
+Then the comparisons. The standard thermodynamic tools scored zero point seven three and zero point seven nine. A simple measure of how many edits separate two sequences scored zero point seven four. So on this task, a learned model beats physics by about ten points.
+
+[B] Why would physics lose? Those tools encode real thermodynamics.
+
+They do, and for the question they were built for, they are very good. They ask: at equilibrium, free in solution, how stable is this duplex? The pulldown asks something else: after binding to a strand on a bead, and surviving the washes, is the prey still there? That involves surfaces, kinetics, and weak, messy partial matches, and those are just the cases where the standard models are least reliable. The network does not know any thermodynamics. It learned the assay.
+
+Which is a strength and a warning. It is a strength if your application looks like the assay. It is a warning if it does not.
+
+One more detail about the scores, because it is the kind a reviewer checks. At the default cut-off, the model is cautious. When it says two strands bind, it is right more than nine times in ten. But it misses about a quarter of the pairs that truly bind. Whether that is the right balance depends on the use. If you are designing strands that must never cross-react, a missed binder is the expensive mistake, and you would lower the cut-off.
+
+Decision seven: what does generalise mean? This is the subtle one, and the authors deserve credit for testing it. A random split means every bait appears in both training and test. The prey differ, but the model has met every bait before. So they also asked the harder question: what if the bait is new? Train on a single bait, and test on the others: the score is zero point five five, barely better than chance. Train on about eleven baits: it climbs to about zero point eight, and levels off.
+
+Read that carefully. The model generalises well across prey, of which it saw millions. It generalises less well across baits, of which it saw twenty-six. The data are enormously deep on one side of the pair and narrow on the other. If I had to name the single most valuable next experiment, it would be more baits.
+
+They also checked salt. Trained at low salt, the model held its score at medium and high. And then they used it: to design a network of twenty-six probes against ninety-six new strands, laid out as storybook characters and their attributes, which they built and tested. At predicting which strands would bind in that network, the model did more than twice as well as the best standard tool.
+
+So here are the limits, stated plainly. Twenty bases only. A yes-or-no answer. One kind of assay. Twenty-six baits.
+
+And each limit is an invitation. Variable lengths. Predicting strength, from how many copies came down. Predicting speed. Feeding in salt and temperature as inputs. Choosing the next baits where the model is least sure, which is called active learning. Reporting how confident it is. And building it into a compiler, as the check on whether a set of strands will leave each other alone.
+
+Finally, take away five questions that work on any paper of this kind. Where did the labels come from? How was the data split, and what does generalising mean under that split? What was the baseline, and was it a fair one? What does the encoding assume? And what would make this number wrong?
+
+Three sentences. BINND is a compact convolutional classifier whose advantage comes less from its architecture than from a hundred and forty-four million measured labels and an encoding that puts would-be base pairs side by side. It beats thermodynamic tools on its own assay by about ten points, is cautious at its default cut-off, and generalises better to new prey than to new baits. Its limits, twenty bases, yes-or-no, one assay, twenty-six baits, are a list of projects.
+
+[B] Questions. One: why were the two strands interleaved, and what would a filter see if they were not? Two: what does the sixty-six percent result tell you about simulated labels? Three: under a random split, what has the model already seen in the test set, and what did the harder test show?
+
+---

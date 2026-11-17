@@ -1,0 +1,61 @@
+# 3.4 Backpropagation out loud
+
+BINND has four and a half million weights. When it gets an answer wrong, which of those four and a half million numbers is to blame, and by how much? If you can answer that for every weight, quickly, you can train a network. If you cannot, you cannot. The procedure that answers it is called backpropagation, and it is the engine under all of modern AI.
+
+Quick recall. A layer has n inputs and m outputs. How many parameters does it have? And why must there be a nonlinearity between layers?
+
+n times m weights, plus m biases. And without a nonlinearity, a stack of layers collapses into one linear map, however many layers you stack.
+
+Start with what we want. The network makes a prediction. A loss function turns the gap between prediction and truth into one number: how wrong was that. What we want is, for every weight, the answer to a what-if question. If I nudged this one weight up a hair, would the loss go up or down, and how steeply? That steepness is the gradient. Once you have it for every weight, you step each weight a little in its downhill direction, and the network is slightly less wrong. Repeat a million times.
+
+The obvious way to get the gradient is the way you would test a valve. Nudge one weight. Run the whole network again. See how the loss changed. Put the weight back. Move on to the next weight.
+
+Count the cost. Four and a half million weights means four and a half million runs of the network, to take one single step. And training takes a million steps. That is not slow. That is never.
+
+[B] So there must be a trick that gets all four and a half million answers at once.
+
+There is, and you may have met it under another name. It is the adjoint method, or reverse-mode sensitivity analysis. One sweep forwards through the network, one sweep backwards, and you have the sensitivity of the output to every parameter. The cost is about two or three runs of the network, no matter how many weights there are.
+
+Here is the picture. Think of a process train: a dozen units in series, each taking a feed and making a product that feeds the next. At the far end, the product is off-spec. You want to know how much each setting on each unit contributed.
+
+Start at the last unit, because that is where you know the error. The last unit can work out two things from what it has on hand. First: how much of this error comes from my own settings? Second: how much comes from what I was fed? It keeps the first as its own share of the blame. It passes the second upstream, as a message to the unit before: here is how wrong your product was, as far as I am concerned.
+
+Now the second-to-last unit holds an error for its own output, and it does the same thing. Some blame to my settings. The rest passed upstream. And so on, all the way back to the feed.
+
+That is backpropagation. Blame flows backwards, one unit at a time, and each unit splits it between itself and its supplier. The mathematics behind the split is the chain rule from calculus: the sensitivity of the end to the beginning is a product of sensitivities, link by link. Backpropagation is the chain rule, organised so that no piece of work is ever done twice.
+
+Now look closely at what each unit needs in order to do its split, because this is where the lesson turns toward hardware.
+
+To decide how much blame belongs to its settings, a unit has to know what it was being fed at the time. Not on average. On this particular example. So during the forward pass, every layer must remember its input.
+
+And to pass blame upstream, a unit has to translate an error in its output into an error in its input. For a layer, that translation uses the layer's own weights, run in the reverse direction. A matrix turned on its side: what mathematicians call the transpose.
+
+So the forward pass is: multiply by the weights, and remember everything. The backward pass is: multiply by the same weights in reverse, and combine with what you remembered.
+
+[B] That sounds like bookkeeping. Why did you say this is where it turns toward hardware?
+
+Because that bookkeeping makes four demands, and every one of them is easy for a digital computer and hard for almost anything else. I want you to be able to recite these four, because they explain why running a network in chemistry is so much easier than training one there.
+
+Demand one: the backward path must know the forward weights exactly. The same numbers have to be used in both directions. In software, that is one array read twice. In a physical system, the backward signal would have to travel through a second structure that is a perfect mirror of the first. This has a name: the weight transport problem.
+
+Demand two: storage. Every activation, in every layer, for every example in the batch, has to be held from the forward pass until the backward pass reaches it. Training needs far more memory than inference does, and this is why.
+
+Demand three: the error signal is signed, and it ranges widely. Blame can be positive or negative. And it can differ by factors of a million between one weight and another. A concentration, remember, cannot be negative, and carries three to five bits.
+
+Demand four: the updates are tiny, and they must add up faithfully. Each step changes a weight by perhaps a thousandth of its value. If your hardware cannot register a change that small, the step is lost. And you need a million of them to accumulate without drifting.
+
+Exact mirrored weights. Stored activations. Signed, wide-ranging errors. Tiny, faithful updates.
+
+Now hold that list against a tube of DNA. Inference asks for a weighted sum and a threshold, and chemistry has both. Training by backpropagation asks for a mirror-image network, a memory for every intermediate value, negative numbers, and updates a thousand times finer than your pipette. That is the asymmetry. It is why every DNA neural network before twenty twenty-five was trained on a laptop.
+
+[B] Is that a dead end, then?
+
+It is a fork. One branch says: keep backpropagation, but do it somewhere else. Train in software and ship the weights to the tube, or run the forward pass in the tube and the backward pass in a model of the tube. The other branch says: find a different learning rule, one that needs only what each unit can see locally. Lesson three point seventeen walks through nine of those. And it is worth knowing that brains face the same four demands, almost certainly do not meet them, and learn anyway.
+
+One last practical thing, so the vocabulary is in your ear before the next lesson. Nobody writes backpropagation by hand any more. You write the forward pass. The software records every operation as it runs, and then replays the record backwards. That is called automatic differentiation. In PyTorch, it is the single line that says: loss, backward.
+
+Three sentences. Training needs the sensitivity of the loss to every weight, and backpropagation delivers all of them in one backward sweep by passing blame from each layer to the one before. To do that, each layer must remember its input and send the error back through its own weights in reverse. That makes four demands, exact mirrored weights, stored activations, signed wide-ranging errors, and tiny faithful updates, which digital hardware meets easily and chemistry does not.
+
+[B] Questions. One: why is nudging each weight in turn hopeless, and what does backpropagation cost instead? Two: what two things must a layer have on hand to do its share of the backward pass? Three: recite the four demands, and say which you think is hardest in a test tube.
+
+---

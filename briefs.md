@@ -25,13 +25,13 @@ HOW TO WRITE A LESSON SCRIPT (plain text, for the ear)
 
 ## Phase 0: Orientation
 
-### 0.1 The map (core, about 9 min)
+### 0.1 The map (core, about 6 min)
 
 Purpose: orient. The end state is six abilities: explain computation without silicon; put numbers on analog versus digital; follow a model from data to weights; build BINND-class models with Claude; place any molecular-computing paper on a map; judge what AI in DNA would take. Three questions to ask of any computer: what carries the signal, how is it kept clean (restoration), what limits its size. Walk the six phases in one sentence each. Explain how lessons work (recall, B's questions, self-check), Core versus Depth, lead-ins to outside items, NotebookLM prompts in the hub. Standing habit: after every item say one sentence aloud linking it to DNA. Keep under 1,400 words.
 
 ## Phase 1: Computing from the ground up
 
-### 1.1 Bits, gates and the digital abstraction (core, about 14 min)
+### 1.1 Bits, gates and the digital abstraction (core, about 9 min)
 
 Bit = a physical distinction a system can make reliably. Gates AND, OR, NOT; NAND alone suffices (universality). Substrates that have computed: relays, valves, vacuum tubes, transistors, fluidics, dominoes. Five requirements for a logic family: nonlinearity; gain (signal restoration); fan-out; cascadability (output is a valid input); isolation (outputs do not disturb inputs). Noise margins: why a gate that snaps sloppy inputs to clean outputs lets errors never accumulate. ChemE picture: a relief valve or a thermostat as a threshold device. DNA bridge: signal = high or low concentration of a strand; seesaw gate threshold plus catalytic amplification = restoration (Qian and Winfree 2011); cascadable because outputs are strands of the same form; isolation imperfect (leak, crosstalk). Self-check: why can no linear device be a logic gate; what does gain buy.
 

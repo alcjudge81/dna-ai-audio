@@ -1,0 +1,61 @@
+# 4.2 BINND dissected: a design review
+
+You have just listened to the BINND paper. Now imagine you are in the room where it was planned, before any experiment was run, and that every choice is still open. What would you have had to decide?
+
+That is how to read a modelling paper: not as a result, but as a chain of decisions, each of which could have gone another way. I count seven. We will take them in order, and at each one I will tell you what was chosen, what the alternative was, and what the choice cost.
+
+Quick recall. I asked you to listen for three things in the paper. What were they?
+
+How the two sequences are laid out for the network. How the data were generated. And what the model was compared against.
+
+Decision one: what question is the model answering? BINND answers a narrow one. Given two strands of DNA, each twenty bases long, will they bind in a pulldown, yes or no? That is a classification with two classes. The alternative would have been to predict a quantity: how strongly, or how fast. Yes-or-no is cruder, but it matches what the experiment measures cleanly, and it makes the problem easier to learn. The price is that the model cannot tell a barely bound pair from a tightly bound one.
+
+Decision two: where do the labels come from? This is the decision that makes the paper. The standard approach is to label pairs with a thermodynamic calculation. The authors measured instead. They took twenty-six bait strands, each carrying a biotin handle, chosen so that every two baits differ from each other in at least ten of their twenty positions. They mixed each bait with a vast library of prey strands. They pulled the baits out on streptavidin beads, with whatever prey had stuck, and sequenced what came down. Twenty-eight conditions, each in triplicate. The final training set was balanced, with equal numbers of bound and unbound pairs: about a hundred and forty-four point six million of them.
+
+Hold that number against the earlier work you will hear next, which trained on two and a half million pairs labelled by simulation. BINND had more than fifty times the data, and the data were real.
+
+How much did measuring matter? The authors ran the experiment that answers it. They trained the same kind of network on labels computed from free energies and tested it on the real data. It scored sixty-six percent. The network trained on measurements scored eighty-three. A model cannot learn what its labels do not contain.
+
+[B] Decision three must be the encoding. Why did they interleave the strands?
+
+Because of what a convolution can see. A convolutional filter looks at a small window of neighbouring positions. If you simply placed strand one and then strand two end to end, base one of the first strand and the base it would pair with on the second would be at opposite ends of the input. No small filter could look at both.
+
+So they wove the strands together. The input is a grid, four rows by forty columns: four rows for the four bases, forty columns for forty positions. The first column is position one of strand one. The second column is position twenty of strand two, which is its would-be partner when the strands lie antiparallel. Then position two of strand one, then position nineteen of strand two. And so on.
+
+Now a filter three or four columns wide sees a candidate base pair together with its neighbours. And neighbouring base pairs are where the stability of a duplex comes from: the stacking between one pair and the next. The encoding hands the network the right physical neighbourhood before it has learned anything.
+
+That is the most transferable idea in the paper. Encoding is where you put what you already know.
+
+Decision four: the architecture. Five convolutional layers, then three fully connected ones. After each convolution: a ReLU, batch normalisation, and dropout. About four and a half million parameters. They also tried a transformer. It was better by about a tenth of one percent, and took thirteen and a half times as long to train. So they kept the convolutional network. That is a judgment you will make often: when two models are nearly tied, take the cheaper one. They also built a smaller version, BINND-Lite, with about a million parameters, for anyone running it on a laptop.
+
+Decision five: training. They split the data at random, eighty percent for training, ten for validation, ten for the final test. They searched the settings automatically, with a scheduler that abandons unpromising runs early. And they stopped training when the validation score failed to improve for two rounds.
+
+Decision six: how to judge it. On about fourteen and a half million test pairs: eighty-three percent accuracy, and an area under the curve of zero point eight eight. That second number is the fairer one. It asks: across every possible cut-off, how well does the model rank binders above non-binders? A half is a coin toss. One is perfect.
+
+Then the comparisons. The standard thermodynamic tools scored zero point seven three and zero point seven nine. A simple measure of how many edits separate two sequences scored zero point seven four. So on this task, a learned model beats physics by about ten points.
+
+[B] Why would physics lose? Those tools encode real thermodynamics.
+
+They do, and for the question they were built for, they are very good. They ask: at equilibrium, free in solution, how stable is this duplex? The pulldown asks something else: after binding to a strand on a bead, and surviving the washes, is the prey still there? That involves surfaces, kinetics, and weak, messy partial matches, and those are just the cases where the standard models are least reliable. The network does not know any thermodynamics. It learned the assay.
+
+Which is a strength and a warning. It is a strength if your application looks like the assay. It is a warning if it does not.
+
+One more detail about the scores, because it is the kind a reviewer checks. At the default cut-off, the model is cautious. When it says two strands bind, it is right more than nine times in ten. But it misses about a quarter of the pairs that truly bind. Whether that is the right balance depends on the use. If you are designing strands that must never cross-react, a missed binder is the expensive mistake, and you would lower the cut-off.
+
+Decision seven: what does generalise mean? This is the subtle one, and the authors deserve credit for testing it. A random split means every bait appears in both training and test. The prey differ, but the model has met every bait before. So they also asked the harder question: what if the bait is new? Train on a single bait, and test on the others: the score is zero point five five, barely better than chance. Train on about eleven baits: it climbs to about zero point eight, and levels off.
+
+Read that carefully. The model generalises well across prey, of which it saw millions. It generalises less well across baits, of which it saw twenty-six. The data are enormously deep on one side of the pair and narrow on the other. If I had to name the single most valuable next experiment, it would be more baits.
+
+They also checked salt. Trained at low salt, the model held its score at medium and high. And then they used it: to design a network of twenty-six probes against ninety-six new strands, laid out as storybook characters and their attributes, which they built and tested. At predicting which strands would bind in that network, the model did more than twice as well as the best standard tool.
+
+So here are the limits, stated plainly. Twenty bases only. A yes-or-no answer. One kind of assay. Twenty-six baits.
+
+And each limit is an invitation. Variable lengths. Predicting strength, from how many copies came down. Predicting speed. Feeding in salt and temperature as inputs. Choosing the next baits where the model is least sure, which is called active learning. Reporting how confident it is. And building it into a compiler, as the check on whether a set of strands will leave each other alone.
+
+Finally, take away five questions that work on any paper of this kind. Where did the labels come from? How was the data split, and what does generalising mean under that split? What was the baseline, and was it a fair one? What does the encoding assume? And what would make this number wrong?
+
+Three sentences. BINND is a compact convolutional classifier whose advantage comes less from its architecture than from a hundred and forty-four million measured labels and an encoding that puts would-be base pairs side by side. It beats thermodynamic tools on its own assay by about ten points, is cautious at its default cut-off, and generalises better to new prey than to new baits. Its limits, twenty bases, yes-or-no, one assay, twenty-six baits, are a list of projects.
+
+[B] Questions. One: why were the two strands interleaved, and what would a filter see if they were not? Two: what does the sixty-six percent result tell you about simulated labels? Three: under a random split, what has the model already seen in the test set, and what did the harder test show?
+
+---
